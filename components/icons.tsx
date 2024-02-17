@@ -4,7 +4,6 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Command,
   CreditCard,
   File,
   FileText,
@@ -25,11 +24,23 @@ import {
   X,
   type Icon as LucideIcon,
 } from "lucide-react"
+import { BarChart } from "@/components/icons/BarChart";
+import { DoughnutChart } from "@/components/icons/DoughnutChart";
+import { LineChart } from "@/components/icons/LineChart";
+import { PolarAreaChart } from "@/components/icons/PolarAreaChart";
+import { RadarChart } from "@/components/icons/RadarChart";
 
 export type Icon = LucideIcon
 
 export const Icons = {
-  logo: Command,
+  logo: ({ ...props }: LucideProps) => (
+    <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" {...props}>
+      <path
+        className="fill-emerald-400"
+        d="M16 8a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v13.927a1 1 0 0 0 1.623.782l3.684-2.93a4 4 0 0 1 2.49-.87H11a5 5 0 0 0 5-5V8Z"
+      />
+    </svg>
+  ),
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
@@ -69,4 +80,9 @@ export const Icons = {
   ),
   twitter: Twitter,
   check: Check,
+  barChart: BarChart,
+  doughnutChart: DoughnutChart,
+  lineChart: LineChart,
+  polarAreaChart: PolarAreaChart,
+  radarChart: RadarChart,
 }
