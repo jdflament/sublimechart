@@ -56,19 +56,20 @@ interface ChartSelectorProps {
 export function ChartSelector({ chart }: ChartSelectorProps) {
   return (
     <ToggleGroup
+      className="flex flex-wrap"
       variant="outline"
       type="single"
       defaultValue={chart.config?.type}
     >
       {chartSelectors.map(chartSelector => (
         <ToggleGroupItem
-          className="flex h-auto flex-col p-4"
+          className="flex h-auto flex-col p-3"
           key={chartSelector.type}
           value={chartSelector.type}
           aria-label={chartSelector.name}
         >
           <ChartSelectorIcon icon={chartSelector.icon} />
-          <span className="whitespace-nowrap text-sm font-semibold leading-7">
+          <span className="whitespace-nowrap text-xs font-semibold leading-7">
             {chartSelector.name}
           </span>
         </ToggleGroupItem>
