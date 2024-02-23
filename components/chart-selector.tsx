@@ -8,6 +8,7 @@ import { BarChart } from "@/components/icons/BarChart";
 import { LineChart } from "@/components/icons/LineChart";
 import { PolarAreaChart } from "@/components/icons/PolarAreaChart";
 import { RadarChart } from "@/components/icons/RadarChart";
+import { useFormContext } from "react-hook-form";
 
 interface ChartSelector {
   name: string
@@ -53,13 +54,16 @@ interface ChartSelectorProps {
   chart: Pick<Chart, "id" | "config">
 }
 
-export function ChartSelector({ chart }: ChartSelectorProps) {
+export function ChartSelector({ chart }: ChartSelectorProps, ref: React.RefObject<HTMLDivElement>) {
+  const { register } = useFormContext() // retrieve all hook methods
+
   return (
     <ToggleGroup
       className="flex flex-wrap"
       variant="outline"
       type="single"
       defaultValue={chart.config?.type}
+      {...register('config.type', { required: true })}
     >
       {chartSelectors.map(chartSelector => (
         <ToggleGroupItem

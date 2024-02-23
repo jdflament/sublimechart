@@ -1,9 +1,8 @@
 "use client"
 
-import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Chart } from "@prisma/client"
-import { useForm } from "react-hook-form"
+import { useForm, FormProvider } from "react-hook-form"
 import * as z from "zod"
 
 import { chartPatchSchema } from "@/lib/validations/chart";
@@ -11,10 +10,13 @@ import { ChartSelector } from "@/components/chart-selector";
 import { ChartCanvas } from "@/components/chart-canvas";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import {Button, buttonVariants} from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
-import {cn} from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import {useEffect, useState} from "react";
+import {Input} from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -23,14 +25,23 @@ interface PlaygroundProps {
 type FormData = z.infer<typeof chartPatchSchema>
 
 export function Playground({ chart }: PlaygroundProps) {
-  const { register, handleSubmit } = useForm<FormData>({
+  const methods = useForm<FormData>({
     resolver: zodResolver(chartPatchSchema),
+    mode: 'onBlur',
   });
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState,
+    formState: { isValidating },
+  } = methods;
+
   const router = useRouter()
-  const [isSaving, setIsSaving] = React.useState<boolean>(false)
+  const [isSaving, setIsSaving] = useState<boolean>(false)
 
   async function onSubmit(data: FormData) {
-    console.log(data);
     setIsSaving(true)
 
     const response = await fetch(`/api/charts/${chart.id}`, {
@@ -61,44 +72,75 @@ export function Playground({ chart }: PlaygroundProps) {
     });
   }
 
+  const data = watch();
+
+  useEffect(() => {
+    if (formState.isValid && !isValidating) {
+      console.log(data);
+    }
+  }, [formState, data, isValidating]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="grid w-full gap-4">
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center space-x-10">
-            <Link
-              href="/dashboard"
-              className={cn(buttonVariants({ variant: "ghost" }))}
-            >
-              <>
-                <Icons.chevronLeft className="mr-2 h-4 w-4" />
-                Back
-              </>
-            </Link>
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid w-full gap-4">
+          <div className="flex w-full items-center justify-between">
+            <div className="flex items-center space-x-10">
+              <Link
+                href="/dashboard"
+                className={cn(buttonVariants({ variant: "ghost" }))}
+              >
+                <>
+                  <Icons.chevronLeft className="mr-2 h-4 w-4" />
+                  Back
+                </>
+              </Link>
+              <Input
+                type="text"
+                placeholder="Chart title..."
+                defaultValue={chart.title}
+                {...register("title", { required: true })}
+              />
+            </div>
+            <Button type="submit">
+              {isSaving && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              <span>Save</span>
+            </Button>
           </div>
-          <Button type="submit">
-            {isSaving && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            <span>Save</span>
-          </Button>
-        </div>
-        <div className="grow lg:flex xl:px-2">
-          <div className="flex-1">
-            <div className="mx-auto mb-4 text-center sm:px-6 lg:pl-8 xl:shrink-0">
-              <ChartSelector chart={chart} {...register('config.type')} />
+          <div className="grow lg:flex xl:px-2">
+            <div className="flex-1">
+              <div className="mx-auto mb-4 text-center sm:px-6 lg:pl-8 xl:shrink-0">
+                <ChartSelector chart={chart} />
+              </div>
+
+              <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+                <ChartCanvas chart={chart} />
+              </div>
             </div>
 
-            <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-              <ChartCanvas chart={chart} />
+            <div className="w-96 shrink-0 px-4 py-6 sm:px-6 lg:w-80">
+              <Tabs defaultValue="datasets">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="datasets">Datasets</TabsTrigger>
+                  <TabsTrigger value="templates">Templates</TabsTrigger>
+                  <TabsTrigger value="themes">Themes</TabsTrigger>
+                </TabsList>
+                <TabsContent value="datasets">
+                  Here is the datasets
+                </TabsContent>
+                <TabsContent value="templates">
+                  Here is the templates
+                </TabsContent>
+                <TabsContent value="themes">
+                  Here is the themes
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
-
-          <div className="w-96 shrink-0 px-4 py-6 sm:px-6 lg:w-80">
-            Data / Templates / Themes
-          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </FormProvider>
   )
 }
