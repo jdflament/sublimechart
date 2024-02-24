@@ -17,6 +17,8 @@ import { cn } from "@/lib/utils";
 import {useEffect, useState} from "react";
 import {Input} from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import ChartLabels from "@/components/chart-labels";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -120,7 +122,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </div>
             </div>
 
-            <div className="w-96 shrink-0 px-4 py-6 sm:px-6 lg:w-80">
+            <div className="w-full shrink-0 lg:w-96">
               <Tabs defaultValue="datasets">
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
@@ -128,13 +130,43 @@ export function Playground({ chart }: PlaygroundProps) {
                   <TabsTrigger value="themes">Themes</TabsTrigger>
                 </TabsList>
                 <TabsContent value="datasets">
-                  Here is the datasets
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Datasets</CardTitle>
+                      <CardDescription>
+                        Update the datasets of the chart.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <ChartLabels chart={chart} />
+                    </CardContent>
+                  </Card>
                 </TabsContent>
                 <TabsContent value="templates">
-                  Here is the templates
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Templates</CardTitle>
+                      <CardDescription>
+                        Select a template.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      TODO: Templates
+                    </CardContent>
+                  </Card>
                 </TabsContent>
                 <TabsContent value="themes">
-                  Here is the themes
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Themes</CardTitle>
+                      <CardDescription>
+                        Select a predefined theme.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      TODO: Themes
+                    </CardContent>
+                  </Card>
                 </TabsContent>
               </Tabs>
             </div>
