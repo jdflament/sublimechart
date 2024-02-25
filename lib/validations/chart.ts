@@ -3,7 +3,9 @@ import * as z from "zod"
 export const chartCreateSchema = z.object({
   title: z.string(),
   config: z.object({
-    type: z.enum(['bar', 'line', 'pie', 'radar', 'doughnut', 'polarArea']),
+    type: z.enum(['bar', 'line', 'pie', 'radar', 'doughnut', 'polarArea'], {
+      required_error: "Please select a type.",
+    }),
     data: z.object({
       labels: z.string().array().min(1),
       datasets: z.array(z.object({

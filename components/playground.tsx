@@ -14,11 +14,12 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import {useEffect, useState} from "react";
-import {Input} from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import ChartLabels from "@/components/chart-labels";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import { ChartLabels } from "@/components/chart-labels";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -27,9 +28,12 @@ interface PlaygroundProps {
 type FormData = z.infer<typeof chartPatchSchema>
 
 export function Playground({ chart }: PlaygroundProps) {
-  const methods = useForm<FormData>({
+  const defaultValues: Partial<FormData> = chart
+
+  const form = useForm<FormData>({
     resolver: zodResolver(chartPatchSchema),
     mode: 'onBlur',
+    defaultValues,
   });
 
   const {
@@ -38,7 +42,7 @@ export function Playground({ chart }: PlaygroundProps) {
     watch,
     formState,
     formState: { isValidating },
-  } = methods;
+  } = form;
 
   const router = useRouter()
   const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -83,7 +87,7 @@ export function Playground({ chart }: PlaygroundProps) {
   }, [formState, data, isValidating]);
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid w-full gap-4">
           <div className="flex w-full items-center justify-between">
@@ -97,11 +101,17 @@ export function Playground({ chart }: PlaygroundProps) {
                   Back
                 </>
               </Link>
-              <Input
-                type="text"
-                placeholder="Chart title..."
-                defaultValue={chart.title}
-                {...register("title", { required: true })}
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Untitled chart" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
             <Button type="submit">
@@ -114,7 +124,7 @@ export function Playground({ chart }: PlaygroundProps) {
           <div className="grow lg:flex xl:px-2">
             <div className="flex-1">
               <div className="mx-auto mb-4 text-center sm:px-6 lg:pl-8 xl:shrink-0">
-                <ChartSelector chart={chart} />
+                <ChartSelector />
               </div>
 
               <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
@@ -124,9 +134,8 @@ export function Playground({ chart }: PlaygroundProps) {
 
             <div className="w-full shrink-0 lg:w-96">
               <Tabs defaultValue="datasets">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
-                  <TabsTrigger value="templates">Templates</TabsTrigger>
                   <TabsTrigger value="themes">Themes</TabsTrigger>
                 </TabsList>
                 <TabsContent value="datasets">
@@ -138,20 +147,7 @@ export function Playground({ chart }: PlaygroundProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      <ChartLabels chart={chart} />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="templates">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Templates</CardTitle>
-                      <CardDescription>
-                        Select a template.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      TODO: Templates
+                      <ChartLabels />
                     </CardContent>
                   </Card>
                 </TabsContent>
