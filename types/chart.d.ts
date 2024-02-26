@@ -1,3 +1,6 @@
+import * as z from "zod";
+import { chartPatchSchema } from "@/lib/validations/chart";
+
 declare global {
   namespace PrismaJson {
     type ChartConfigType = {
@@ -15,3 +18,5 @@ declare global {
     }
   }
 }
+
+export type ChartPatchFormData = z.infer<typeof chartPatchSchema>

@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Chart } from "@prisma/client"
 import { useForm, FormProvider } from "react-hook-form"
-import * as z from "zod"
 
 import { chartPatchSchema } from "@/lib/validations/chart";
 import { ChartSelector } from "@/components/chart-selector";
@@ -14,40 +13,35 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ChartLabels } from "@/components/chart-labels";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { ChartPatchFormData } from "@/types/chart";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
 }
 
-type FormData = z.infer<typeof chartPatchSchema>
-
 export function Playground({ chart }: PlaygroundProps) {
-  const defaultValues: Partial<FormData> = chart
+  const defaultValues = chartPatchSchema.parse(chart);
 
-  const form = useForm<FormData>({
+  const form = useForm<ChartPatchFormData>({
     resolver: zodResolver(chartPatchSchema),
     mode: 'onBlur',
     defaultValues,
   });
 
   const {
-    register,
     handleSubmit,
-    watch,
-    formState,
-    formState: { isValidating },
   } = form;
 
   const router = useRouter()
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
-  async function onSubmit(data: FormData) {
+  async function onSubmit(data: ChartPatchFormData) {
     setIsSaving(true)
 
     const response = await fetch(`/api/charts/${chart.id}`, {
@@ -77,14 +71,6 @@ export function Playground({ chart }: PlaygroundProps) {
       description: "Your chart has been saved.",
     });
   }
-
-  const data = watch();
-
-  useEffect(() => {
-    if (formState.isValid && !isValidating) {
-      console.log(data);
-    }
-  }, [formState, data, isValidating]);
 
   return (
     <FormProvider {...form}>
@@ -128,7 +114,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </div>
 
               <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
-                <ChartCanvas chart={chart} />
+                <ChartCanvas />
               </div>
             </div>
 

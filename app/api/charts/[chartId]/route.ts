@@ -61,6 +61,7 @@ export async function PATCH(
       },
       data: {
         title: body.title,
+        // @ts-ignore
         config: body.config,
       },
     })

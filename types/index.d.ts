@@ -63,21 +63,3 @@ export type UserSubscriptionPlan = SubscriptionPlan &
     stripeCurrentPeriodEnd: number
     isPro: boolean
   }
-
-declare global {
-  namespace PrismaJson {
-    export type ChartConfigType = {
-      type: string;
-      data: {
-        labels: string[];
-        datasets: {
-          label: string | null;
-          data: number[];
-          borderColor: string;
-          backgroundColor: string;
-          borderWidth: number;
-        }[];
-      }
-    }
-  }
-}
