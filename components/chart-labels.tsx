@@ -26,6 +26,14 @@ export function ChartLabels() {
     control: form.control,
   })
 
+  function handleAppend() {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
+
+    append("")
+  }
+
   return (
     <div>
       <Collapsible
@@ -72,7 +80,7 @@ export function ChartLabels() {
         type="button"
         variant="outline"
         className="mt-2 w-full"
-        onClick={() => append("")}
+        onClick={handleAppend}
       >
         <span>Add label</span>
         <Icons.add className="h-4 w-4" />

@@ -62,7 +62,7 @@ export function ChartSelector() {
           <RadioGroup
             onValueChange={field.onChange}
             defaultValue={field.value}
-            className="flex gap-2 pt-2 mx-auto flex-wrap justify-center"
+            className="mx-auto flex flex-wrap justify-center gap-2 pt-2"
           >
             {chartSelectors.map(chartSelector => (
               <FormItem key={chartSelector.type}>
@@ -70,7 +70,7 @@ export function ChartSelector() {
                   <FormControl>
                     <RadioGroupItem value={chartSelector.type} className="sr-only" />
                   </FormControl>
-                  <div className="items-center rounded-md border-2 border-muted p-1 hover:border-accent p-3 cursor-pointer">
+                  <div className="cursor-pointer items-center rounded-md border-2 border-muted p-3 hover:border-accent">
                     <div className="flex justify-center">
                       <ChartSelectorIcon icon={chartSelector.icon} />
                     </div>

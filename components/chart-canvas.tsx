@@ -30,7 +30,7 @@ export function ChartCanvas() {
         ref.current.destroy();
       }
     };
-  }, [type, JSON.stringify(data)]);
+  }, [type, data]);
 
   return (
     <canvas id="chart"></canvas>

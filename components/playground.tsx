@@ -20,6 +20,7 @@ import { ChartLabels } from "@/components/chart-labels";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { ChartPatchFormData } from "@/types/chart";
+import { ChartDataSets } from "@/components/chart-data-sets";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -120,8 +121,9 @@ export function Playground({ chart }: PlaygroundProps) {
 
             <div className="w-full shrink-0 lg:w-96">
               <Tabs defaultValue="datasets">
-                <TabsList className="grid w-full grid-cols-2">
+                <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
+                  <TabsTrigger value="options">Options</TabsTrigger>
                   <TabsTrigger value="themes">Themes</TabsTrigger>
                 </TabsList>
                 <TabsContent value="datasets">
@@ -134,6 +136,20 @@ export function Playground({ chart }: PlaygroundProps) {
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <ChartLabels />
+                      <ChartDataSets />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="options">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Options</CardTitle>
+                      <CardDescription>
+                        Customize the chart render through options.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      TODO: Options
                     </CardContent>
                   </Card>
                 </TabsContent>

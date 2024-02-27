@@ -70,6 +70,7 @@ export async function POST(req: Request) {
     const chart = await db.chart.create({
       data: {
         title: body.title,
+        // @ts-ignore
         config: body.config,
         authorId: session.user.id,
       },
