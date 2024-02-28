@@ -21,6 +21,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription, DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import {Label} from "@/components/ui/label";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -88,25 +97,46 @@ export function Playground({ chart }: PlaygroundProps) {
                   Back
                 </>
               </Link>
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="Untitled chart" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
-            <Button type="submit">
-              {isSaving && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              <span>Save</span>
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button type="button">Save</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[475px]">
+                <DialogHeader>
+                  <DialogTitle>Save your chart</DialogTitle>
+                  <DialogDescription>
+                    This will save the current chart state which you
+                    can access later.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="title">Title</Label>
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input placeholder="Untitled chart" {...field} autoFocus />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">
+                    {isSaving && (
+                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    <span>Save</span>
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="grow lg:flex xl:px-2">
             <div className="flex-1">

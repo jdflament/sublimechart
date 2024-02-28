@@ -13,9 +13,18 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {CaretSortIcon, DotsHorizontalIcon} from "@radix-ui/react-icons";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger
+} from "@/components/ui/sheet";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {useState} from "react";
+import {ColorPicker} from "@/components/ui/color-picker";
 
 export function ChartDataSets() {
   const form = useFormContext();
@@ -88,8 +97,12 @@ export function ChartDataSets() {
                               <SheetTitle className="text-sm font-medium">
                                 Dataset #{datasetIndex + 1}
                               </SheetTitle>
+                              <SheetDescription>
+                                Edit the dataset values and style.
+                              </SheetDescription>
                             </SheetHeader>
                             <div className="grid gap-4 py-4">
+                              <FormLabel>Dataset</FormLabel>
                               { labels && labels.map((label, index) => (
                                 <FormField
                                   control={form.control}
@@ -111,6 +124,45 @@ export function ChartDataSets() {
                                 />
                               ))}
                             </div>
+                            <div className="grid gap-4 py-4">
+                              <FormLabel>Background color</FormLabel>
+                              <FormField
+                                control={form.control}
+                                key={`dataset-${datasetIndex}-backgroundColor`}
+                                name={`config.data.datasets.${datasetIndex}.backgroundColor`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl className="flex gap-2">
+                                      <ColorPicker {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                            <div className="grid gap-4 py-4">
+                              <FormLabel>Border color</FormLabel>
+                              <FormField
+                                control={form.control}
+                                key={`dataset-${datasetIndex}-borderColor`}
+                                name={`config.data.datasets.${datasetIndex}.borderColor`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormControl className="flex gap-2">
+                                      <ColorPicker {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                            <SheetFooter>
+                              <SheetTrigger asChild>
+                                <Button type="button">
+                                  Save
+                                </Button>
+                              </SheetTrigger>
+                            </SheetFooter>
                           </SheetContent>
                         </Sheet>
                         { datasetIndex !== 0 && (
