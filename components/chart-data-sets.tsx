@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {CaretSortIcon, DotsHorizontalIcon} from "@radix-ui/react-icons";
+import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   Sheet,
   SheetContent,
@@ -22,18 +22,19 @@ import {
   SheetTitle,
   SheetTrigger
 } from "@/components/ui/sheet";
-import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
-import {useState} from "react";
-import {ColorPicker} from "@/components/ui/color-picker";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useState } from "react";
+import { ColorPicker } from "@/components/ui/color-picker";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export function ChartDataSets() {
   const form = useFormContext();
   const [isOpen, setIsOpen] = useState(true)
 
   const labels = form.watch('config.data.labels');
+  const datasets = form.watch('config.data.datasets');
 
   const {
-    fields: datasets,
     append: append,
     remove: remove,
   } = useFieldArray({
@@ -103,26 +104,30 @@ export function ChartDataSets() {
                             </SheetHeader>
                             <div className="grid gap-4 py-4">
                               <FormLabel>Dataset</FormLabel>
-                              { labels && labels.map((label, index) => (
-                                <FormField
-                                  control={form.control}
-                                  key={`dataset-${datasetIndex}-label-${index}`}
-                                  name={`config.data.datasets.${datasetIndex}.data.${index}`}
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormControl className="flex gap-2">
-                                        <Input
-                                          type="number"
-                                          placeholder={label ? `Data for ${label}` : `Data #${index + 1}`}
-                                          {...field}
-                                          onChange={(event) => field.onChange(parseFloat(event.target.value))}
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              ))}
+                              <ScrollArea className="max-h-96 whitespace-nowrap rounded-md border">
+                                <div className="flex flex-col space-y-4 p-4">
+                                  { labels && labels.map((label, index) => (
+                                    <FormField
+                                      control={form.control}
+                                      key={`dataset-${datasetIndex}-label-${index}`}
+                                      name={`config.data.datasets.${datasetIndex}.data.${index}`}
+                                      render={({ field }) => (
+                                        <FormItem>
+                                          <FormControl className="flex gap-2">
+                                            <Input
+                                              type="number"
+                                              placeholder={label ? `Data for ${label}` : `Data #${index + 1}`}
+                                              {...field}
+                                              onChange={(event) => field.onChange(parseFloat(event.target.value))}
+                                            />
+                                          </FormControl>
+                                          <FormMessage />
+                                        </FormItem>
+                                      )}
+                                    />
+                                  ))}
+                                </div>
+                              </ScrollArea>
                             </div>
                             <div className="grid gap-4 py-4">
                               <FormLabel>Background color</FormLabel>

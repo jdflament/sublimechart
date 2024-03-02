@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  ArrowDown,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -20,6 +21,7 @@ import {
   SunMedium,
   Trash,
   Twitter,
+  Undo2,
   User,
   X,
   type Icon as LucideIcon,
@@ -61,6 +63,8 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  undo: Undo2,
+  arrowDown: ArrowDown,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

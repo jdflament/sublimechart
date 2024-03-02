@@ -15,10 +15,11 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 
 export function ChartLabels() {
   const form = useFormContext();
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(true);
+
+  const labels = form.watch('config.data.labels');
 
   const {
-    fields: labels,
     append ,
     remove,
   } = useFieldArray({
@@ -55,7 +56,7 @@ export function ChartLabels() {
           {labels.map((label, index) => (
             <FormField
               control={form.control}
-              key={label.id}
+              key={`label-${index}`}
               name={`config.data.labels.${index}`}
               render={({ field }) => (
                 <FormItem>

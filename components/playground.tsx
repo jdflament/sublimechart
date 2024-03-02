@@ -30,6 +30,8 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import {Label} from "@/components/ui/label";
+import {ChartPreset} from "@/components/chart-preset";
+import { presets } from "@/data/presets"
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
@@ -165,6 +167,7 @@ export function Playground({ chart }: PlaygroundProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
+                      <ChartPreset presets={presets} />
                       <ChartLabels />
                       <ChartDataSets />
                     </CardContent>

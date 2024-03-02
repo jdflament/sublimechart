@@ -1,5 +1,4 @@
-import React from 'react';
-
+import { ComponentType } from 'react';
 import { DoughnutChart } from "@/components/icons/DoughnutChart";
 import { BarChart } from "@/components/icons/BarChart";
 import { LineChart } from "@/components/icons/LineChart";
@@ -12,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 interface ChartSelector {
   name: string
   type: string,
-  icon: React.ComponentType<{ className?: string }>
+  icon: ComponentType<{ className?: string }>
 }
 
 const chartSelectors: Array<ChartSelector> = [
@@ -50,7 +49,8 @@ function ChartSelectorIcon({ icon: Icon }: { icon: ChartSelector['icon'] }) {
 }
 
 export function ChartSelector() {
-  const form = useFormContext() // retrieve all hook methods
+  const form = useFormContext();
+  const type = form.watch('config.type');
 
   return (
     <FormField
@@ -68,7 +68,7 @@ export function ChartSelector() {
               <FormItem key={chartSelector.type}>
                 <FormLabel className="[&:has([data-state=checked])>div]:border-primary">
                   <FormControl>
-                    <RadioGroupItem value={chartSelector.type} className="sr-only" />
+                    <RadioGroupItem checked={type === chartSelector.type} value={chartSelector.type} className="sr-only" />
                   </FormControl>
                   <div className="cursor-pointer items-center rounded-md border-2 border-muted p-3 hover:border-accent">
                     <div className="flex justify-center">
