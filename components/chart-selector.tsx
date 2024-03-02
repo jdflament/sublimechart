@@ -62,6 +62,7 @@ export function ChartSelector() {
           <RadioGroup
             onValueChange={field.onChange}
             defaultValue={field.value}
+            value={type}
             className="mx-auto flex flex-wrap justify-center gap-2 pt-2"
           >
             {chartSelectors.map(chartSelector => (
