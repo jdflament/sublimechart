@@ -33,7 +33,7 @@ const options = z.object({
       datalabels: z.object({
         display: z.boolean().default(false).optional(),
         anchor: z.enum(['start', 'center', 'end']).default('end').optional(),
-        align: z.enum(['top', 'left', 'right', 'bottom']).default('top').optional(),
+        align: z.enum(['start', 'center', 'end', 'top', 'left', 'right', 'bottom']).default('top').optional(),
         color: z.string().default('#000000').optional(),
         backgroundColor: z.string().optional(),
         borderRadius: z.number().optional(),

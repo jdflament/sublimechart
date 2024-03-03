@@ -104,6 +104,9 @@ export function ChartDataLabels() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
+                    <SelectItem value="start">Start</SelectItem>
+                    <SelectItem value="center">Center</SelectItem>
+                    <SelectItem value="end">End</SelectItem>
                     <SelectItem value="right">Right</SelectItem>
                     <SelectItem value="bottom">Bottom</SelectItem>
                     <SelectItem value="left">Left</SelectItem>
