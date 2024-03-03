@@ -47,7 +47,7 @@ export function ChartAxis() {
         render={() => (
           <FormItem>
             <div className="mb-4">
-              <FormLabel className="text-base">X Axis</FormLabel>
+              <FormLabel className="text-sm font-semibold">X Axis</FormLabel>
               <FormDescription>
                 Enable/Disable X Axis options
               </FormDescription>
@@ -90,7 +90,7 @@ export function ChartAxis() {
         render={() => (
           <FormItem>
             <div className="mb-4">
-              <FormLabel className="text-base">Y Axis</FormLabel>
+              <FormLabel className="text-sm font-semibold">Y Axis</FormLabel>
               <FormDescription>
                 Enable/Disable Y Axis options
               </FormDescription>
@@ -134,7 +134,7 @@ export function ChartAxis() {
           render={() => (
             <FormItem>
               <div className="mb-4">
-                <FormLabel className="text-base">R Axis</FormLabel>
+                <FormLabel className="text-sm font-semibold">R Axis</FormLabel>
                 <FormDescription>
                   Enable/Disable R Axis options
                 </FormDescription>

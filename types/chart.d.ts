@@ -16,61 +16,61 @@ declare global {
         }[];
       },
       options: {
-        plugins: {
-          datalabels: {
-            display: boolean|undefined;
-            anchor: string|undefined;
-            align: string|undefined;
-            color: string|undefined;
-            backgroundColor: string|undefined;
-            borderRadius: number|undefined;
-            font: {
-              size: number|undefined;
+        plugins?: {
+          datalabels?: {
+            display?: boolean|undefined;
+            anchor?: string|undefined;
+            align?: string|undefined;
+            color?: string|undefined;
+            backgroundColor?: string|undefined;
+            borderRadius?: number|undefined;
+            font?: {
+              size?: number|undefined;
             },
           },
-          legend: {
-            display: boolean;
+          legend?: {
+            display?: boolean | undefined;
           },
           title: {
             display: boolean;
             text: string;
           }
         },
-        layout: {
-          padding: number | undefined;
+        layout?: {
+          padding?: number | undefined;
         },
-        scales: {
-          r: {
-            grid: {
-              display: boolean | undefined;
+        scales?: {
+          r?: {
+            grid?: {
+              display?: boolean | undefined;
             },
-            ticks: {
-              display: boolean | undefined;
+            ticks?: {
+              display?: boolean | undefined;
             }
           }
-          x: {
-            border: {
-              display: boolean | undefined;
+          x?: {
+            border?: {
+              display?: boolean | undefined;
             }
-            grid: {
-              display: boolean | undefined;
+            grid?: {
+              display?: boolean | undefined;
             },
-            ticks: {
-              display: boolean | undefined;
+            ticks?: {
+              display?: boolean | undefined;
             }
-            stacked: boolean | undefined;
+            stacked?: boolean | undefined;
           },
-          y: {
-            border: {
-              display: boolean | undefined;
+          y?: {
+            border?: {
+              display?: boolean | undefined;
             }
-            grid: {
-              display: boolean | undefined;
+            grid?: {
+              display?: boolean | undefined;
             },
-            ticks: {
-              display: boolean | undefined;
+            ticks?: {
+              display?: boolean | undefined;
             }
-            stacked: boolean | undefined;
+            stacked?: boolean | undefined;
           },
         }
       }
