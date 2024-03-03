@@ -1,20 +1,20 @@
 import { DashboardHeader } from "@/components/header"
-import { PostCreateButton } from "@/components/post-create-button"
-import { PostItem } from "@/components/post-item"
+import { ChartItem } from "@/components/chart-item"
 import { DashboardShell } from "@/components/shell"
+import { ChartCreateButton } from "@/components/chart-create-button";
 
 export default function DashboardLoading() {
   return (
     <DashboardShell>
       <DashboardHeader heading="Charts" text="Create and manage your charts.">
-        <PostCreateButton />
+        <ChartCreateButton />
       </DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border">
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
+        <ChartItem.Skeleton />
+        <ChartItem.Skeleton />
+        <ChartItem.Skeleton />
+        <ChartItem.Skeleton />
+        <ChartItem.Skeleton />
       </div>
     </DashboardShell>
   )

@@ -26,7 +26,7 @@ export default async function DashboardPage() {
     },
     select: {
       id: true,
-      title: true,
+      config: true,
       createdAt: true,
     },
     orderBy: {

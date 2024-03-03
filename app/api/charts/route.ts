@@ -19,7 +19,7 @@ export async function GET() {
     const charts = await db.chart.findMany({
       select: {
         id: true,
-        title: true,
+        config: true,
         createdAt: true,
       },
       where: {
@@ -62,14 +62,12 @@ export async function POST(req: Request) {
     const body = chartCreateSchema.parse(json)
 
     console.log({
-      title: body.title,
       config: body.config,
       authorId: session.user.id,
     });
 
     const chart = await db.chart.create({
       data: {
-        title: body.title,
         // @ts-ignore
         config: body.config,
         authorId: session.user.id,

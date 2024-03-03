@@ -6,10 +6,12 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { ChartActions } from "@/components/chart-actions"
 
 interface ChartItemProps {
-  chart: Pick<Chart, "id" | "title" | "createdAt">
+  chart: Pick<Chart, "id" | "config" | "createdAt">
 }
 
 export function ChartItem({ chart }: ChartItemProps) {
+  const title = chart.config?.options?.plugins?.title?.text;
+
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
@@ -17,7 +19,7 @@ export function ChartItem({ chart }: ChartItemProps) {
           href={`/playground/${chart.id}`}
           className="font-semibold hover:underline"
         >
-          {chart.title}
+          {title}
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
@@ -25,7 +27,7 @@ export function ChartItem({ chart }: ChartItemProps) {
           </p>
         </div>
       </div>
-      <ChartActions chart={{ id: chart.id, title: chart.title }} />
+      <ChartActions chart={{ id: chart.id }} />
     </div>
   )
 }

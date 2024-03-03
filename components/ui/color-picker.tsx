@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/popover'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Paintbrush } from 'lucide-react'
-import {forwardRef, useEffect, useState} from 'react'
+import { forwardRef, useState } from 'react'
 import { cn } from "@/lib/utils";
 
 const ColorPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onChange, value, ...props }, ref) => {
@@ -101,18 +101,19 @@ const ColorPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onCha
           </TabsList>
 
           <TabsContent value="solid" className="mt-0 flex flex-wrap gap-1">
-            {solids.map((solid) => (
+            { solids.map((solid) => (
               <div
                 key={solid}
                 style={{ background: solid }}
                 className="h-6 w-6 cursor-pointer rounded-md active:scale-105"
                 onClick={() => handleColorChange(solid)}
               />
-            ))}
+            )) }
             <Input
               id="color"
               type="color"
               className="w-full cursor-pointer rounded-md"
+              value={color}
               onChange={(e) => handleColorChange(e.currentTarget.value)}
             />
           </TabsContent>

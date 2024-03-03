@@ -29,7 +29,7 @@ import {
 import { BarChart } from "@/components/icons/BarChart";
 import { DoughnutChart } from "@/components/icons/DoughnutChart";
 import { LineChart } from "@/components/icons/LineChart";
-import { PolarAreaChart } from "@/components/icons/PolarAreaChart";
+import { PieChart } from "@/components/icons/PieChart";
 import { RadarChart } from "@/components/icons/RadarChart";
 
 export type Icon = LucideIcon
@@ -87,6 +87,6 @@ export const Icons = {
   barChart: BarChart,
   doughnutChart: DoughnutChart,
   lineChart: LineChart,
-  polarAreaChart: PolarAreaChart,
+  pieChart: PieChart,
   radarChart: RadarChart,
 }

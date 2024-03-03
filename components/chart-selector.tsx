@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 import { DoughnutChart } from "@/components/icons/DoughnutChart";
 import { BarChart } from "@/components/icons/BarChart";
 import { LineChart } from "@/components/icons/LineChart";
-import { PolarAreaChart } from "@/components/icons/PolarAreaChart";
+import { PieChart } from "@/components/icons/PieChart";
 import { RadarChart } from "@/components/icons/RadarChart";
 import { useFormContext } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -31,9 +31,9 @@ const chartSelectors: Array<ChartSelector> = [
     icon: DoughnutChart,
   },
   {
-    name: 'Polar Chart',
-    type: 'polarArea',
-    icon: PolarAreaChart,
+    name: 'Pie Chart',
+    type: 'pie',
+    icon: PieChart,
   },
   {
     name: 'Radar Chart',
@@ -61,7 +61,6 @@ export function ChartSelector() {
           <FormMessage />
           <RadioGroup
             onValueChange={field.onChange}
-            defaultValue={field.value}
             value={type}
             className="mx-auto flex flex-wrap justify-center gap-2 pt-2"
           >

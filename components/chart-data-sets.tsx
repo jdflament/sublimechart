@@ -40,7 +40,7 @@ export function ChartDataSets() {
   } = useFieldArray({
     name: "config.data.datasets",
     control: form.control,
-  })
+  });
 
   function handleAppend() {
     if (!isOpen) {

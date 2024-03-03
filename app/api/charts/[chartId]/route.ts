@@ -60,7 +60,6 @@ export async function PATCH(
         id: params.chartId,
       },
       data: {
-        title: body.title,
         // @ts-ignore
         config: body.config,
       },

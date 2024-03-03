@@ -27,12 +27,24 @@ export function ChartLabels() {
     control: form.control,
   })
 
+  const {
+    remove: removeData,
+  } = useFieldArray({
+    name: "config.data.datasets.*.data",
+    control: form.control,
+  })
+
   function handleAppend() {
     if (!isOpen) {
       setIsOpen(true);
     }
 
     append("")
+  }
+
+  function handleRemove(index: number) {
+    remove(index);
+    removeData(index);
   }
 
   return (
@@ -64,7 +76,7 @@ export function ChartLabels() {
                     <div>
                       <Input placeholder={`Label #${index + 1}`} {...field} />
                       { index !== 0 && (
-                        <Button type="button" variant="outline" onClick={() => remove(index)}>
+                        <Button type="button" variant="outline" onClick={() => handleRemove(index)}>
                           <Icons.trash className="h-4 w-4" />
                         </Button>
                       )}

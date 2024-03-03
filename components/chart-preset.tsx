@@ -12,9 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { useFormContext } from "react-hook-form";
 import { ChartPatchFormData } from "@/types/chart";
-import {Icons} from "@/components/icons";
-import {FormLabel} from "@/components/ui/form";
-import {CollapsibleTrigger} from "@/components/ui/collapsible";
+import { Icons } from "@/components/icons";
+import { chartPatchSchema } from "@/lib/validations/chart";
 
 interface PresetSelectorProps extends PopoverProps {
   presets: Preset[]
@@ -29,21 +28,19 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
 
   function handleApply() {
     if (!hasSnapshot) {
+      const data = chartPatchSchema.parse(form.getValues());
+
       setSnapshotPreset({
-        id: "snapshot",
+        slug: "snapshot",
+        name: data.config?.options?.plugins?.title?.text,
         // @ts-ignore
-        name: form.getValues('title'),
-        // @ts-ignore
-        title: form.getValues('title'),
-        // @ts-ignore
-        config: form.getValues('config'),
+        config: data.config,
       });
 
       setHasSnapshot(true);
     }
 
     if (selectedPreset) {
-      form.setValue('title', selectedPreset.title);
       // @ts-ignore
       form.setValue('config', selectedPreset.config);
     }
@@ -51,9 +48,6 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
 
   return (
     <div>
-      <FormLabel className="text-sm font-semibold">
-        Select a preset
-      </FormLabel>
       <div className="mt-2 flex gap-2">
         <Popover open={open} onOpenChange={setOpen} {...props}>
           <PopoverTrigger asChild>
@@ -74,7 +68,7 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
               <CommandEmpty>No presets found.</CommandEmpty>
               {snapshotPreset && (
                 <CommandItem
-                  key={snapshotPreset.id}
+                  key={snapshotPreset.slug}
                   onSelect={() => {
                     setSelectedPreset(snapshotPreset);
                     setOpen(false);
@@ -84,7 +78,7 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
-                      selectedPreset?.id === snapshotPreset.id
+                      selectedPreset?.slug === snapshotPreset.slug
                         ? "opacity-100"
                         : "opacity-0"
                     )}
@@ -94,7 +88,7 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
               <CommandGroup heading="Examples">
                 {presets.map((preset) => (
                   <CommandItem
-                    key={preset.id}
+                    key={preset.slug}
                     onSelect={() => {
                       setSelectedPreset(preset)
                       setOpen(false)
@@ -104,7 +98,7 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
                     <CheckIcon
                       className={cn(
                         "ml-auto h-4 w-4",
-                        selectedPreset?.id === preset.id
+                        selectedPreset?.slug === preset.slug
                           ? "opacity-100"
                           : "opacity-0"
                       )}

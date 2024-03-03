@@ -21,20 +21,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription, DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import {Label} from "@/components/ui/label";
 import {ChartPreset} from "@/components/chart-preset";
 import { presets } from "@/data/presets"
+import {ChartOptions} from "@/components/chart-options";
 
 interface PlaygroundProps {
-  chart: Pick<Chart, "id" | "title" | "config" | "createdAt">
+  chart: Pick<Chart, "id" | "config" | "createdAt">
 }
 
 export function Playground({ chart }: PlaygroundProps) {
@@ -62,7 +54,6 @@ export function Playground({ chart }: PlaygroundProps) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: data.title,
         config: data.config,
       }),
     });
@@ -100,45 +91,26 @@ export function Playground({ chart }: PlaygroundProps) {
                 </>
               </Link>
             </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button type="button">Save</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[475px]">
-                <DialogHeader>
-                  <DialogTitle>Save your chart</DialogTitle>
-                  <DialogDescription>
-                    This will save the current chart state which you
-                    can access later.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="title">Title</Label>
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Input placeholder="Untitled chart" {...field} autoFocus />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button type="submit">
-                    {isSaving && (
-                      <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                    )}
-                    <span>Save</span>
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="config.options.plugins.title.text"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="Untitled chart" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">
+                {isSaving && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                <span>Save</span>
+              </Button>
+            </div>
           </div>
           <div className="grow lg:flex xl:px-2">
             <div className="flex-1">
@@ -146,12 +118,12 @@ export function Playground({ chart }: PlaygroundProps) {
                 <ChartSelector />
               </div>
 
-              <div className="px-4 py-6 sm:px-6 lg:pl-8 xl:flex-1 xl:pl-6">
+              <div className="px-4 py-6 sm:px-6 md:sticky md:top-14 lg:flex-1 lg:pl-8 xl:pl-6">
                 <ChartCanvas />
               </div>
             </div>
 
-            <div className="w-full shrink-0 lg:w-96">
+            <div className="mb-4 w-full shrink-0 lg:w-96">
               <Tabs defaultValue="datasets">
                 <TabsList className="grid w-full grid-cols-3">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
@@ -182,7 +154,7 @@ export function Playground({ chart }: PlaygroundProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      TODO: Options
+                      <ChartOptions />
                     </CardContent>
                   </Card>
                 </TabsContent>

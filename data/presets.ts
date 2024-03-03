@@ -1,27 +1,15 @@
+import { ChartConfigType } from "@/types/chart";
+
 export interface Preset {
-  id: string
-  name: string
-  title: string
-  config: {
-    type: string
-    data: {
-      labels: string[]
-      datasets: {
-        label: string | null
-        data: number[]
-        borderColor: string
-        backgroundColor: string
-        borderWidth: number
-      }[]
-    }
-  }
+  slug: string
+  name: string|undefined
+  config: ChartConfigType
 }
 
 export const presets: Preset[] = [
   {
-    id: "9cb0e66a-9937-465d-a188-2c4c4ae2401f",
+    slug: "website-traffic",
     name: "Website traffic",
-    title: "Website traffic",
     config: {
       type: 'line',
       data: {
@@ -42,13 +30,38 @@ export const presets: Preset[] = [
             borderWidth: 1,
           },
         ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+          },
+          title: {
+            display: true,
+            text: "Website traffic",
+          },
+        },
+        layout: {
+          padding: 20,
+        },
+        scales: {
+          x: {
+            grid: {
+              display: true,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+            },
+          },
+        }
       }
     }
   },
   {
-    id: "61eb0e32-2391-4cd3-adc3-66efe09bc0b7",
+    slug: "project-mrr",
     name: "Project MRR",
-    title: "Project MRR (in dollar)",
     config: {
       type: 'bar',
       data: {
@@ -76,6 +89,32 @@ export const presets: Preset[] = [
             borderWidth: 1,
           },
         ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: true,
+          },
+          title: {
+            display: true,
+            text: "Project MRR (in dollar)",
+          },
+        },
+        layout: {
+          padding: 20,
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            grid: {
+              display: false,
+            },
+          },
+        }
       }
     }
   },

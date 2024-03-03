@@ -1,14 +1,18 @@
-import {useRef, useEffect, useCallback, useState} from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { useFormContext } from "react-hook-form";
 import { ChartPatchFormData } from "@/types/chart";
 import ChartJS from "chart.js/auto";
 import * as React from "react";
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
-  const title = form.watch('title');
-  const { type, data } = form.watch("config");
+  const {
+    type,
+    data,
+    options
+  } = form.watch("config");
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false)
 
@@ -17,15 +21,27 @@ export function ChartCanvas() {
 
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
 
+    if (ref.current) {
+      ref.current.destroy();
+    }
+
     if (!ref.current) {
+      ChartJS.defaults.plugins.title.font = {
+        size: 16,
+        weight: "bold",
+      };
+
       ref.current = new ChartJS(ctx, {
+        plugins: [ChartDataLabels],
         // @ts-ignore
         type,
         // @ts-ignore
         data,
+        // @ts-ignore
+        options,
       });
     }
-  }, [type, data]);
+  }, [type, data, options]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -51,18 +67,17 @@ export function ChartCanvas() {
       ref.current.type = type;
       // @ts-ignore
       ref.current.data = data;
+      // @ts-ignore
+      ref.current.options = options;
 
       ref.current.update();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, JSON.stringify(data)]);
+  }, [type, JSON.stringify(data), JSON.stringify(options)]);
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-center">{title}</CardTitle>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="p-0">
         <canvas id="chart"></canvas>
       </CardContent>
     </Card>

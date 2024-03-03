@@ -14,9 +14,70 @@ declare global {
           backgroundColor: string;
           borderWidth: number;
         }[];
+      },
+      options: {
+        plugins: {
+          datalabels: {
+            display: boolean|undefined;
+            anchor: string|undefined;
+            align: string|undefined;
+            color: string|undefined;
+            backgroundColor: string|undefined;
+            borderRadius: number|undefined;
+            font: {
+              size: number|undefined;
+            },
+          },
+          legend: {
+            display: boolean;
+          },
+          title: {
+            display: boolean;
+            text: string;
+          }
+        },
+        layout: {
+          padding: number | undefined;
+        },
+        scales: {
+          r: {
+            grid: {
+              display: boolean | undefined;
+            },
+            ticks: {
+              display: boolean | undefined;
+            }
+          }
+          x: {
+            border: {
+              display: boolean | undefined;
+            }
+            grid: {
+              display: boolean | undefined;
+            },
+            ticks: {
+              display: boolean | undefined;
+            }
+            stacked: boolean | undefined;
+          },
+          y: {
+            border: {
+              display: boolean | undefined;
+            }
+            grid: {
+              display: boolean | undefined;
+            },
+            ticks: {
+              display: boolean | undefined;
+            }
+            stacked: boolean | undefined;
+          },
+        }
       }
     }
   }
 }
 
 export type ChartPatchFormData = z.infer<typeof chartPatchSchema>
+
+export type ChartConfigType = PrismaJson.ChartConfigType

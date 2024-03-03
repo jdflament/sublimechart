@@ -42,7 +42,7 @@ async function deleteChart(chartId: string) {
 }
 
 interface ChartActionsProps {
-  chart: Pick<Chart, "id" | "title">
+  chart: Pick<Chart, "id">
 }
 
 export function ChartActions({ chart }: ChartActionsProps) {

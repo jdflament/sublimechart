@@ -27,7 +27,6 @@ export function ChartCreateButton({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: 'Untitled Chart',
         config: {
           type: "line",
           data: {
@@ -38,6 +37,17 @@ export function ChartCreateButton({
                 data: [0],
               }
             ]
+          },
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: 'Untitled Chart'
+              }
+            },
+            layout: {
+              padding: 20,
+            }
           }
         }
       }),
