@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ChartLabels } from "@/components/chart-labels";
@@ -24,6 +24,7 @@ import { ChartDataSets } from "@/components/chart-data-sets";
 import {ChartPreset} from "@/components/chart-preset";
 import { presets } from "@/data/presets"
 import {ChartOptions} from "@/components/chart-options";
+import {ChartBackground} from "@/components/chart-background";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "config" | "createdAt">
@@ -38,12 +39,22 @@ export function Playground({ chart }: PlaygroundProps) {
     defaultValues,
   });
 
+  const { watch, unregister } = form;
+  const type = watch("config.type");
+
   const {
     handleSubmit,
   } = form;
 
   const router = useRouter()
   const [isSaving, setIsSaving] = useState<boolean>(false)
+
+  // Clear conditional fields
+  useEffect(() => {
+    if (['line', 'bar'].includes(type)) {
+      unregister('config.options.scales.r');
+    }
+  }, [type, unregister]);
 
   async function onSubmit(data: ChartPatchFormData) {
     setIsSaving(true)
@@ -125,9 +136,10 @@ export function Playground({ chart }: PlaygroundProps) {
 
             <div className="mb-4 w-full shrink-0 lg:w-96">
               <Tabs defaultValue="datasets">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
                   <TabsTrigger value="options">Options</TabsTrigger>
+                  <TabsTrigger value="background">Background</TabsTrigger>
                   <TabsTrigger value="themes">Themes</TabsTrigger>
                 </TabsList>
                 <TabsContent value="datasets">
@@ -155,6 +167,19 @@ export function Playground({ chart }: PlaygroundProps) {
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <ChartOptions />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="background">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Background</CardTitle>
+                      <CardDescription>
+                        Select your favorite background.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      <ChartBackground />
                     </CardContent>
                   </Card>
                 </TabsContent>

@@ -13,6 +13,7 @@ declare global {
           borderColor: string;
           backgroundColor: string;
           borderWidth: number;
+          fill: boolean | undefined;
         }[];
       },
       options: {

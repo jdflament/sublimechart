@@ -35,6 +35,14 @@ export function ChartAxis() {
     },
     {
       name: "ticks.display",
+      label: "Ticks",
+    },
+    {
+      name: "angleLines.display",
+      label: "Angle Lines",
+    },
+    {
+      name: "pointLabels.display",
       label: "Labels",
     },
   ];
@@ -86,7 +94,7 @@ export function ChartAxis() {
 
       <FormField
         control={form.control}
-        name="config.options.scales.x"
+        name="config.options.scales.y"
         render={() => (
           <FormItem>
             <div className="mb-4">

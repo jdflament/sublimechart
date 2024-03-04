@@ -26,11 +26,13 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useState } from "react";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {Switch} from "@/components/ui/switch";
 
 export function ChartDataSets() {
   const form = useFormContext();
   const [isOpen, setIsOpen] = useState(true)
 
+  const type = form.watch('config.type');
   const labels = form.watch('config.data.labels');
   const datasets = form.watch('config.data.datasets');
 
@@ -129,6 +131,28 @@ export function ChartDataSets() {
                                 </div>
                               </ScrollArea>
                             </div>
+                            { ['line', 'radar'].includes(type) && (
+                              <FormField
+                                control={form.control}
+                                name={`config.data.datasets.${datasetIndex}.fill`}
+                                render={({ field }) => (
+                                  <FormItem className="flex flex-row items-center justify-between py-4">
+                                    <div className="space-y-0.5">
+                                      <FormLabel className="text-sm">
+                                        Fill
+                                      </FormLabel>
+                                    </div>
+                                    <FormControl>
+                                      <Switch
+                                        checked={field.value}
+                                        defaultChecked={true}
+                                        onCheckedChange={field.onChange}
+                                      />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+                            )}
                             <div className="grid gap-4 py-4">
                               <FormLabel>Background color</FormLabel>
                               <FormField

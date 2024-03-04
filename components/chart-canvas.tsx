@@ -14,7 +14,7 @@ export function ChartCanvas() {
     options
   } = form.watch("config");
   const ref = useRef<ChartJS>();
-  const [isMounted, setIsMounted] = useState<boolean>(false)
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const initializeChart = useCallback(async () => {
     const ChartJS = (await import("chart.js/auto")).default
@@ -30,6 +30,8 @@ export function ChartCanvas() {
         size: 16,
         weight: "bold",
       };
+
+      ChartJS.defaults.plugins.datalabels = { display: false };
 
       ref.current = new ChartJS(ctx, {
         plugins: [ChartDataLabels],

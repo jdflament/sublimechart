@@ -12,6 +12,7 @@ const data = z.object({
     backgroundColor: z.string().optional(),
     borderColor: z.string().optional(),
     borderWidth: z.number().optional(),
+    fill: z.boolean().optional().default(false),
   })).optional(),
 });
 
@@ -46,7 +47,7 @@ const options = z.object({
         text: z.string(),
       }).optional(),
       legend: z.object({
-        display: z.boolean(),
+        display: z.boolean().optional(),
       }).optional(),
     }).optional(),
     layout: z.object({
