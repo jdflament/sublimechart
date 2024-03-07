@@ -35,15 +35,16 @@ declare global {
           title: {
             display: boolean;
             text: string;
+            font?: {
+              size?: number | undefined;
+            },
+            align?: string | undefined;
+            color?: string | undefined;
+            position?: string | undefined;
+            padding?: number | undefined;
           }
           background?: {
-            color?: string | {
-              gradient?: {
-                offset: number | undefined;
-                color: string | undefined;
-              }[];
-              direction?: 'vertical' | 'horizontal';
-            };
+            color?: string | undefined;
           }
         },
         layout?: {
@@ -53,20 +54,32 @@ declare global {
           r?: {
             grid?: {
               display?: boolean | undefined;
+              color?: string | undefined;
             },
             ticks?: {
+              display?: boolean | undefined;
+              color?: string | undefined;
+            },
+            pointLabels?: {
+              display?: boolean | undefined;
+              color?: string | undefined;
+            },
+            angleLines?: {
               display?: boolean | undefined;
             }
           }
           x?: {
             border?: {
               display?: boolean | undefined;
+              color?: string | undefined;
             }
             grid?: {
               display?: boolean | undefined;
+              color?: string | undefined;
             },
             ticks?: {
               display?: boolean | undefined;
+              color?: string | undefined;
             }
             stacked?: boolean | undefined;
           },

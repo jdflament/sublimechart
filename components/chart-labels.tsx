@@ -39,7 +39,7 @@ export function ChartLabels() {
       setIsOpen(true);
     }
 
-    append("")
+    append(`Label #${labels.length + 1}`)
   }
 
   function handleRemove(index: number) {
@@ -64,7 +64,7 @@ export function ChartLabels() {
             </Button>
           </CollapsibleTrigger>
         </div>
-        <CollapsibleContent className="mt-2 space-y-2">
+        <CollapsibleContent className="mt-2 grid grid-cols-2 gap-2">
           {labels.map((label, index) => (
             <FormField
               control={form.control}
@@ -75,11 +75,9 @@ export function ChartLabels() {
                   <FormControl className="flex gap-2">
                     <div>
                       <Input placeholder={`Label #${index + 1}`} {...field} />
-                      { index !== 0 && (
-                        <Button type="button" variant="outline" onClick={() => handleRemove(index)}>
-                          <Icons.trash className="h-4 w-4" />
-                        </Button>
-                      )}
+                      <Button type="button" variant="outline" onClick={() => handleRemove(index)}>
+                        <Icons.trash className="h-4 w-4" />
+                      </Button>
                     </div>
                   </FormControl>
                   <FormMessage />

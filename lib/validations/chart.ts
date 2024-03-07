@@ -19,12 +19,15 @@ const data = z.object({
 const axis = z.object({
   border: z.object({
     display: z.boolean().optional(),
+    color: z.string().optional(),
   }).optional(),
   grid: z.object({
     display: z.boolean().optional(),
+    color: z.string().optional(),
   }).optional(),
   ticks: z.object({
     display: z.boolean().optional(),
+    color: z.string().optional(),
   }).optional(),
   stacked: z.boolean().optional(),
 }).optional();
@@ -43,17 +46,18 @@ const options = z.object({
       }).optional(),
     }).optional(),
     background: z.object({
-      color: z.string().optional() || z.object({
-        gradient: z.object({
-          offset: z.number().optional(),
-          color: z.string().optional(),
-        }).array().optional(),
-        direction: z.enum(['vertical', 'horizontal']).optional(),
-      }).optional(),
+      color: z.string().optional(),
     }).optional(),
     title: z.object({
       display: z.boolean(),
       text: z.string(),
+      font: z.object({
+        size: z.number().optional(),
+      }).optional(),
+      color: z.string().optional(),
+      align: z.enum(['start', 'center', 'end']).optional(),
+      position: z.enum(['top', 'left', 'right', 'bottom']).optional(),
+      padding: z.number().optional(),
     }).optional(),
     legend: z.object({
       display: z.boolean().optional(),
@@ -66,8 +70,17 @@ const options = z.object({
     r: z.object({
       grid: z.object({
         display: z.boolean().optional(),
+        color: z.string().optional(),
       }).optional(),
       ticks: z.object({
+        display: z.boolean().optional(),
+        color: z.string().optional(),
+      }).optional(),
+      pointLabels: z.object({
+        display: z.boolean().optional(),
+        color: z.string().optional(),
+      }).optional(),
+      angleLines: z.object({
         display: z.boolean().optional(),
       }).optional(),
     }).optional(),

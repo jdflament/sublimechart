@@ -24,9 +24,9 @@ import {
 } from "@/components/ui/sheet";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
-import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Switch} from "@/components/ui/switch";
+import {ColorPicker} from "@/components/ui/color-picker";
 
 export function ChartDataSets() {
   const form = useFormContext();
@@ -80,7 +80,6 @@ export function ChartDataSets() {
                     <CardTitle className="text-sm font-medium">
                       Dataset #{datasetIndex + 1}
                     </CardTitle>
-
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="secondary">
@@ -95,7 +94,7 @@ export function ChartDataSets() {
                               Edit
                             </DropdownMenuItem>
                           </SheetTrigger>
-                          <SheetContent className="w-80">
+                          <SheetContent className="w-96">
                             <SheetHeader>
                               <SheetTitle className="text-sm font-medium">
                                 Dataset #{datasetIndex + 1}
@@ -106,7 +105,7 @@ export function ChartDataSets() {
                             </SheetHeader>
                             <div className="grid gap-4 py-4">
                               <FormLabel>Dataset</FormLabel>
-                              <ScrollArea className="max-h-96 whitespace-nowrap rounded-md border">
+                              <ScrollArea className="max-h-[600px] whitespace-nowrap rounded-md border">
                                 <div className="flex flex-col space-y-4 p-4">
                                   { labels && labels.map((label, index) => (
                                     <FormField
@@ -130,60 +129,6 @@ export function ChartDataSets() {
                                   ))}
                                 </div>
                               </ScrollArea>
-                            </div>
-                            { ['line', 'radar'].includes(type) && (
-                              <FormField
-                                control={form.control}
-                                name={`config.data.datasets.${datasetIndex}.fill`}
-                                render={({ field }) => (
-                                  <FormItem className="flex flex-row items-center justify-between py-4">
-                                    <div className="space-y-0.5">
-                                      <FormLabel className="text-sm">
-                                        Fill
-                                      </FormLabel>
-                                    </div>
-                                    <FormControl>
-                                      <Switch
-                                        checked={field.value}
-                                        defaultChecked={true}
-                                        onCheckedChange={field.onChange}
-                                      />
-                                    </FormControl>
-                                  </FormItem>
-                                )}
-                              />
-                            )}
-                            <div className="grid gap-4 py-4">
-                              <FormLabel>Background color</FormLabel>
-                              <FormField
-                                control={form.control}
-                                key={`dataset-${datasetIndex}-backgroundColor`}
-                                name={`config.data.datasets.${datasetIndex}.backgroundColor`}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl className="flex gap-2">
-                                      <ColorPicker {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
-                            </div>
-                            <div className="grid gap-4 py-4">
-                              <FormLabel>Border color</FormLabel>
-                              <FormField
-                                control={form.control}
-                                key={`dataset-${datasetIndex}-borderColor`}
-                                name={`config.data.datasets.${datasetIndex}.borderColor`}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormControl className="flex gap-2">
-                                      <ColorPicker {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                  </FormItem>
-                                )}
-                              />
                             </div>
                             <SheetFooter>
                               <SheetTrigger asChild>
@@ -222,6 +167,62 @@ export function ChartDataSets() {
                         </FormItem>
                       )}
                     />
+                    <div className="flex gap-4">
+                      <div className="grid gap-4 pt-4">
+                        <FormLabel>Background color</FormLabel>
+                        <FormField
+                          control={form.control}
+                          key={`dataset-${datasetIndex}-backgroundColor`}
+                          name={`config.data.datasets.${datasetIndex}.backgroundColor`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl className="flex gap-2">
+                                <ColorPicker {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <div className="grid gap-4 pt-4">
+                        <FormLabel>Border color</FormLabel>
+                        <FormField
+                          control={form.control}
+                          key={`dataset-${datasetIndex}-borderColor`}
+                          name={`config.data.datasets.${datasetIndex}.borderColor`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl className="flex gap-2">
+                                <ColorPicker {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                    { ['line', 'radar'].includes(type) && (
+                      <FormField
+                        control={form.control}
+                        name={`config.data.datasets.${datasetIndex}.fill`}
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-center justify-between py-4">
+                            <div className="space-y-0.5">
+                              <FormLabel className="text-sm">
+                                Fill
+                              </FormLabel>
+                            </div>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                defaultChecked={true}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    )}
                   </CardContent>
                 </Card>
               ))}

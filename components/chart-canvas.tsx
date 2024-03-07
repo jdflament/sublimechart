@@ -6,6 +6,7 @@ import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
+import {AspectRatio} from "@/components/ui/aspect-ratio";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -33,6 +34,7 @@ export function ChartCanvas() {
       };
 
       ChartJS.defaults.plugins.datalabels = { display: false };
+      ChartJS.defaults.aspectRatio = 1;
 
       ref.current = new ChartJS(ctx, {
         plugins: [ChartDataLabels, Background],
@@ -79,10 +81,12 @@ export function ChartCanvas() {
   }, [type, JSON.stringify(data), JSON.stringify(options)]);
 
   return (
-    <Card>
-      <CardContent className="p-0">
-        <canvas id="chart"></canvas>
-      </CardContent>
-    </Card>
+    <AspectRatio ratio={4 / 3}>
+      <Card>
+        <CardContent className="p-0">
+            <canvas id="chart"></canvas>
+        </CardContent>
+      </Card>
+    </AspectRatio>
   );
 }

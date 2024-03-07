@@ -5,8 +5,6 @@ const Background = {
     ctx.save();
     ctx.globalCompositeOperation = 'destination-over';
 
-    console.log(options.color);
-
     if (options.color && isLinearGradient(options.color)) {
       ctx.fillStyle = convertLinearGradientToCanvasGradient(options.color, ctx, chart.width, chart.height);
     } else {
@@ -77,12 +75,13 @@ function convertLinearGradientToCanvasGradient(linearGradient: string, ctx: Canv
   colorStops.forEach((colorStop, index) => {
     const parts = colorStop.trim().split(' ');
     const color = parts[0];
-    const position = parts[1] || (index / (colorStops.length - 1)).toString();
-
-    gradient.addColorStop(parseFloat(position), color);
+    let position: number;
+    position = index / (colorStops.length - 1);
+    gradient.addColorStop(position, color);
   });
 
   return gradient;
 }
+
 
 export default Background;

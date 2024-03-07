@@ -25,6 +25,7 @@ import {ChartPreset} from "@/components/chart-preset";
 import { presets } from "@/data/presets"
 import {ChartOptions} from "@/components/chart-options";
 import {ChartBackground} from "@/components/chart-background";
+import {ChartTitle} from "@/components/chart-title";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "config" | "createdAt">
@@ -103,18 +104,8 @@ export function Playground({ chart }: PlaygroundProps) {
               </Link>
             </div>
             <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="config.options.plugins.title.text"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input placeholder="Untitled chart" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <ChartTitle />
+
               <Button type="submit">
                 {isSaving && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -129,18 +120,18 @@ export function Playground({ chart }: PlaygroundProps) {
                 <ChartSelector />
               </div>
 
-              <div className="px-4 py-6 sm:px-6 md:sticky md:top-14 lg:flex-1 lg:pl-8 xl:pl-6">
+              <div className="px-4 py-6 sm:px-6 md:sticky md:top-10 lg:flex-1 lg:pl-8 xl:pl-6">
                 <ChartCanvas />
               </div>
             </div>
 
-            <div className="mb-4 w-full shrink-0 lg:w-96">
+            <div className="mb-4 ml-20 w-full shrink-0 lg:w-[500px]">
               <Tabs defaultValue="datasets">
                 <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>
+                  <TabsTrigger value="themes">Themes</TabsTrigger>
                   <TabsTrigger value="options">Options</TabsTrigger>
                   <TabsTrigger value="background">Background</TabsTrigger>
-                  <TabsTrigger value="themes">Themes</TabsTrigger>
                 </TabsList>
                 <TabsContent value="datasets">
                   <Card>
@@ -154,6 +145,19 @@ export function Playground({ chart }: PlaygroundProps) {
                       <ChartPreset presets={presets} />
                       <ChartLabels />
                       <ChartDataSets />
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+                <TabsContent value="themes">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Themes</CardTitle>
+                      <CardDescription>
+                        Select a predefined theme.
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-2">
+                      TODO: Themes
                     </CardContent>
                   </Card>
                 </TabsContent>
@@ -180,19 +184,6 @@ export function Playground({ chart }: PlaygroundProps) {
                     </CardHeader>
                     <CardContent className="space-y-2">
                       <ChartBackground />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="themes">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Themes</CardTitle>
-                      <CardDescription>
-                        Select a predefined theme.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      TODO: Themes
                     </CardContent>
                   </Card>
                 </TabsContent>
