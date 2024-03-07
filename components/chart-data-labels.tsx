@@ -5,7 +5,7 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Switch } from "@/components/ui/switch";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import {Slider} from "@/components/ui/slider";
+import { Slider } from "@/components/ui/slider";
 
 export function ChartDataLabels() {
   const form = useFormContext();

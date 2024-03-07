@@ -5,6 +5,7 @@ import ChartJS from "chart.js/auto";
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Background from '@/lib/chart/plugins/background';
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -34,7 +35,7 @@ export function ChartCanvas() {
       ChartJS.defaults.plugins.datalabels = { display: false };
 
       ref.current = new ChartJS(ctx, {
-        plugins: [ChartDataLabels],
+        plugins: [ChartDataLabels, Background],
         // @ts-ignore
         type,
         // @ts-ignore

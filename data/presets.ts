@@ -21,6 +21,7 @@ export const presets: Preset[] = [
             borderColor: "#3678e0",
             backgroundColor: "#5590e8",
             borderWidth: 1,
+            fill: false,
           },
           {
             label: "Paid",
@@ -28,6 +29,7 @@ export const presets: Preset[] = [
             borderColor: "#e83636",
             backgroundColor: "#e85555",
             borderWidth: 1,
+            fill: false,
           },
         ],
       },
@@ -73,6 +75,7 @@ export const presets: Preset[] = [
             borderColor: "#97baf6",
             backgroundColor: "#b3cfff",
             borderWidth: 1,
+            fill: false,
           },
           {
             label: "2023",
@@ -80,6 +83,7 @@ export const presets: Preset[] = [
             borderColor: "#6899ee",
             backgroundColor: "#83a7e5",
             borderWidth: 1,
+            fill: false,
           },
           {
             label: "2024",
@@ -87,6 +91,7 @@ export const presets: Preset[] = [
             borderColor: "#3678e0",
             backgroundColor: "#5590e8",
             borderWidth: 1,
+            fill: false,
           },
         ]
       },

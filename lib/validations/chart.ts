@@ -17,55 +17,64 @@ const data = z.object({
 });
 
 const axis = z.object({
-    border: z.object({
-      display: z.boolean().optional(),
-    }).optional(),
-    grid: z.object({
-      display: z.boolean().optional(),
-    }).optional(),
-    ticks: z.object({
-      display: z.boolean().optional(),
-    }).optional(),
-    stacked: z.boolean().optional(),
-  }).optional();
+  border: z.object({
+    display: z.boolean().optional(),
+  }).optional(),
+  grid: z.object({
+    display: z.boolean().optional(),
+  }).optional(),
+  ticks: z.object({
+    display: z.boolean().optional(),
+  }).optional(),
+  stacked: z.boolean().optional(),
+}).optional();
 
 const options = z.object({
-    plugins: z.object({
-      datalabels: z.object({
-        display: z.boolean().default(false).optional(),
-        anchor: z.enum(['start', 'center', 'end']).default('end').optional(),
-        align: z.enum(['start', 'center', 'end', 'top', 'left', 'right', 'bottom']).default('top').optional(),
-        color: z.string().default('#000000').optional(),
-        backgroundColor: z.string().optional(),
-        borderRadius: z.number().optional(),
-        font: z.object({
-          size: z.number().optional(),
-        }).optional(),
+  plugins: z.object({
+    datalabels: z.object({
+      display: z.boolean().default(false).optional(),
+      anchor: z.enum(['start', 'center', 'end']).default('end').optional(),
+      align: z.enum(['start', 'center', 'end', 'top', 'left', 'right', 'bottom']).default('top').optional(),
+      color: z.string().default('#000000').optional(),
+      backgroundColor: z.string().optional(),
+      borderRadius: z.number().optional(),
+      font: z.object({
+        size: z.number().optional(),
       }).optional(),
-      title: z.object({
-        display: z.boolean(),
-        text: z.string(),
+    }).optional(),
+    background: z.object({
+      color: z.string().optional() || z.object({
+        gradient: z.object({
+          offset: z.number().optional(),
+          color: z.string().optional(),
+        }).array().optional(),
+        direction: z.enum(['vertical', 'horizontal']).optional(),
       }).optional(),
-      legend: z.object({
+    }).optional(),
+    title: z.object({
+      display: z.boolean(),
+      text: z.string(),
+    }).optional(),
+    legend: z.object({
+      display: z.boolean().optional(),
+    }).optional(),
+  }).optional(),
+  layout: z.object({
+    padding: z.number().optional(),
+  }).optional(),
+  scales: z.object({
+    r: z.object({
+      grid: z.object({
+        display: z.boolean().optional(),
+      }).optional(),
+      ticks: z.object({
         display: z.boolean().optional(),
       }).optional(),
     }).optional(),
-    layout: z.object({
-      padding: z.number().optional(),
-    }).optional(),
-    scales: z.object({
-      r: z.object({
-        grid: z.object({
-          display: z.boolean().optional(),
-        }).optional(),
-        ticks: z.object({
-          display: z.boolean().optional(),
-        }).optional(),
-      }).optional(),
-      x: axis,
-      y: axis,
-    }).optional(),
-  }).optional();
+    x: axis,
+    y: axis,
+  }).optional(),
+}).optional();
 
 export const chartCreateSchema = z.object({
   config: z.object({

@@ -36,6 +36,15 @@ declare global {
             display: boolean;
             text: string;
           }
+          background?: {
+            color?: string | {
+              gradient?: {
+                offset: number | undefined;
+                color: string | undefined;
+              }[];
+              direction?: 'vertical' | 'horizontal';
+            };
+          }
         },
         layout?: {
           padding?: number | undefined;
@@ -74,7 +83,7 @@ declare global {
             stacked?: boolean | undefined;
           },
         }
-      }
+      },
     }
   }
 }
