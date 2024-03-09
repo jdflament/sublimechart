@@ -3,6 +3,7 @@ import { ChartConfigType } from "@/types/chart";
 export interface Preset {
   slug: string
   name: string|undefined
+  aspectRatio: string
   config: ChartConfigType
 }
 
@@ -10,6 +11,7 @@ export const presets: Preset[] = [
   {
     slug: "website-traffic",
     name: "Website traffic",
+    aspectRatio: "16/9",
     config: {
       type: 'line',
       data: {
@@ -64,6 +66,7 @@ export const presets: Preset[] = [
   {
     slug: "project-mrr",
     name: "Project MRR",
+    aspectRatio: "4/3",
     config: {
       type: 'bar',
       data: {

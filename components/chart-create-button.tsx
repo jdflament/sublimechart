@@ -27,6 +27,7 @@ export function ChartCreateButton({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        aspectRatio: '16/9',
         config: {
           type: "line",
           data: {

@@ -6,10 +6,11 @@ import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
-import {AspectRatio} from "@/components/ui/aspect-ratio";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
+  const aspectRatio = form.watch("aspectRatio");
   const {
     type,
     data,
@@ -35,6 +36,7 @@ export function ChartCanvas() {
 
       ChartJS.defaults.plugins.datalabels = { display: false };
       ChartJS.defaults.aspectRatio = 1;
+      ChartJS.defaults.maintainAspectRatio = false;
 
       ref.current = new ChartJS(ctx, {
         plugins: [ChartDataLabels, Background],
@@ -80,13 +82,19 @@ export function ChartCanvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, JSON.stringify(data), JSON.stringify(options)]);
 
+  function parseAspectRatio(aspectRatio) {
+    const [width, height] = aspectRatio.split('/').map(Number);
+    console.log(width / height);
+    return width / height;
+  }
+
   return (
-    <AspectRatio ratio={4 / 3}>
       <Card>
         <CardContent className="p-0">
+          <AspectRatio ratio={parseAspectRatio(aspectRatio)}>
             <canvas id="chart"></canvas>
+          </AspectRatio>
         </CardContent>
       </Card>
-    </AspectRatio>
   );
 }

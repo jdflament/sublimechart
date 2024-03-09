@@ -1,5 +1,9 @@
 import * as z from "zod"
 
+const aspectRatio = z.enum(['1/1', '2/3', '3/2', '4/3', '4/5', '16/9', '9/16'], {
+  'required_error': 'Please select an aspect ratio.',
+});
+
 const type = z.enum(['bar', 'line', 'pie', 'radar', 'doughnut'], {
   required_error: "Please select a type.",
 });
@@ -90,6 +94,7 @@ const options = z.object({
 }).optional();
 
 export const chartCreateSchema = z.object({
+  aspectRatio,
   config: z.object({
     type,
     data,
@@ -98,6 +103,7 @@ export const chartCreateSchema = z.object({
 });
 
 export const chartPatchSchema = z.object({
+  aspectRatio,
   config: z.object({
     type,
     data,

@@ -60,6 +60,7 @@ export async function PATCH(
         id: params.chartId,
       },
       data: {
+        aspectRatio: body.aspectRatio,
         // @ts-ignore
         config: body.config,
       },

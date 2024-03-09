@@ -13,22 +13,21 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import {useEffect, useState} from "react";
-import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ChartLabels } from "@/components/chart-labels";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
-import {ChartPreset} from "@/components/chart-preset";
+import { ChartPreset } from "@/components/chart-preset";
 import { presets } from "@/data/presets"
-import {ChartOptions} from "@/components/chart-options";
-import {ChartBackground} from "@/components/chart-background";
-import {ChartTitle} from "@/components/chart-title";
+import { ChartOptions } from "@/components/chart-options";
+import { ChartBackground } from "@/components/chart-background";
+import { ChartTitle } from "@/components/chart-title";
+import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 
 interface PlaygroundProps {
-  chart: Pick<Chart, "id" | "config" | "createdAt">
+  chart: Pick<Chart, "id" | "aspectRatio" | "config" | "createdAt">
 }
 
 export function Playground({ chart }: PlaygroundProps) {
@@ -66,6 +65,7 @@ export function Playground({ chart }: PlaygroundProps) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        aspectRatio: data.aspectRatio,
         config: data.config,
       }),
     });
@@ -104,6 +104,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </Link>
             </div>
             <div className="flex gap-4">
+              <ChartAspectRatio />
               <ChartTitle />
 
               <Button type="submit">

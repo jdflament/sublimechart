@@ -19,6 +19,7 @@ export async function GET() {
     const charts = await db.chart.findMany({
       select: {
         id: true,
+        aspectRatio: true,
         config: true,
         createdAt: true,
       },
@@ -62,12 +63,14 @@ export async function POST(req: Request) {
     const body = chartCreateSchema.parse(json)
 
     console.log({
+      aspectRatio: body.aspectRatio,
       config: body.config,
       authorId: session.user.id,
     });
 
     const chart = await db.chart.create({
       data: {
+        aspectRatio: body.aspectRatio,
         // @ts-ignore
         config: body.config,
         authorId: session.user.id,

@@ -91,6 +91,7 @@ model Chart {
   id        String   @id @default(cuid())
   /// [ChartConfigType]
   config    Json?
+  aspectRatio String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
   authorId  String
