@@ -9,6 +9,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import {ColorPicker} from "@/components/ui/color-picker";
 import {Slider} from "@/components/ui/slider";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {ChartFont} from "@/components/chart-font";
 
 export function ChartTitle() {
   const form = useFormContext();
@@ -31,6 +32,7 @@ export function ChartTitle() {
               </p>
             </div>
             <div className="grid gap-4">
+              <ChartFont />
               <FormField
                 control={form.control}
                 name="config.options.plugins.title.font.size"

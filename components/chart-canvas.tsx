@@ -84,7 +84,6 @@ export function ChartCanvas() {
 
   function parseAspectRatio(aspectRatio) {
     const [width, height] = aspectRatio.split('/').map(Number);
-    console.log(width / height);
     return width / height;
   }
 
