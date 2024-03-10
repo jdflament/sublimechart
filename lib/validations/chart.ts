@@ -32,6 +32,9 @@ const axis = z.object({
   ticks: z.object({
     display: z.boolean().optional(),
     color: z.string().optional(),
+    font: z.object({
+      family: z.string().optional(),
+    }).optional(),
   }).optional(),
   stacked: z.boolean().optional(),
 }).optional();
@@ -46,6 +49,7 @@ const options = z.object({
       backgroundColor: z.string().optional(),
       borderRadius: z.number().optional(),
       font: z.object({
+        family: z.string().optional(),
         size: z.number().optional(),
       }).optional(),
     }).optional(),
@@ -56,6 +60,7 @@ const options = z.object({
       display: z.boolean(),
       text: z.string(),
       font: z.object({
+        family: z.string().optional(),
         size: z.number().optional(),
       }).optional(),
       color: z.string().optional(),
@@ -64,7 +69,17 @@ const options = z.object({
       padding: z.number().optional(),
     }).optional(),
     legend: z.object({
+      labels: z.object({
+        color: z.string().optional(),
+        font: z.object({
+          family: z.string().optional(),
+          size: z.number().optional(),
+        }).optional(),
+        padding: z.number().optional(),
+      }).optional(),
       display: z.boolean().optional(),
+      position: z.enum(['top', 'left', 'right', 'bottom']).optional(),
+      align: z.enum(['start', 'center', 'end']).optional(),
     }).optional(),
   }).optional(),
   layout: z.object({
@@ -79,6 +94,9 @@ const options = z.object({
       ticks: z.object({
         display: z.boolean().optional(),
         color: z.string().optional(),
+        font: z.object({
+          family: z.string().optional(),
+        }).optional(),
       }).optional(),
       pointLabels: z.object({
         display: z.boolean().optional(),

@@ -9,7 +9,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import {ColorPicker} from "@/components/ui/color-picker";
 import {Slider} from "@/components/ui/slider";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {ChartFont} from "@/components/chart-font";
+import {FontPicker} from "@/components/ui/font-picker";
 
 export function ChartTitle() {
   const form = useFormContext();
@@ -26,13 +26,23 @@ export function ChartTitle() {
         <PopoverContent className="w-80">
           <div className="grid gap-4">
             <div className="space-y-2">
-              <h4 className="font-medium leading-none">Title & Subtitle</h4>
+              <h4 className="font-medium leading-none">Title</h4>
               <p className="text-sm text-muted-foreground">
-                Customize the appearance of the chart title and subtitle.
+                Customize the appearance of the chart title.
               </p>
             </div>
             <div className="grid gap-4">
-              <ChartFont />
+              <FormField
+                control={form.control}
+                name="config.options.plugins.title.font.family"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Font-Family</FormLabel>
+                    <FontPicker {...field} />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="config.options.plugins.title.font.size"

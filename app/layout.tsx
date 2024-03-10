@@ -39,11 +39,11 @@ export const metadata = {
   ],
   authors: [
     {
-      name: "shadcn",
-      url: "https://shadcn.com",
+      name: "jdflament",
+      url: "https://twitter.com/jdflament",
     },
   ],
-  creator: "shadcn",
+  creator: "jdflament",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
-          fontHeading.variable
+          fontHeading.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

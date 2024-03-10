@@ -9,21 +9,17 @@ import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Fonts } from "@/data/fonts";
+import {ScrollArea} from "@/components/ui/scroll-area";
 
 const FontPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onChange, value, ...props }, ref) => {
   // @ts-ignore
-  const [font, setFont] = useState<string>(value || 'Inter');
+  const [font, setFont] = useState<string>(value);
 
-  const fonts = [
-    {
-      value: 'Playfair Display',
-      label: 'Playfair Display',
-    },
-    {
-      value: 'Lato',
-      label: 'Lato',
-    },
-  ];
+  const fonts = Fonts.map((font, name) => ({
+    label: font.name,
+    value: font.loader.style.fontFamily,
+  }));
 
   const handleFontChange = (newFont) => {
     setFont(newFont);
@@ -57,27 +53,32 @@ const FontPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onChan
           <CommandInput
             placeholder="Search font..."
             className="h-9"
+            ref={ref}
+            {...props}
           />
-          <CommandEmpty>No font found.</CommandEmpty>
-          <CommandGroup>
-            {fonts.map((fontItem) => (
-              <CommandItem
-                value={fontItem.value}
-                key={fontItem.value}
-                onSelect={() => handleFontChange(fontItem.value)}
-              >
-                {fontItem.label}
-                <CheckIcon
-                  className={cn(
-                    "ml-auto h-4 w-4",
-                    fontItem.value === font
-                      ? "opacity-100"
-                      : "opacity-0"
-                  )}
-                />
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <ScrollArea className="h-64">
+            <CommandEmpty>No font found.</CommandEmpty>
+            <CommandGroup>
+                {fonts.map((fontItem) => (
+                  <CommandItem
+                    value={fontItem.value}
+                    key={fontItem.value}
+                    onSelect={() => handleFontChange(fontItem.value)}
+                    style={{ fontFamily: fontItem.value }}
+                  >
+                    {fontItem.label}
+                    <CheckIcon
+                      className={cn(
+                        "ml-auto h-4 w-4",
+                        fontItem.value === font
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </PopoverContent>
     </Popover>

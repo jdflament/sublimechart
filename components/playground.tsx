@@ -126,7 +126,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </div>
             </div>
 
-            <div className="mb-4 ml-20 w-full shrink-0 lg:w-[500px]">
+            <div className="mb-4 w-full shrink-0 lg:ml-14 lg:w-[500px]">
               <Tabs defaultValue="datasets">
                 <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="datasets">Datasets</TabsTrigger>

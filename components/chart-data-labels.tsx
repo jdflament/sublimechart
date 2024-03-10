@@ -107,10 +107,10 @@ export function ChartDataLabels() {
                     <SelectItem value="start">Start</SelectItem>
                     <SelectItem value="center">Center</SelectItem>
                     <SelectItem value="end">End</SelectItem>
+                    <SelectItem value="top">Top</SelectItem>
                     <SelectItem value="right">Right</SelectItem>
                     <SelectItem value="bottom">Bottom</SelectItem>
                     <SelectItem value="left">Left</SelectItem>
-                    <SelectItem value="top">Top</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

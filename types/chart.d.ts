@@ -26,11 +26,22 @@ declare global {
             backgroundColor?: string|undefined;
             borderRadius?: number|undefined;
             font?: {
+              family?: string|undefined;
               size?: number|undefined;
             },
           },
           legend?: {
+            labels?: {
+              color?: string|undefined;
+              font?: {
+                family?: string|undefined;
+                size?: number|undefined;
+              },
+              padding?: number|undefined;
+            },
             display?: boolean | undefined;
+            position?: string | undefined;
+            align?: string | undefined;
           },
           title: {
             display: boolean;
@@ -59,6 +70,9 @@ declare global {
             ticks?: {
               display?: boolean | undefined;
               color?: string | undefined;
+              font?: {
+                family?: string | undefined;
+              }
             },
             pointLabels?: {
               display?: boolean | undefined;
@@ -80,6 +94,9 @@ declare global {
             ticks?: {
               display?: boolean | undefined;
               color?: string | undefined;
+              font?: {
+                family?: string | undefined;
+              }
             }
             stacked?: boolean | undefined;
           },
@@ -92,6 +109,10 @@ declare global {
             },
             ticks?: {
               display?: boolean | undefined;
+              color?: string | undefined;
+              font?: {
+                family?: string | undefined;
+              }
             }
             stacked?: boolean | undefined;
           },

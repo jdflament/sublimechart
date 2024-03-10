@@ -1,33 +1,29 @@
 "use client"
 
-import {
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { FormLabel } from "@/components/ui/form"
 
-import {useFormContext} from "react-hook-form";
-import {FontPicker} from "@/components/ui/font-picker";
+import { useFormContext } from "react-hook-form";
+import { FontPicker } from "@/components/ui/font-picker";
 
 export function ChartFont() {
   const form = useFormContext();
 
+  function handleChangeFont(font) {
+    form.setValue("config.options.plugins.title.font.family", font);
+    form.setValue("config.options.plugins.legend.labels.font.family", font);
+    form.setValue("config.options.plugins.datalabels.font.family", font);
+    form.setValue("config.options.scales.x.ticks.font.family", font);
+    form.setValue("config.options.scales.y.ticks.font.family", font);
+
+    if (form.getValues("config.options.scales.r.ticks.display")) {
+      form.setValue("config.options.scales.r.ticks.font.family", font);
+    }
+  }
+
   return (
-    <FormField
-      control={form.control}
-      name="config.options.plugins.title.font.family"
-      render={({ field }) => (
-        <FormItem className="flex flex-col">
-          <FormLabel>Font-Family</FormLabel>
-          <FontPicker {...field} />
-          <FormDescription>
-            This is the font that will be used in the chart title.
-          </FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <div className="flex flex-col gap-4">
+      <FormLabel>Font-Family</FormLabel>
+      <FontPicker onChange={handleChangeFont} />
+    </div>
   )
 }
