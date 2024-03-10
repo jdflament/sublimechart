@@ -64,6 +64,7 @@
     "@vercel/og": "^0.0.21",
     "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "chartjs-plugin-watermark": "^2.0.2",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "cmdk": "^0.1.22",

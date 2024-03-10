@@ -6,6 +6,7 @@ import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
+import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export function ChartCanvas() {
@@ -38,8 +39,9 @@ export function ChartCanvas() {
       ChartJS.defaults.aspectRatio = 1;
       ChartJS.defaults.maintainAspectRatio = false;
 
+      // @ts-ignore
       ref.current = new ChartJS(ctx, {
-        plugins: [ChartDataLabels, Background],
+        plugins: [ChartDataLabels, Background, ChartjsPluginWatermark],
         // @ts-ignore
         type,
         // @ts-ignore

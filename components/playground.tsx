@@ -25,6 +25,7 @@ import { ChartOptions } from "@/components/chart-options";
 import { ChartBackground } from "@/components/chart-background";
 import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
+import {ChartWatermark} from "@/components/chart-watermark";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "createdAt">
@@ -104,6 +105,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </Link>
             </div>
             <div className="flex gap-4">
+              <ChartWatermark />
               <ChartAspectRatio />
               <ChartTitle />
 
