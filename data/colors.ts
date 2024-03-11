@@ -9,6 +9,10 @@ export interface Color {
 export const solidColors: Color[] = [];
 
 for (const colorGroup in Colors) {
+  if (['lightBlue', 'warmGray', 'trueGray', 'coolGray', 'blueGray'].includes(colorGroup)) {
+    continue;
+  }
+
   if (typeof Colors[colorGroup] !== "string") {
     // If it's a group of shades, iterate through each shade
     for (const shade in Colors[colorGroup]) {
