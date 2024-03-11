@@ -17,6 +17,7 @@ export function ChartCanvas() {
     data,
     options
   } = form.watch("config");
+  const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -24,6 +25,25 @@ export function ChartCanvas() {
     const ChartJS = (await import("chart.js/auto")).default
 
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
+
+    if (watermark && options) {
+      // TODO: Adjust watermark options with correct logo
+      options.watermark = {
+        image: '/watermark.png',
+        x: 10,
+        y: 10,
+        width: 40,
+        height: 40,
+        alignX: 'right',
+        alignY: 'bottom',
+        opacity: 0.5,
+        position: 'front',
+      }
+    }
+
+    if (!watermark && options) {
+      delete options.watermark;
+    }
 
     if (ref.current) {
       ref.current.destroy();
@@ -50,7 +70,7 @@ export function ChartCanvas() {
         options,
       });
     }
-  }, [type, data, options]);
+  }, [type, data, options, watermark]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -73,8 +93,6 @@ export function ChartCanvas() {
   useEffect(() => {
     if (ref.current) {
       // @ts-ignore
-      ref.current.type = type;
-      // @ts-ignore
       ref.current.data = data;
       // @ts-ignore
       ref.current.options = options;
@@ -82,7 +100,7 @@ export function ChartCanvas() {
       ref.current.update();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, JSON.stringify(data), JSON.stringify(options)]);
+  }, [JSON.stringify(data), JSON.stringify(options)]);
 
   function parseAspectRatio(aspectRatio) {
     const [width, height] = aspectRatio.split('/').map(Number);

@@ -63,6 +63,7 @@ export async function PATCH(
         aspectRatio: body.aspectRatio,
         // @ts-ignore
         config: body.config,
+        watermark: body.watermark,
       },
     })
 

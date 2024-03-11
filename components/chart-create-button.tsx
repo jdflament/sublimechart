@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import {redirect, useRouter} from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
@@ -50,7 +50,8 @@ export function ChartCreateButton({
               padding: 20,
             }
           }
-        }
+        },
+        watermark: true,
       }),
     })
 

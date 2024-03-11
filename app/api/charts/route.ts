@@ -16,12 +16,14 @@ export async function GET() {
     }
 
     const { user } = session
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
     const charts = await db.chart.findMany({
       select: {
         id: true,
         aspectRatio: true,
         config: true,
         createdAt: true,
+        watermark: !subscriptionPlan?.isPro,
       },
       where: {
         authorId: user.id,
@@ -66,6 +68,7 @@ export async function POST(req: Request) {
       aspectRatio: body.aspectRatio,
       config: body.config,
       authorId: session.user.id,
+      watermark: body.watermark,
     });
 
     const chart = await db.chart.create({
@@ -74,6 +77,7 @@ export async function POST(req: Request) {
         // @ts-ignore
         config: body.config,
         authorId: session.user.id,
+        watermark: body.watermark,
       },
       select: {
         id: true,

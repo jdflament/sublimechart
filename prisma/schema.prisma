@@ -96,6 +96,7 @@ model Chart {
   updatedAt DateTime @default(now()) @map("updated_at")
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
+  watermark Boolean @default(true)
 
   @@index([authorId], map: "charts_authorId_fkey")
   @@map("charts")

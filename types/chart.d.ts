@@ -116,6 +116,18 @@ declare global {
             }
             stacked?: boolean | undefined;
           },
+        },
+        watermark?: {
+          image?: string | undefined;
+          x?: number | undefined;
+          y?: number | undefined;
+          alignX?: string | undefined;
+          alignY?: string | undefined;
+          opacity?: number | undefined;
+          width?: number | undefined;
+          height?: number | undefined;
+          position?: string | undefined;
+          alignToChartArea?: boolean | undefined;
         }
       },
     }

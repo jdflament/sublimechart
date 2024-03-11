@@ -5,6 +5,7 @@ export interface Preset {
   name: string|undefined
   aspectRatio: string
   config: ChartConfigType
+  watermark: boolean
 }
 
 export const presets: Preset[] = [
@@ -61,7 +62,8 @@ export const presets: Preset[] = [
           },
         }
       }
-    }
+    },
+    watermark: true,
   },
   {
     slug: "project-mrr",
@@ -124,6 +126,7 @@ export const presets: Preset[] = [
           },
         }
       }
-    }
+    },
+    watermark: true,
   },
 ]

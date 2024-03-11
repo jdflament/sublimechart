@@ -109,7 +109,21 @@ const options = z.object({
     x: axis,
     y: axis,
   }).optional(),
+  watermark: z.object({
+    image: z.string().optional(),
+    x: z.number().optional(),
+    y: z.number().optional(),
+    alignX: z.enum(['left', 'middle', 'right']).optional(),
+    alignY: z.enum(['top', 'middle', 'bottom']).optional(),
+    opacity: z.number().optional(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+    position: z.enum(['front', 'back', 'between']).optional(),
+    alignToChartArea: z.boolean().optional(),
+  }).optional(),
 }).optional();
+
+const watermark = z.boolean();
 
 export const chartCreateSchema = z.object({
   aspectRatio,
@@ -118,6 +132,7 @@ export const chartCreateSchema = z.object({
     data,
     options,
   }),
+  watermark,
 });
 
 export const chartPatchSchema = z.object({
@@ -127,4 +142,5 @@ export const chartPatchSchema = z.object({
     data,
     options,
   }),
+  watermark,
 })

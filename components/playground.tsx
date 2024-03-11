@@ -28,7 +28,7 @@ import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import {ChartWatermark} from "@/components/chart-watermark";
 
 interface PlaygroundProps {
-  chart: Pick<Chart, "id" | "aspectRatio" | "config" | "createdAt">
+  chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
 }
 
 export function Playground({ chart }: PlaygroundProps) {
@@ -68,6 +68,7 @@ export function Playground({ chart }: PlaygroundProps) {
       body: JSON.stringify({
         aspectRatio: data.aspectRatio,
         config: data.config,
+        watermark: data.watermark,
       }),
     });
 
