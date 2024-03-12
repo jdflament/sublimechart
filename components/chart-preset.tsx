@@ -2,8 +2,7 @@
 
 import * as React from "react"
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
-import { PopoverProps } from "@radix-ui/react-popover"
-
+import { presets } from "@/data/presets"
 import { cn } from "@/lib/utils"
 
 import { Preset } from "@/data/presets"
@@ -15,16 +14,13 @@ import { ChartPatchFormData } from "@/types/chart";
 import { Icons } from "@/components/icons";
 import { chartPatchSchema } from "@/lib/validations/chart";
 
-interface PresetSelectorProps extends PopoverProps {
-  presets: Preset[]
-}
-
-export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
+export function ChartPreset() {
   const [open, setOpen] = React.useState(false)
   const [selectedPreset, setSelectedPreset] = React.useState<Preset>()
   const [snapshotPreset, setSnapshotPreset] = React.useState<Preset | undefined>();
   const [hasSnapshot, setHasSnapshot] = React.useState<boolean>(false);
   const form = useFormContext<ChartPatchFormData>();
+  const config = form.watch("config");
 
   function handleApply() {
     if (!hasSnapshot) {
@@ -42,14 +38,17 @@ export function ChartPreset({ presets, ...props }: PresetSelectorProps) {
 
     if (selectedPreset) {
       // @ts-ignore
-      form.setValue('config', selectedPreset.config);
+      form.setValue('config', {
+        ...config,
+        ...selectedPreset.config,
+      });
     }
   }
 
   return (
     <div>
       <div className="mt-2 flex gap-2">
-        <Popover open={open} onOpenChange={setOpen} {...props}>
+        <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button
               variant="outline"

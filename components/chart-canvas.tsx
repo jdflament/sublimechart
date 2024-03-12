@@ -8,6 +8,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import {chartPatchSchema} from "@/lib/validations/chart";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -20,6 +21,9 @@ export function ChartCanvas() {
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
+
+  // TODO: Uncomment to get the chart config
+  //console.log(chartPatchSchema.parse(form.getValues()).config);
 
   const initializeChart = useCallback(async () => {
     const ChartJS = (await import("chart.js/auto")).default
@@ -61,7 +65,11 @@ export function ChartCanvas() {
 
       // @ts-ignore
       ref.current = new ChartJS(ctx, {
-        plugins: [ChartDataLabels, Background, ChartjsPluginWatermark],
+        plugins: [
+          ChartDataLabels,
+          Background,
+          ChartjsPluginWatermark,
+        ],
         // @ts-ignore
         type,
         // @ts-ignore

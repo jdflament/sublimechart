@@ -20,12 +20,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
 import { ChartPreset } from "@/components/chart-preset";
-import { presets } from "@/data/presets"
 import { ChartOptions } from "@/components/chart-options";
 import { ChartBackground } from "@/components/chart-background";
 import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import {ChartWatermark} from "@/components/chart-watermark";
+import {ChartThemes} from "@/components/chart-themes";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -146,7 +146,7 @@ export function Playground({ chart }: PlaygroundProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      <ChartPreset presets={presets} />
+                      <ChartPreset />
                       <ChartLabels />
                       <ChartDataSets />
                     </CardContent>
@@ -161,7 +161,7 @@ export function Playground({ chart }: PlaygroundProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      TODO: Themes
+                      <ChartThemes />
                     </CardContent>
                   </Card>
                 </TabsContent>

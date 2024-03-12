@@ -122,11 +122,6 @@ export const gradientColors: Color[] = [
     color: 'linear-gradient(to right, #F472B6, #22D3EE)',
   },
   {
-    value: 'fuchsia-to-pink',
-    label: 'Fuchsia to Pink',
-    color: 'linear-gradient(to right, #F472B6, #F43F5E)',
-  },
-  {
     value: 'fuchsia-to-purple',
     label: 'Fuchsia to Purple',
     color: 'linear-gradient(to right, #F472B6, #9333EA)',

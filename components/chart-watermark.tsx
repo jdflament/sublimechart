@@ -12,13 +12,15 @@ export function ChartWatermark() {
     control={form.control}
     name="watermark"
     render={({ field }) => (
-      <FormItem className="flex items-center gap-2">
-        <FormLabel>Watermark</FormLabel>
+      <FormItem className="flex">
         <FormControl>
-          <Switch
-            checked={field.value}
-            onCheckedChange={field.onChange}
-          />
+          <div className="flex items-center space-x-2">
+            <FormLabel>Watermark</FormLabel>
+            <Switch
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+          </div>
         </FormControl>
       </FormItem>
     )}
