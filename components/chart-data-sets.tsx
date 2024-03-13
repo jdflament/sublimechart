@@ -6,13 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu";
-import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon } from "@radix-ui/react-icons";
 import {
   Sheet,
   SheetContent,
@@ -26,7 +20,15 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Switch} from "@/components/ui/switch";
-import {ColorPicker} from "@/components/ui/color-picker";
+import {ChartDataSetsColors} from "@/components/chart-data-sets-colors";
+import {Slider} from "@/components/ui/slider";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 
 export function ChartDataSets() {
   const form = useFormContext();
@@ -80,78 +82,82 @@ export function ChartDataSets() {
                     <CardTitle className="text-sm font-medium">
                       Dataset #{datasetIndex + 1}
                     </CardTitle>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="secondary">
-                          <span className="sr-only">Actions</span>
-                          <DotsHorizontalIcon className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <Sheet>
-                          <SheetTrigger asChild>
-                            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                              Edit
-                            </DropdownMenuItem>
-                          </SheetTrigger>
-                          <SheetContent className="w-96">
-                            <SheetHeader>
-                              <SheetTitle className="text-sm font-medium">
-                                Dataset #{datasetIndex + 1}
-                              </SheetTitle>
-                              <SheetDescription>
-                                Edit the dataset values and style.
-                              </SheetDescription>
-                            </SheetHeader>
-                            <div className="grid gap-4 py-4">
-                              <FormLabel>Dataset</FormLabel>
-                              <ScrollArea className="max-h-[600px] whitespace-nowrap rounded-md border">
-                                <div className="flex flex-col space-y-4 p-4">
-                                  { labels && labels.map((label, index) => (
-                                    <FormField
-                                      control={form.control}
-                                      key={`dataset-${datasetIndex}-label-${index}`}
-                                      name={`config.data.datasets.${datasetIndex}.data.${index}`}
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <FormControl className="flex gap-2">
-                                            <Input
-                                              type="number"
-                                              placeholder={label ? `Data for ${label}` : `Data #${index + 1}`}
-                                              {...field}
-                                              onChange={(event) => field.onChange(parseFloat(event.target.value))}
-                                            />
-                                          </FormControl>
-                                          <FormMessage />
-                                        </FormItem>
-                                      )}
-                                    />
-                                  ))}
-                                </div>
-                              </ScrollArea>
-                            </div>
-                            <SheetFooter>
-                              <SheetTrigger asChild>
-                                <Button type="button">
-                                  Save
-                                </Button>
-                              </SheetTrigger>
-                            </SheetFooter>
-                          </SheetContent>
-                        </Sheet>
-                        { datasetIndex !== 0 && (
-                          <div>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                              onSelect={() => remove(datasetIndex)}
-                              className="text-red-600"
-                            >
-                              Remove
-                            </DropdownMenuItem>
+                    <div className="flex gap-2">
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button type="button" variant="outline">
+                            <span className="sr-only">Configure</span>
+                            <Icons.settings className="h-4 w-4" />
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent className="w-96">
+                          <SheetHeader>
+                            <SheetTitle className="text-sm font-medium">
+                              Dataset #{datasetIndex + 1}
+                            </SheetTitle>
+                            <SheetDescription>
+                              Edit the dataset values and style.
+                            </SheetDescription>
+                          </SheetHeader>
+                          <div className="grid gap-4 py-4">
+                            <FormLabel>Dataset</FormLabel>
+                            <ScrollArea className="max-h-[600px] whitespace-nowrap rounded-md border">
+                              <div className="flex flex-col space-y-4 p-4">
+                                { labels && labels.map((label, index) => (
+                                  <FormField
+                                    control={form.control}
+                                    key={`dataset-${datasetIndex}-label-${index}`}
+                                    name={`config.data.datasets.${datasetIndex}.data.${index}`}
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormControl className="flex gap-2">
+                                          <Input
+                                            type="number"
+                                            placeholder={label ? `Data for ${label}` : `Data #${index + 1}`}
+                                            {...field}
+                                            onChange={(event) => field.onChange(parseFloat(event.target.value))}
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                ))}
+                              </div>
+                            </ScrollArea>
                           </div>
-                        )}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                          <SheetFooter>
+                            <SheetTrigger asChild>
+                              <Button type="button">
+                                Save
+                              </Button>
+                            </SheetTrigger>
+                          </SheetFooter>
+                        </SheetContent>
+                      </Sheet>
+
+                      { datasetIndex !== 0 && (
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button variant="ghost">
+                              <Icons.trash className="h-4 w-4" />
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Are you sure to remove this dataset?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your dataset.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction onClick={() => remove(datasetIndex)}>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      )}
+                    </div>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
                     <FormField
@@ -167,46 +173,42 @@ export function ChartDataSets() {
                         </FormItem>
                       )}
                     />
-                    <div className="flex gap-4">
-                      <div className="grid gap-4 pt-4">
-                        <FormLabel>Background color</FormLabel>
-                        <FormField
-                          control={form.control}
-                          key={`dataset-${datasetIndex}-backgroundColor`}
-                          name={`config.data.datasets.${datasetIndex}.backgroundColor`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl className="flex gap-2">
-                                <ColorPicker {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid gap-4 pt-4">
-                        <FormLabel>Border color</FormLabel>
-                        <FormField
-                          control={form.control}
-                          key={`dataset-${datasetIndex}-borderColor`}
-                          name={`config.data.datasets.${datasetIndex}.borderColor`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl className="flex gap-2">
-                                <ColorPicker {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                    </div>
+
+                    <FormField
+                      control={form.control}
+                      name={`config.data.datasets.${datasetIndex}.borderWidth`}
+                      render={({ field: { value, onChange } }) => (
+                        <FormItem className="py-2">
+                          <FormControl>
+                            <div className="grid gap-4">
+                              <div className="flex items-center justify-between">
+                                <FormLabel htmlFor="padding">Border width</FormLabel>
+                                <span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
+                                  {value ?? '-'}
+                                </span>
+                              </div>
+                              <Slider
+                                id="padding"
+                                max={20}
+                                defaultValue={[value]}
+                                step={1}
+                                className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                                aria-label="Padding"
+                                onValueChange={(values) => onChange(values[0])}
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
                     { ['line', 'radar'].includes(type) && (
                       <FormField
                         control={form.control}
                         name={`config.data.datasets.${datasetIndex}.fill`}
                         render={({ field }) => (
-                          <FormItem className="flex flex-row items-center justify-between py-4">
+                          <FormItem className="flex flex-row items-center justify-between py-2">
                             <div className="space-y-0.5">
                               <FormLabel className="text-sm">
                                 Fill
@@ -223,6 +225,8 @@ export function ChartDataSets() {
                         )}
                       />
                     )}
+
+                    <ChartDataSetsColors datasetIndex={datasetIndex} />
                   </CardContent>
                 </Card>
               ))}

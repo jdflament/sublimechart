@@ -17,22 +17,23 @@ export function ChartLabels() {
   const form = useFormContext();
   const [isOpen, setIsOpen] = useState(true);
 
-  const labels = form.watch('config.data.labels');
-
   const {
+    fields,
     append ,
     remove,
   } = useFieldArray({
     name: "config.data.labels",
     control: form.control,
-  })
+  });
+
+  const labels = form.watch('config.data.labels', fields);
 
   const {
     remove: removeData,
   } = useFieldArray({
     name: "config.data.datasets.*.data",
     control: form.control,
-  })
+  });
 
   function handleAppend() {
     if (!isOpen) {
@@ -68,7 +69,7 @@ export function ChartLabels() {
           {labels.map((label, index) => (
             <FormField
               control={form.control}
-              key={`label-${index}`}
+              key={label.id}
               name={`config.data.labels.${index}`}
               render={({ field }) => (
                 <FormItem>

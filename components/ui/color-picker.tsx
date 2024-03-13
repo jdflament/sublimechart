@@ -30,7 +30,7 @@ const ColorPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onCha
           <div className="flex w-full items-center gap-2">
             {color ? (
               <div
-                className="h-4 w-5 rounded !bg-cover !bg-center transition-all"
+                className="h-5 w-6 rounded border-2 border-accent !bg-cover !bg-center transition-all"
                 style={{ background: color }}
               ></div>
             ) : (

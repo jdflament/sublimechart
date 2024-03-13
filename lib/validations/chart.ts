@@ -13,8 +13,8 @@ const data = z.object({
   datasets: z.array(z.object({
     label: z.string().optional(),
     data: z.number().array().min(1),
-    backgroundColor: z.string().optional(),
-    borderColor: z.string().optional(),
+    backgroundColor: z.string().array().optional(),
+    borderColor: z.string().array().optional(),
     borderWidth: z.number().optional(),
     fill: z.boolean().optional().default(false),
   })).optional(),

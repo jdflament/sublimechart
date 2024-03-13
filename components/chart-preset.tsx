@@ -3,7 +3,7 @@
 import * as React from "react"
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { presets } from "@/data/presets"
-import { cn } from "@/lib/utils"
+import {cn, mergeObjects} from "@/lib/utils"
 
 import { Preset } from "@/data/presets"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -38,10 +38,7 @@ export function ChartPreset() {
 
     if (selectedPreset) {
       // @ts-ignore
-      form.setValue('config', {
-        ...config,
-        ...selectedPreset.config,
-      });
+      form.setValue('config', mergeObjects(config, selectedPreset.config));
     }
   }
 

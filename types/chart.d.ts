@@ -3,11 +3,11 @@ import { chartPatchSchema } from "@/lib/validations/chart";
 
 export type ChartDataType = {
   labels: string[];
-  datasets: {
+  datasets?: {
     label: string | null;
     data: number[];
-    borderColor?: string;
-    backgroundColor?: string;
+    borderColor?: string[];
+    backgroundColor?: string[];
     borderWidth?: number;
     fill?: boolean | undefined;
   }[];

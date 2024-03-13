@@ -19,3 +19,16 @@ export function formatDate(input: string | number): string {
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
+
+export function mergeObjects(obj1, obj2) {
+  for (const key in obj2) {
+    if (obj2.hasOwnProperty(key)) {
+      if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
+        obj1[key] = mergeObjects(obj1[key], obj2[key]);
+      } else {
+        obj1[key] = obj2[key];
+      }
+    }
+  }
+  return obj1;
+}

@@ -5,8 +5,8 @@ export interface Theme {
   name: string|undefined
   image: string|undefined
   datasets?: {
-    borderColor?: string;
-    backgroundColor?: string
+    borderColor?: string[];
+    backgroundColor?: string[]
     borderWidth?: number | undefined;
     fill?: boolean | undefined;
   }
@@ -22,8 +22,8 @@ export const themes: Theme[] = [
     name: "Pep's",
     image: "/themes/peps.png",
     datasets: {
-      borderColor: "#FFFFFF",
-      backgroundColor: "#FFFFFF",
+      borderColor: ["#FFFFFF"],
+      backgroundColor: ["#FFFFFF"],
       borderWidth: 1,
       fill: false
     },
@@ -32,9 +32,7 @@ export const themes: Theme[] = [
       options: {
         plugins: {
           datalabels: {
-            font: {
-              family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'"
-            }
+            display: false,
           },
           background: {
             color: "linear-gradient(to right, #9333EA, #F472B6)",
@@ -43,9 +41,13 @@ export const themes: Theme[] = [
             display: true,
             text: "Project MRR (in dollar)",
             font: {
-              family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'"
+              family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'",
+              size: 20
             },
-            color: "#f8fafc"
+            color: "#f8fafc",
+            align: "center",
+            position: "top",
+            padding: 10
           },
           legend: {
             labels: {
@@ -104,8 +106,8 @@ export const themes: Theme[] = [
     name: "Mars",
     image: "/themes/mars.png",
     datasets: {
-      backgroundColor: "#fef9c3",
-      borderColor: "#fef9c3",
+      backgroundColor: ["#fef9c3"],
+      borderColor: ["#fef9c3"],
       borderWidth: 1,
       fill: false
     },

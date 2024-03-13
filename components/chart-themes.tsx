@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { themes } from '@/data/themes';
 import * as React from "react";
 import { ChartPatchFormData } from "@/types/chart";
+import {mergeObjects} from "@/lib/utils";
 
 export function ChartThemes() {
   const form = useFormContext<ChartPatchFormData>();
@@ -20,21 +21,8 @@ export function ChartThemes() {
     const theme = themes.find((theme) => theme.slug === themeSlug);
 
     if (theme) {
-      const updatedConfig = {
-        ...config,
-        ...theme.config
-      };
-
-      if (theme.datasets && updatedConfig?.data?.datasets) {
-        // @ts-ignore
-        updatedConfig.data.datasets = updatedConfig.data.datasets.map((dataset) => ({
-          ...dataset,
-          ...theme.datasets
-        }));
-      }
-
       // @ts-ignore
-      form.setValue('config', updatedConfig);
+      form.setValue('config', mergeObjects(config, theme.config));
     }
   }
 
