@@ -21,6 +21,14 @@ export function ChartThemes() {
     const theme = themes.find((theme) => theme.slug === themeSlug);
 
     if (theme) {
+      if (theme.datasets && config?.data?.datasets) {
+        // @ts-ignore
+        config.data.datasets = config.data.datasets.map((dataset) => ({
+          ...dataset,
+          ...theme.datasets
+        }));
+      }
+
       // @ts-ignore
       form.setValue('config', mergeObjects(config, theme.config));
     }

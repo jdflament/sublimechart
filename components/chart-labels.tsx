@@ -76,9 +76,11 @@ export function ChartLabels() {
                   <FormControl className="flex gap-2">
                     <div>
                       <Input placeholder={`Label #${index + 1}`} {...field} />
-                      <Button type="button" variant="outline" onClick={() => handleRemove(index)}>
-                        <Icons.trash className="h-4 w-4" />
-                      </Button>
+                      { index > 0 &&  (
+                        <Button type="button" variant="outline" onClick={() => handleRemove(index)}>
+                          <Icons.trash className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   </FormControl>
                   <FormMessage />
