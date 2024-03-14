@@ -36,6 +36,8 @@ export function ChartCreateButton({
               {
                 label: 'My First Dataset',
                 data: [0],
+                backgroundColor: [],
+                borderColor: [],
               }
             ]
           },

@@ -19,13 +19,12 @@ import { ChartLabels } from "@/components/chart-labels";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
-import { ChartPreset } from "@/components/chart-preset";
 import { ChartOptions } from "@/components/chart-options";
 import { ChartBackground } from "@/components/chart-background";
 import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
-import {ChartWatermark} from "@/components/chart-watermark";
-import {ChartThemes} from "@/components/chart-themes";
+import { ChartWatermark } from "@/components/chart-watermark";
+import { ChartTemplates } from "@/components/chart-templates";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -42,6 +41,8 @@ export function Playground({ chart }: PlaygroundProps) {
 
   const { watch, unregister } = form;
   const type = watch("config.type");
+  const labels = watch('config.data.labels');
+  const datasets = watch('config.data.datasets');
 
   const {
     handleSubmit,
@@ -56,6 +57,25 @@ export function Playground({ chart }: PlaygroundProps) {
       unregister('config.options.scales.r');
     }
   }, [type, unregister]);
+
+  // Clear excess data if labels are removed
+  useEffect(() => {
+    if (labels?.length && datasets?.length) {
+      datasets.forEach((dataset, datasetIndex) => {
+        if (!dataset.data) {
+          return;
+        }
+
+        const excess = dataset.data.length - labels.length;
+
+        if (excess > 0) {
+          const newData = [...dataset.data];
+          newData.splice(labels.length, excess);
+          form.setValue(`config.data.datasets.${datasetIndex}.data`, newData);
+        }
+      });
+    }
+  }, [labels, datasets, form]);
 
   async function onSubmit(data: ChartPatchFormData) {
     setIsSaving(true)
@@ -130,38 +150,37 @@ export function Playground({ chart }: PlaygroundProps) {
             </div>
 
             <div className="mb-4 w-full shrink-0 lg:ml-14 lg:w-[500px]">
-              <Tabs defaultValue="datasets">
+              <Tabs defaultValue="templates">
                 <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="datasets">Datasets</TabsTrigger>
-                  <TabsTrigger value="themes">Themes</TabsTrigger>
+                  <TabsTrigger value="templates">Templates</TabsTrigger>
+                  <TabsTrigger value="data">Data</TabsTrigger>
                   <TabsTrigger value="options">Options</TabsTrigger>
                   <TabsTrigger value="background">Background</TabsTrigger>
                 </TabsList>
-                <TabsContent value="datasets">
+                <TabsContent value="templates">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Datasets</CardTitle>
+                      <CardTitle>Templates</CardTitle>
                       <CardDescription>
-                        Update the datasets of the chart.
+                        Select a predefined template.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      <ChartPreset />
-                      <ChartLabels />
-                      <ChartDataSets />
+                      <ChartTemplates />
                     </CardContent>
                   </Card>
                 </TabsContent>
-                <TabsContent value="themes">
+                <TabsContent value="data">
                   <Card>
                     <CardHeader>
-                      <CardTitle>Themes</CardTitle>
+                      <CardTitle>Data</CardTitle>
                       <CardDescription>
-                        Select a predefined theme.
+                        Update the data of the chart.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-2">
-                      <ChartThemes />
+                      <ChartLabels />
+                      <ChartDataSets />
                     </CardContent>
                   </Card>
                 </TabsContent>

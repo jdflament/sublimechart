@@ -4,8 +4,8 @@ import { chartPatchSchema } from "@/lib/validations/chart";
 export type ChartDataType = {
   labels: string[];
   datasets?: {
-    label: string | null;
-    data: number[];
+    label?: string|undefined;
+    data?: number[]|undefined;
     borderColor?: string[];
     backgroundColor?: string[];
     borderWidth?: number;

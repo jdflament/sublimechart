@@ -12,7 +12,7 @@ const data = z.object({
   labels: z.string().array().min(1),
   datasets: z.array(z.object({
     label: z.string().optional(),
-    data: z.number().array().min(1),
+    data: z.array(z.number().nullish()).optional(),
     backgroundColor: z.string().array().optional(),
     borderColor: z.string().array().optional(),
     borderWidth: z.number().optional(),

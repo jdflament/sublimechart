@@ -17,7 +17,7 @@ import {
   SheetTrigger
 } from "@/components/ui/sheet";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {Switch} from "@/components/ui/switch";
 import {ChartDataSetsColors} from "@/components/chart-data-sets-colors";
@@ -115,7 +115,9 @@ export function ChartDataSets() {
                                             type="number"
                                             placeholder={label ? `Data for ${label}` : `Data #${index + 1}`}
                                             {...field}
-                                            onChange={(event) => field.onChange(parseFloat(event.target.value))}
+                                            onChange={(event) => (
+                                              field.onChange(event.target.value ? parseFloat(event.target.value) : null)
+                                            )}
                                           />
                                         </FormControl>
                                         <FormMessage />

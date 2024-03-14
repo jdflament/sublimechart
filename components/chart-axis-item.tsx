@@ -12,6 +12,7 @@ interface ChartAxisItem {
 
 export function ChartAxisItem({ axis, options }: ChartAxisItem) {
   const form = useFormContext();
+
   const hasGrid  = form.watch(`config.options.scales.${axis}.grid.display`);
   const hasLabels  = form.watch(`config.options.scales.${axis}.ticks.display`);
   const hasBorder  = form.watch(`config.options.scales.${axis}.border.display`);
@@ -27,10 +28,10 @@ export function ChartAxisItem({ axis, options }: ChartAxisItem) {
           </FormDescription>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="mt-2 flex flex-col gap-4">
         <FormField
           control={form.control}
-          name="config.options.scales.x"
+          name={`config.options.scales.${axis}`}
           render={() => (
             <FormItem>
               <div className="space-4 mt-2 grid w-full grid-cols-2 gap-2">

@@ -68,8 +68,8 @@ export function ChartLabels() {
         <CollapsibleContent className="mt-2 grid grid-cols-2 gap-2">
           {labels.map((label, index) => (
             <FormField
+              key={`label-${index}`}
               control={form.control}
-              key={label.id}
               name={`config.data.labels.${index}`}
               render={({ field }) => (
                 <FormItem>

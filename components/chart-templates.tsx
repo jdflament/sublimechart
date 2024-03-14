@@ -1,49 +1,39 @@
 import { useFormContext } from 'react-hook-form';
 import {FormControl, FormLabel} from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { themes } from '@/data/themes';
+import { templates } from '@/data/templates';
 import * as React from "react";
 import { ChartPatchFormData } from "@/types/chart";
-import {mergeObjects} from "@/lib/utils";
 
-export function ChartThemes() {
+export function ChartTemplates() {
   const form = useFormContext<ChartPatchFormData>();
   const [selectedTheme, setSelectedTheme] = React.useState<string>()
-  const config = form.watch("config");
 
-  function onChangeTheme(themeSlug) {
-    if (!themeSlug) {
+  function onChangeTheme(templateSlug) {
+    if (!templateSlug) {
       return;
     }
 
-    setSelectedTheme(themeSlug);
+    setSelectedTheme(templateSlug);
 
-    const theme = themes.find((theme) => theme.slug === themeSlug);
+    const template = templates.find((template) => template.slug === templateSlug);
 
-    if (theme) {
-      if (theme.datasets && config?.data?.datasets) {
-        // @ts-ignore
-        config.data.datasets = config.data.datasets.map((dataset) => ({
-          ...dataset,
-          ...theme.datasets
-        }));
-      }
-
+    if (template) {
       // @ts-ignore
-      form.setValue('config', mergeObjects(config, theme.config));
+      form.setValue('config', template.config);
     }
   }
 
   return (
     <RadioGroup onValueChange={onChangeTheme}>
       <div className="grid max-w-md grid-cols-1 gap-2 pt-2">
-        {themes.map((theme) => (
-          <FormLabel htmlFor={theme.slug} key={theme.slug} className="[&:has([data-state=checked])>div]:border-primary">
+        {templates.map((template) => (
+          <FormLabel htmlFor={template.slug} key={template.slug} className="[&:has([data-state=checked])>div]:border-primary">
             <FormControl>
               <RadioGroupItem
-                id={theme.slug}
-                value={theme.slug}
-                checked={selectedTheme === theme.slug}
+                id={template.slug}
+                value={template.slug}
+                checked={selectedTheme === template.slug}
                 className="sr-only"
               />
             </FormControl>
@@ -51,12 +41,12 @@ export function ChartThemes() {
               <div className="space-y-2 rounded-sm">
                 <div
                   className="h-60 w-full rounded-md bg-cover bg-center"
-                  style={{ backgroundImage: `url(${theme.image})` }}
+                  style={{ backgroundImage: `url(${template.image})` }}
                 />
               </div>
             </div>
             <span className="block w-full p-2 text-center font-semibold">
-              {theme.name}
+              {template.name}
             </span>
           </FormLabel>
         ))}
