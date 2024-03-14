@@ -25,6 +25,7 @@ import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
+import {ChartExport} from "@/components/chart-export";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -138,6 +139,8 @@ export function Playground({ chart }: PlaygroundProps) {
                 )}
                 <span>Save</span>
               </Button>
+
+              <ChartExport />
             </div>
           </div>
           <div className="grow lg:flex xl:px-2">
@@ -146,7 +149,7 @@ export function Playground({ chart }: PlaygroundProps) {
                 <ChartSelector />
               </div>
 
-              <div className="px-4 py-6 sm:px-6 md:sticky md:top-10 lg:flex-1 lg:pl-8 xl:pl-6">
+              <div className="px-4 py-6 sm:px-6 md:sticky md:top-16 lg:flex-1 lg:pl-8 xl:pl-6">
                 <ChartCanvas />
               </div>
             </div>
