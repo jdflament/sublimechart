@@ -113,8 +113,8 @@ export function Playground({ chart }: PlaygroundProps) {
     <FormProvider {...form}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid w-full gap-4">
-          <div className="flex w-full items-center justify-between">
-            <div className="flex items-center space-x-10">
+          <div className="flex w-full flex-col justify-between md:flex-row">
+            <div className="flex space-x-10">
               <Link
                 href="/dashboard"
                 className={cn(buttonVariants({ variant: "ghost" }))}
@@ -125,9 +125,11 @@ export function Playground({ chart }: PlaygroundProps) {
                 </>
               </Link>
             </div>
-            <div className="flex gap-4">
-              <ChartWatermark />
-              <ChartAspectRatio />
+            <div className="flex w-full flex-col gap-4 md:w-auto md:flex-row">
+              <div className="flex justify-between gap-4 md:justify-normal">
+                <ChartWatermark />
+                <ChartAspectRatio />
+              </div>
               <ChartTitle />
 
               <Button type="submit">

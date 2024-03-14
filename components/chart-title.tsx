@@ -15,7 +15,7 @@ export function ChartTitle() {
   const form = useFormContext();
 
   return (
-    <div className="flex w-full max-w-sm items-center space-x-2">
+    <div className="flex w-full items-center space-x-2 md:max-w-sm">
       <Popover>
         <PopoverTrigger asChild>
           <Button variant="secondary" type="button">
@@ -167,7 +167,7 @@ export function ChartTitle() {
         control={form.control}
         name="config.options.plugins.title.text"
         render={({ field }) => (
-          <FormItem>
+          <FormItem className="flex w-full">
             <FormControl>
               <Input placeholder="Untitled chart" {...field} />
             </FormControl>
