@@ -8,6 +8,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import {cn} from "@/lib/utils";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -20,6 +21,20 @@ export function ChartCanvas() {
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [chartContainerClass, setChartContainerClass] = useState<string>('w-[500px]');
+
+  useEffect(() => {
+    switch (aspectRatio) {
+      case "9/16":
+      case "4/5":
+      case "2/3":
+        setChartContainerClass('w-[350px]');
+        break;
+      case "16/9":
+      default:
+        setChartContainerClass('w-[650px]');
+    }
+  }, [aspectRatio]);
 
   // TODO: Uncomment to get the chart config
   //console.log(chartPatchSchema.parse(form.getValues()).config);
@@ -60,6 +75,7 @@ export function ChartCanvas() {
 
       ChartJS.defaults.plugins.datalabels = { display: false };
       ChartJS.defaults.aspectRatio = 1;
+      ChartJS.defaults.responsive = true;
       ChartJS.defaults.maintainAspectRatio = false;
 
       // @ts-ignore
@@ -115,10 +131,10 @@ export function ChartCanvas() {
   }
 
   return (
-      <Card>
+      <Card className={cn('mx-auto overflow-hidden', chartContainerClass)}>
         <CardContent className="p-0">
           <AspectRatio ratio={parseAspectRatio(aspectRatio)}>
-            <canvas id="chart"></canvas>
+            <canvas id="chart" className="rounded-md"></canvas>
           </AspectRatio>
         </CardContent>
       </Card>

@@ -1,10 +1,5 @@
 import Colors from 'tailwindcss/colors';
-
-export interface Color {
-  value: string
-  label: string
-  color: string
-}
+import { Color } from "@/types";
 
 export const solidColors: Color[] = [];
 

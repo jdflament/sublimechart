@@ -32,7 +32,7 @@ export function ChartItem({ chart }: ChartItemProps) {
   )
 }
 
-ChartItem.Skeleton = function PostItemSkeleton() {
+ChartItem.Skeleton = function ChartItemSkeleton() {
   return (
     <div className="p-4">
       <div className="space-y-3">

@@ -7,7 +7,7 @@ import {
 import { Paintbrush } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import { cn } from "@/lib/utils";
-import { solidColors } from "@/data/colors";
+import { solidColors } from "@/config/colors";
 
 const ColorPicker = forwardRef<HTMLInputElement, InputProps>(({ className, onChange, value, ...props }, ref) => {
   // @ts-ignore

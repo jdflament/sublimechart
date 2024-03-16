@@ -1,11 +1,4 @@
-import { ChartConfigType } from "@/types/chart";
-
-export interface Template {
-  slug: string
-  name: string|undefined
-  image: string|undefined
-  config: ChartConfigType
-}
+import { Template } from "@/types";
 
 export const templates: Template[] = [
   {

@@ -1,13 +1,4 @@
-import { ChartDataType } from "@/types/chart";
-
-export interface Preset {
-  slug: string
-  name: string|undefined
-  config: {
-    type?: string|undefined
-    data: ChartDataType
-  }
-}
+import { Preset } from "@/types";
 
 export const presets: Preset[] = [
   {

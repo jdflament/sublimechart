@@ -2,6 +2,7 @@ import { User } from "@prisma/client"
 import type { Icon } from "lucide-react"
 
 import { Icons } from "@/components/icons"
+import {ChartConfigType, ChartDataType} from "@/types/chart";
 
 export type NavItem = {
   title: string
@@ -63,3 +64,25 @@ export type UserSubscriptionPlan = SubscriptionPlan &
     stripeCurrentPeriodEnd: number
     isPro: boolean
   }
+
+export type Color = {
+  value: string
+  label: string
+  color: string
+}
+
+export type Preset = {
+  slug: string
+  name: string|undefined
+  config: {
+    type?: string|undefined
+    data: ChartDataType
+  }
+}
+
+export type Template = {
+  slug: string
+  name: string|undefined
+  image: string|undefined
+  config: ChartConfigType
+}

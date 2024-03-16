@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { solidColors, gradientColors } from '@/data/colors';
+import { solidColors, gradientColors } from '@/config/colors';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export function ChartBackground() {

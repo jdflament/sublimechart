@@ -2,10 +2,10 @@
 
 import * as React from "react"
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
-import { presets } from "@/data/presets"
+import { presets } from "@/config/presets"
 import {cn, mergeObjects} from "@/lib/utils"
 
-import { Preset } from "@/data/presets"
+import { Preset } from "@/config/presets"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";

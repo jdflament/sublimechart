@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import {FormControl, FormLabel} from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { templates } from '@/data/templates';
+import { templates } from '@/config/templates';
 import * as React from "react";
 import { ChartPatchFormData } from "@/types/chart";
 
