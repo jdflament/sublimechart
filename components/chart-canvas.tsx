@@ -8,7 +8,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import {chartPatchSchema} from "@/lib/validations/chart";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();

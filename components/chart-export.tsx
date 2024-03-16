@@ -21,7 +21,10 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import {Icons} from "@/components/icons";
+import { Icons } from "@/components/icons";
+import { useFormContext } from "react-hook-form";
+import { toast } from "@/components/ui/use-toast";
+import { chartPatchSchema } from "@/lib/validations/chart";
 
 export function ChartExport() {
   const [open, setOpen] = React.useState(false)
@@ -33,7 +36,7 @@ export function ChartExport() {
         <DialogTrigger asChild>
           <Button variant="outline">Export</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[650px]">
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>Export your Chart</DialogTitle>
             <DialogDescription>
@@ -72,19 +75,71 @@ export function ChartExport() {
 }
 
 function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
+  const form = useFormContext();
+
+  function handleExportConfig() {
+    const config = chartPatchSchema.parse(form.getValues()).config;
+
+    if (config.options?.watermark) {
+      delete config.options?.watermark;
+    }
+
+    navigator.clipboard
+      .writeText(JSON.stringify(config, null, 2))
+      .then(() => {
+        return toast({
+          description: "🎉 Your chart config has been copied to clipboard!",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+
+        return toast({
+          title: "Something went wrong.",
+          description: "An error occurred while copying your chart config. Please try again.",
+          variant: "destructive",
+        });
+      })
+      ;
+  }
+
+  async function handleExportPNG() {
+    const ctx = document.getElementById('chart') as HTMLCanvasElement;
+    const title = form.watch("config.options.plugins.title.text");
+
+    if (ctx) {
+      const url = ctx.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${title}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
+    return toast({
+      title: "Something went wrong.",
+      description: "Your chart was not exported. Please try again.",
+      variant: "destructive",
+    })
+  }
+
   return (
-    <div className={cn("grid grid-cols-3 gap-4", className)} {...props}>
+    <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
       <Button
         type="button"
         variant="outline"
+        onClick={handleExportConfig}
         className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
       >
         <Icons.code className="mb-3 h-6 w-6" />
-        Config
+        Chart.JS Config
       </Button>
       <Button
         type="button"
         variant="outline"
+        onClick={handleExportPNG}
         className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
       >
         <Icons.media className="mb-3 h-6 w-6" />
