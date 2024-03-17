@@ -5,7 +5,6 @@ import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons"
 import { presets } from "@/config/presets"
 import {cn, mergeObjects} from "@/lib/utils"
 
-import { Preset } from "@/config/presets"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -13,6 +12,7 @@ import { useFormContext } from "react-hook-form";
 import { ChartPatchFormData } from "@/types/chart";
 import { Icons } from "@/components/icons";
 import { chartPatchSchema } from "@/lib/validations/chart";
+import { Preset } from "@/types";
 
 export function ChartPreset() {
   const [open, setOpen] = React.useState(false)
