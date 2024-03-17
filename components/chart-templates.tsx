@@ -45,7 +45,7 @@ export function ChartTemplates() {
                 />
               </div>
             </div>
-            <span className="block w-full p-2 text-center font-semibold">
+            <span className="block w-full p-2 text-center font-heading font-semibold">
               {template.name}
             </span>
           </FormLabel>

@@ -33,18 +33,12 @@ import { DoughnutChart } from "@/components/icons/DoughnutChart";
 import { LineChart } from "@/components/icons/LineChart";
 import { PieChart } from "@/components/icons/PieChart";
 import { RadarChart } from "@/components/icons/RadarChart";
+import { Logo } from "@/components/icons/Logo";
 
 export type Icon = LucideIcon
 
 export const Icons = {
-  logo: ({ ...props }: LucideProps) => (
-    <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        className="fill-emerald-400"
-        d="M16 8a5 5 0 0 0-5-5H5a5 5 0 0 0-5 5v13.927a1 1 0 0 0 1.623.782l3.684-2.93a4 4 0 0 1 2.49-.87H11a5 5 0 0 0 5-5V8Z"
-      />
-    </svg>
-  ),
+  logo: Logo,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,

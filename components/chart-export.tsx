@@ -35,7 +35,7 @@ export function ChartExport() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Export</Button>
+          <Button type="button">Export</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[550px]">
           <DialogHeader>

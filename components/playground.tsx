@@ -133,7 +133,7 @@ export function Playground({ chart }: PlaygroundProps) {
               </div>
               <ChartTitle />
 
-              <Button type="submit">
+              <Button type="submit" variant="outline">
                 {isSaving && (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                 )}
