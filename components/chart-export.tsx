@@ -25,7 +25,7 @@ import { Icons } from "@/components/icons";
 import { useFormContext } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
 import { chartPatchSchema } from "@/lib/validations/chart";
-import {Separator} from "@/components/ui/separator";
+import { Separator } from "@/components/ui/separator";
 
 export function ChartExport() {
   const [open, setOpen] = React.useState(false)
@@ -42,7 +42,7 @@ export function ChartExport() {
             <DialogTitle>Export your Chart</DialogTitle>
             <DialogDescription>
               Pick a format to export your chart.
-              Let's get your chart out there!
+              Let&apos;s get your chart out there!
             </DialogDescription>
           </DialogHeader>
           <ExportButtons />
@@ -61,7 +61,7 @@ export function ChartExport() {
           <DrawerTitle>Export your Chart</DrawerTitle>
           <DrawerDescription>
             Pick a format to export your chart.
-            Let's get your chart out there!
+            Let&apos;s get your chart out there!
           </DrawerDescription>
         </DrawerHeader>
         <ExportButtons className="px-4" />
