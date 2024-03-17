@@ -60,7 +60,7 @@ export const templates: Template[] = [
             backgroundColor: "#818cf8",
             borderRadius: 5,
             font: {
-              family: "'__Karla_432edd', '__Karla_Fallback_432edd'",
+              family: "Karla, sans-serif",
               size: 12
             }
           },

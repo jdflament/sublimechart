@@ -9,6 +9,7 @@ import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import {cn} from "@/lib/utils";
+import {chartPatchSchema} from "@/lib/validations/chart";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -37,7 +38,7 @@ export function ChartCanvas() {
   }, [aspectRatio]);
 
   // TODO: Uncomment to get the chart config
-  //console.log(chartPatchSchema.parse(form.getValues()).config);
+  console.log(chartPatchSchema.parse(form.getValues()).config);
 
   const initializeChart = useCallback(async () => {
     const ChartJS = (await import("chart.js/auto")).default
