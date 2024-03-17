@@ -57,3 +57,31 @@
     @apply bg-background text-foreground;
   }
 }
+
+.lines {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+}
+
+.lines svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-25%);
+}
+
+.lines svg path {
+  stroke-dasharray: 0 1000;
+  animation: dash 4s linear infinite alternate;
+  animation-fill-mode: forwards;
+}
+
+@keyframes dash {
+  from {
+    stroke-dasharray: 0 1000;
+  }
+  to {
+    stroke-dasharray: 1000 0;
+  }
+}
