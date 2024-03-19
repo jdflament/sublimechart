@@ -743,7 +743,7 @@ export function Logo(props: React.ComponentPropsWithoutRef<'svg'>) {
             WebkitUserDrag: 'auto',
             WebkitUserModify: 'read-only',
             WebkitWritingMode: 'horizontal-tb'
-          }}><svg xmlns="http://www.w3.org/2000/svg" width={400} height={400} viewBox="0 0 24 24" fill="rgb(255, 255, 255)"
+          }}><svg xmlns="http://www.w3.org/2000/svg" width={21} height={21} viewBox="0 0 24 24" fill="rgb(255, 255, 255)"
                   stroke="rgba(13, 10, 9, 1)" strokeWidth="2.26" strokeLinecap="round" strokeLinejoin="round"
                   className="lucide lucide-pie-chart" fillOpacity="0.78" style={{
             accentColor: 'auto',

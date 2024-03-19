@@ -51,7 +51,7 @@ export default async function DashboardPage() {
             <EmptyPlaceholder.Icon name="lineChart" />
             <EmptyPlaceholder.Title>No charts created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any charts yet. Start creating content.
+              You don&apos;t have any charts yet. Start creating one now.
             </EmptyPlaceholder.Description>
             <ChartCreateButton variant="outline" />
           </EmptyPlaceholder>

@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import {Button} from "@/components/ui/button";
 
 async function deleteChart(chartId: string) {
   const response = await fetch(`/api/charts/${chartId}`, {
@@ -97,14 +98,16 @@ export function ChartActions({ chart }: ChartActionsProps) {
                   router.refresh()
                 }
               }}
-              className="bg-red-600 focus:ring-red-600"
+              asChild
             >
-              {isDeleteLoading ? (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <Icons.trash className="mr-2 h-4 w-4" />
-              )}
-              <span>Delete</span>
+              <Button type="button" variant="destructive" disabled={isDeleteLoading}>
+                {isDeleteLoading ? (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Icons.trash className="mr-2 h-4 w-4" />
+                )}
+                <span>Delete</span>
+              </Button>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

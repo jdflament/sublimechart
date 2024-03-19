@@ -145,7 +145,7 @@ export default async function IndexPage() {
                     : tierIdx === 0
                       ? 'rounded-t-3xl sm:rounded-b-none lg:rounded-bl-3xl lg:rounded-tr-none'
                       : 'sm:rounded-t-none lg:rounded-bl-none lg:rounded-tr-3xl',
-                  'rounded-3xl p-8 ring-1 ring-gray-900/10 sm:p-10'
+                  'rounded-3xl p-8 ring-1 ring-secondary sm:p-10'
                 )}
               >
                 <h3
