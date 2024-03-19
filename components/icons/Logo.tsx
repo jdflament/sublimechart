@@ -1,11 +1,9 @@
 export function Logo(props: React.ComponentPropsWithoutRef<'svg'>) {
-  // @ts-ignore
-  // @ts-ignore
   return (
-    <svg className="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" {...props}>
-      <foreignObject width="100%" height="100%" x={0} y={0} externalResourcesRequired="true">
+    <svg className="h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" {...props}>
+      <foreignObject width="100%" height="100%" x={0} y={0}>
         <div xmlns="http://www.w3.org/1999/xhtml"
-             className="aspect-square w-screen max-w-full bg-transparent md:h-[350px] md:w-[350px] lg:h-[400px] lg:w-[400px] xl:h-[600px] xl:w-[600px]"
+             className="aspect-square max-w-full bg-transparent"
              style={{
                accentColor: 'auto',
                placeContent: 'normal',

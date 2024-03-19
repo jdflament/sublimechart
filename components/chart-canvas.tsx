@@ -49,14 +49,14 @@ export function ChartCanvas() {
       // TODO: Adjust watermark options with correct logo
       options.watermark = {
         image: '/watermark.png',
-        x: 15,
+        x: 0,
         y: 15,
         width: 115,
         height: 41,
-        alignX: 'right',
+        alignX: 'middle',
         alignY: 'bottom',
         opacity: 0.4,
-        position: 'back',
+        position: 'between',
         alignToChartArea: false,
       }
     }

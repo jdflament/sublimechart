@@ -44,7 +44,7 @@ export default async function MarketingLayout({
                     "px-4"
                   )}
                 >
-                  Login
+                  Sign up for free
                 </Link>
             }
           </nav>

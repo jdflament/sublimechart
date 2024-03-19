@@ -58,23 +58,32 @@
   }
 }
 
-.lines {
+.curves {
   height: 100%;
   width: 100%;
   position: absolute;
   z-index: -1;
 }
 
-.lines svg {
+.curves svg {
   position: absolute;
   top: 50%;
   transform: translateY(-25%);
 }
 
-.lines svg path {
-  stroke-dasharray: 0 1000;
+.curves svg:first-child path {
   animation: dash 4s linear infinite alternate;
-  animation-fill-mode: forwards;
+  animation-fill-mode: backwards, forwards;
+}
+
+.curves svg:nth-child(2) path {
+  animation: dash 5s linear infinite alternate;
+  animation-fill-mode: backwards, forwards;
+}
+
+.curves svg:last-child path {
+  animation: dash 3s linear infinite alternate;
+  animation-fill-mode: backwards, forwards;
 }
 
 @keyframes dash {
