@@ -67,8 +67,7 @@
 
 .curves svg {
   position: absolute;
-  top: 50%;
-  transform: translateY(-25%);
+  bottom: 0;
 }
 
 .curves svg:first-child path {

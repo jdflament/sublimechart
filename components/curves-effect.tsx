@@ -4,14 +4,17 @@ import { cn } from "@/lib/utils";
 
 type CurvesEffectProps = {
   className?: string
+  firstCurveClassName?: string
+  secondCurveClassName?: string
+  lastCurveClassName?: string
 }
 
-export function CurvesEffect({ className }: CurvesEffectProps) {
+export function CurvesEffect({ className, firstCurveClassName, secondCurveClassName, lastCurveClassName }: CurvesEffectProps) {
   return (
     <div className={ cn('curves', className) }>
       <svg width="100%" viewBox="0 0 745.88685 88.700434" version="1.1">
         <g id="layer1" transform="translate(0.35777846,-262.17068)">
-          <path className="stroke-primary" style={{
+          <path className={cn('stroke-primary', firstCurveClassName)} style={{
             fill: 'none',
             fillRule: 'evenodd',
             strokeWidth: '1.5px',
@@ -24,7 +27,7 @@ export function CurvesEffect({ className }: CurvesEffectProps) {
       </svg>
       <svg width="100%" viewBox="0 0 685.88685 123.700434" version="1.1">
         <g id="layer1" transform="translate(0.25777846,-242.17068)">
-          <path className="stroke-accent" style={{
+          <path className={cn('stroke-accent', secondCurveClassName)} style={{
             fill: 'none',
             fillRule: 'evenodd',
             strokeWidth: '2.7px',
@@ -36,7 +39,7 @@ export function CurvesEffect({ className }: CurvesEffectProps) {
       </svg>
       <svg width="100%" viewBox="0 0 754.94473 93.855249" version="1.1">
         <g transform="translate(1.7580844,-434.006)">
-          <path className="stroke-foreground" style={{
+          <path className={cn('stroke-foreground', lastCurveClassName)} style={{
             fill: 'none',
             fillRule: 'evenodd',
             strokeWidth: '0.3px',

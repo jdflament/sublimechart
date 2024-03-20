@@ -7,61 +7,41 @@ import { CurvesEffect } from "@/components/curves-effect";
 import Image from "next/image";
 import LightPreview from '@/public/preview/light.png';
 import DarkPreview from '@/public/preview/dark.png';
+import { tiers } from "@/config/tiers";
+import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 
 const features = [
   {
-    name: 'Unlimited inboxes',
+    name: '5 different chart types',
     description:
-      'Non quo aperiam repellendus quas est est. Eos aut dolore aut ut sit nesciunt. Ex tempora quia. Sit nobis consequatur dolores incidunt.',
+      'Choose from a variety of chart types to visualize your data. Line, bar, doughnut, pie and radar charts are available.',
+    icon: Icons.barChart,
+  },
+  {
+    name: 'Start from a template',
+    description:
+      'Customize your charts with a comprehensive and easy to use editor. Add your data, change colors, labels, shapes and more.',
+    icon: Icons.settings,
+  },
+  {
+    name: 'Advanced editor',
+    description:
+      'Customize your charts with a comprehensive and easy to use editor. Add your data, change colors, labels, shapes and more.',
+    icon: Icons.settings,
+  },
+  {
+    name: 'Multiple export options',
+    description:
+      'Export your chart to PNG, GIF, MP4 or even Chart.js configuration. Create a unique chart to share with your audience or on your website.',
     icon: Icons.media,
   },
-  {
-    name: 'Manage team members',
-    description:
-      'Vero eum voluptatem aliquid nostrum voluptatem. Vitae esse natus. Earum nihil deserunt eos quasi cupiditate. A inventore et molestiae natus.',
-    icon: Icons.clapperboard,
-  },
-  {
-    name: 'Spam report',
-    description:
-      'Et quod quaerat dolorem quaerat architecto aliquam accusantium. Ex adipisci et doloremque autem quia quam. Quis eos molestiae at iure impedit.',
-    icon: Icons.sun,
-  },
 ];
-
-const tiers = [
-  {
-    name: 'Free',
-    id: 'tier-free',
-    href: '#',
-    priceMonthly: '$0',
-    description: "Give a try to SublimeChart with our free tier.",
-    features: ['Line, Bar and Doughnut charts', 'Up to 3 charts saved', 'Basic editor options', 'PNG and Chart.js config export'],
-    featured: false,
-  },
-  {
-    name: 'Pro',
-    id: 'tier-pro',
-    href: '#',
-    priceMonthly: '$69',
-    description: 'Dedicated support and infrastructure for your company.',
-    features: [
-      'All chart types',
-      'Unlimited charts saved',
-      'Animated charts with video export',
-      'Predefined templates',
-      'All editor options',
-      'No watermark',
-    ],
-    featured: true,
-  },
-]
 
 export default async function IndexPage() {
   return (
     <>
       <section className="relative space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
-        <CurvesEffect className="top-48 md:top-36 lg:top-44" />
+        <CurvesEffect className="-bottom-20" />
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
             Create, design and export awesome charts.
@@ -79,7 +59,7 @@ export default async function IndexPage() {
       </section>
       <section className="relative overflow-hidden pt-32">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <h2 className="font-heading font-semibold leading-7 text-foreground">You are <span className="text-primary">unique</span>. You&apos;re chart too.</h2>
+          <h2 className="font-heading leading-7 text-foreground">You are <span className="text-primary">unique</span>. You&apos;re chart too.</h2>
           <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">Make it your <span className="text-primary">own</span>.</p>
           <p className="mx-auto mt-6 max-w-2xl leading-normal text-muted-foreground">
             Craft captivating charts effortlessly with our intuitive editor. Customize colors, labels, shapes and more to tell your data&apos;s story beautifully.
@@ -106,35 +86,39 @@ export default async function IndexPage() {
           </div>
         </div>
       </section>
-      <div className="container mx-auto mt-16 flex max-w-[64rem] sm:mt-20 lg:mt-24">
-        <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-          {features.map((feature) => (
-            <div key={feature.name} className="flex flex-col">
-              <dt className="text-base font-semibold leading-7">
-                <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                  <feature.icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                {feature.name}
-              </dt>
-              <dd className="mt-1 flex flex-auto flex-col leading-7 text-muted-foreground">
-                <p className="flex-auto">{feature.description}</p>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-      <section className="container flex flex-col  gap-6 py-8 md:max-w-[64rem] md:py-12 lg:py-24">
+      <section id="features" className="container mx-auto mt-14 flex max-w-[64rem] sm:mt-16 lg:mt-24">
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
+          <h2 className="font-heading leading-7 text-foreground">We thought for you.</h2>
+          <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">All you need for your <span className="text-primary">charts</span> are here.</p>
+          <p className="mx-auto mt-6 leading-normal text-muted-foreground">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
+            dolor cupiditate blanditiis.
+          </p>
+          <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-muted-foreground sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
+            {features.map((feature) => (
+              <div key={feature.name} className="relative pl-9">
+                <dt className="inline font-heading text-secondary-foreground">
+                  <feature.icon className="absolute left-1 top-1 h-5 w-5 text-primary" aria-hidden="true" />
+                  {feature.name}
+                </dt>{' '}
+                <dd className="inline">{feature.description}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+      <section id="pricing" className="container mt-14 flex flex-col gap-6 md:mt-16 md:max-w-[64rem] lg:mt-24">
         <div className="mx-auto flex w-full flex-col gap-4 md:max-w-[58rem]">
           <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-            <h2 className="font-heading font-semibold leading-7 text-primary">SublimeChart Pricing</h2>
+            <h2 className="font-heading font-semibold leading-7">SublimeChart Pricing</h2>
             <p className="mt-2 font-heading text-4xl font-bold tracking-tight sm:text-5xl">
-              Build awesome charts today.
+              Build <span className="text-primary">awesome</span> charts today.
             </p>
           </div>
           <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-muted-foreground">
             SublimeChart offers a straightforward pricing model. No hidden fees, no surprises.
           </p>
-          <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
+          <div className="mx-auto mt-4 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-16 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
             {tiers.map((tier, tierIdx) => (
               <div
                 key={tier.id}
@@ -158,14 +142,22 @@ export default async function IndexPage() {
                   {tier.name}
                 </h3>
                 <p className="mt-4 flex items-baseline gap-x-2">
-              <span
-                className={cn(
-                  tier.featured ? 'text-accent' : 'text-secondary-foreground',
-                  'font-heading text-5xl tracking-tight'
-                )}
-              >
-                {tier.priceMonthly}
-              </span>
+                  <span
+                    className={cn(
+                      tier.featured ? 'text-accent' : 'text-secondary-foreground',
+                      'font-heading text-5xl tracking-tight'
+                    )}
+                  >
+                    {tier.priceMonthly}
+                  </span>
+                  { tier.priceHelpText && (
+                    <span className={cn(
+                        tier.featured ? 'text-accent' : 'text-secondary-foreground',
+                        'font-heading text-sm tracking-tight'
+                      )}>
+                    {tier.priceHelpText}
+                  </span>
+                  )}
                 </p>
                 <p className={cn(tier.featured ? 'text-accent' : 'text-secondary-foreground', 'mt-6 text-base leading-7')}>
                   {tier.description}
@@ -184,11 +176,69 @@ export default async function IndexPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href={tier.href} aria-describedby={tier.id} className={cn(buttonVariants({ size: "lg", variant: tier.featured ? 'default' : 'outline' }), 'mt-4 w-full')}>
+                <Link href="/register" aria-describedby={tier.id} className={cn(buttonVariants({ size: "lg", variant: tier.featured ? 'default' : 'outline' }), 'mt-4 w-full')}>
                   Sign up for free
                 </Link>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      <section id="faq" className="container mt-14 flex flex-col gap-6 md:mt-16 md:max-w-[64rem] lg:mt-24">
+        <div className="mx-auto flex w-full flex-col gap-4 md:max-w-[58rem]">
+          <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
+            <h2 className="font-heading font-semibold leading-7 text-primary">Frequently Asked Questions</h2>
+            <p className="mt-2 font-heading text-4xl font-bold tracking-tight sm:text-5xl">
+              Everything you need to know.
+            </p>
+          </div>
+          <Accordion type="single" collapsible className="mt-4 w-full sm:mt-16">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>What is SublimeChart?</AccordionTrigger>
+              <AccordionContent>
+                SublimeChart is a live editor tool that allows you to create, design and export charts.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>What kind of chart type are available?</AccordionTrigger>
+              <AccordionContent>
+                Currently we are supporting 5 different chart types: Line, Bar, Doughnut, Pie and Radar.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger>Is SublimeChart free?</AccordionTrigger>
+              <AccordionContent>
+                Yes, you can start using SublimeChart for free. We also offer a pro version with more features.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-4">
+              <AccordionTrigger>Can I import my data?</AccordionTrigger>
+              <AccordionContent>
+                Not yet, but we are working on it. Stay tuned for updates.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-5">
+              <AccordionTrigger>Can I use my chart inside my application?</AccordionTrigger>
+              <AccordionContent>
+                Of course! You can export the Chart.JS configuration by clicking on the export button.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </section>
+      <section className="mx-auto py-24 sm:px-6 sm:py-32 md:max-w-[64rem] lg:px-8">
+        <div className="relative isolate overflow-hidden bg-secondary-foreground px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+          <CurvesEffect className="bottom-3 left-0" lastCurveClassName="stroke-secondary" />
+          <h2 className="mx-auto max-w-2xl font-heading text-3xl tracking-tight text-secondary sm:text-4xl">
+            Say goodbye to <span className="text-primary">boring</span> charts. <p>Start creating <span className="text-primary">today</span>.</p>
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-8 text-secondary">
+            Give a try to SublimeChart and start creating beautiful charts today. No credit card required.
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-x-6">
+            <Link href="/register" className={buttonVariants({ size: "lg", variant: 'secondary' })}>
+              Sign up for free
+            </Link>
           </div>
         </div>
       </section>

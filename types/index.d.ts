@@ -86,3 +86,13 @@ export type Template = {
   image: string|undefined
   config: ChartConfigType
 }
+
+export type Tier = {
+  name: string
+  id: string
+  priceMonthly: string
+  priceHelpText?: string
+  description: string
+  features: string[]
+  featured: boolean
+}
