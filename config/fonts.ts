@@ -1,4 +1,4 @@
-import { Open_Sans, Roboto, Lato, Montserrat, Oswald, Ubuntu, Raleway, Source_Sans_Pro, Merriweather, Nunito, Playfair_Display, PT_Sans, Inter, Quicksand, Noto_Sans, Josefin_Sans, Pacifico, Comfortaa, Fira_Sans, Exo, Roboto_Condensed, Cabin, Mulish, Arimo, Titillium_Web, Vollkorn, Dancing_Script, Poppins, Baloo_2, Yantramanav, Barlow, Work_Sans, Roboto_Slab, Cinzel, Bitter, Amatic_SC, Karla, Notable, PT_Serif, Noto_Serif, Rubik, Roboto_Mono, Indie_Flower, Cormorant } from "next/font/google";
+import { Open_Sans, Roboto, Lato, Montserrat, Oswald, Ubuntu, Raleway, Source_Sans_3, Merriweather, Nunito, Playfair_Display, PT_Sans, Inter, Quicksand, Noto_Sans, Josefin_Sans, Pacifico, Comfortaa, Fira_Sans, Exo, Roboto_Condensed, Cabin, Mulish, Arimo, Titillium_Web, Vollkorn, Dancing_Script, Poppins, Baloo_2, Yantramanav, Barlow, Work_Sans, Roboto_Slab, Cinzel, Bitter, Amatic_SC, Karla, Notable, PT_Serif, Noto_Serif, Rubik, Roboto_Mono, Indie_Flower, Cormorant } from "next/font/google";
 
 const openSans = Open_Sans({ weight: "400", subsets: ["latin"], variable: "--font-open-sans" });
 const roboto = Roboto({ weight: "400", subsets: ["latin"], variable: "--font-roboto" });
@@ -8,7 +8,7 @@ const poppins = Poppins({ weight: "400", subsets: ["latin"], variable: "--font-p
 const oswald = Oswald({ weight: "400", subsets: ["latin"], variable: "--font-oswald" });
 const ubuntu = Ubuntu({ weight: "400", subsets: ["latin"], variable: "--font-ubuntu" });
 const raleway = Raleway({ weight: "400", subsets: ["latin"], variable: "--font-raleway" });
-const sourceSansPro = Source_Sans_Pro({ weight: "400", subsets: ["latin"], variable: "--font-source-sans-pro" });
+const sourceSansPro = Source_Sans_3({ weight: "400", subsets: ["latin"], variable: "--font-source-sans-pro" });
 const merriweather = Merriweather({ weight: "400", subsets: ["latin"], variable: "--font-merriweather" });
 const nunito = Nunito({ weight: "400", subsets: ["latin"], variable: "--font-nunito" });
 const playfairDisplay = Playfair_Display({ weight: "400", subsets: ["latin"], variable: "--font-playfair-display" });

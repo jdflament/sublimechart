@@ -109,10 +109,10 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
     const title = form.watch("config.options.plugins.title.text");
 
     if (ctx) {
-      const url = ctx.toDataURL("image/jpeg", 1.0);
+      const url = ctx.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = url;
-      link.download = `${title}.jpeg`;
+      link.download = `${title}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

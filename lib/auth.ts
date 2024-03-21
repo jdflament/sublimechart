@@ -1,13 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import EmailProvider from "next-auth/providers/email"
-import { Client } from "postmark"
 
 import { env } from "@/env.mjs"
-import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
 
-const postmarkClient = new Client(env.POSTMARK_API_TOKEN);
+import { sendVerificationRequest } from '@/lib/resend';
 
 // Configuration for MailDev
 const maildevConfig = {
@@ -18,51 +16,12 @@ const maildevConfig = {
   secure: false,
 };
 
-// Configuration for real email provider (Postmark)
-const emailProviderConfig = {
-  from: env.SMTP_FROM,
-  sendVerificationRequest: async ({ identifier, url, provider }) => {
-    const user = await db.user.findUnique({
-      where: {
-        email: identifier,
-      },
-      select: {
-        emailVerified: true,
-      },
-    });
-
-    const templateId = user?.emailVerified
-      ? env.POSTMARK_SIGN_IN_TEMPLATE
-      : env.POSTMARK_ACTIVATION_TEMPLATE;
-    if (!templateId) {
-      throw new Error("Missing template id");
-    }
-
-    const result = await postmarkClient.sendEmailWithTemplate({
-      TemplateId: parseInt(templateId),
-      To: identifier,
-      From: provider.from as string,
-      TemplateModel: {
-        action_url: url,
-        product_name: siteConfig.name,
-      },
-      Headers: [
-        {
-          Name: "X-Entity-Ref-ID",
-          Value: new Date().getTime() + "",
-        },
-      ],
-    });
-
-    if (result.ErrorCode) {
-      throw new Error(result.Message);
-    }
-  },
+const resendConfig = {
+  from: env.EMAIL_FROM,
+  sendVerificationRequest,
 };
 
-// Choose email provider based on the environment
-// @ts-ignore
-const emailProvider = process.env.NODE_ENV === 'development' ? EmailProvider(maildevConfig) : EmailProvider(emailProviderConfig);
+const emailProvider = process.env.NODE_ENV === 'development' ? EmailProvider(maildevConfig) : EmailProvider(resendConfig);
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),

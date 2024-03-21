@@ -60,7 +60,7 @@ export const templates: Template[] = [
             backgroundColor: "#818cf8",
             borderRadius: 5,
             font: {
-              family: "Karla, sans-serif",
+              family: "'__Karla_6460a9', '__Karla_Fallback_6460a9'",
               size: 12
             }
           },
@@ -71,7 +71,7 @@ export const templates: Template[] = [
             display: true,
             text: "Project MRR ($)",
             font: {
-              family: "'__Karla_432edd', '__Karla_Fallback_432edd'",
+              family: "'__Karla_6460a9', '__Karla_Fallback_6460a9'",
               size: 25
             },
             color: "#f1f5f9",
@@ -83,7 +83,7 @@ export const templates: Template[] = [
             labels: {
               color: "#f8fafc",
               font: {
-                family: "'__Karla_432edd', '__Karla_Fallback_432edd'",
+                family: "'__Karla_6460a9', '__Karla_Fallback_6460a9'",
                 size: 10
               },
               padding: 10
@@ -110,9 +110,10 @@ export const templates: Template[] = [
               display: true,
               color: "#f8fafc",
               font: {
-                family: "'__Karla_432edd', '__Karla_Fallback_432edd'"
+                family: "'__Karla_6460a9', '__Karla_Fallback_6460a9'"
               }
-            }
+            },
+            stacked: false
           },
           y: {
             border: {
@@ -127,11 +128,11 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Karla_432edd', '__Karla_Fallback_432edd'"
+                family: "'__Karla_6460a9', '__Karla_Fallback_6460a9'"
               }
             }
           }
-        }
+        },
       }
     }
   },
@@ -212,7 +213,7 @@ export const templates: Template[] = [
             backgroundColor: "#818cf8",
             borderRadius: 5,
             font: {
-              family: "'__Vollkorn_f79d75', '__Vollkorn_Fallback_f79d75'",
+              family: "'__PT_Serif_738126', '__PT_Serif_Fallback_738126'",
               size: 12
             }
           },
@@ -223,7 +224,7 @@ export const templates: Template[] = [
             display: true,
             text: "Social growth",
             font: {
-              family: "'__Vollkorn_f79d75', '__Vollkorn_Fallback_f79d75'",
+              family: "'__PT_Serif_738126', '__PT_Serif_Fallback_738126'",
               size: 25
             },
             color: "#f1f5f9",
@@ -235,7 +236,7 @@ export const templates: Template[] = [
             labels: {
               color: "#f8fafc",
               font: {
-                family: "'__Vollkorn_f79d75', '__Vollkorn_Fallback_f79d75'",
+                family: "'__PT_Serif_738126', '__PT_Serif_Fallback_738126'",
                 size: 10
               },
               padding: 10
@@ -262,7 +263,7 @@ export const templates: Template[] = [
               display: true,
               color: "#f8fafc",
               font: {
-                family: "'__Vollkorn_f79d75', '__Vollkorn_Fallback_f79d75'"
+                family: "'__PT_Serif_738126', '__PT_Serif_Fallback_738126'"
               }
             },
             stacked: false
@@ -280,11 +281,11 @@ export const templates: Template[] = [
               display: true,
               color: "#f8fafc",
               font: {
-                family: "'__Vollkorn_f79d75', '__Vollkorn_Fallback_f79d75'"
+                family: "'__PT_Serif_738126', '__PT_Serif_Fallback_738126'"
               }
             }
           }
-        },
+        }
       }
     }
   },
@@ -353,7 +354,7 @@ export const templates: Template[] = [
             backgroundColor: "#1e40af",
             borderRadius: 10,
             font: {
-              family: "'__Fira_Sans_2c3147', '__Fira_Sans_Fallback_2c3147'",
+              family: "'__Fira_Sans_d5c5f4', '__Fira_Sans_Fallback_d5c5f4'",
               size: 20
             }
           },
@@ -364,7 +365,7 @@ export const templates: Template[] = [
             display: true,
             text: "Customers per Country (%)",
             font: {
-              family: "'__Fira_Sans_2c3147', '__Fira_Sans_Fallback_2c3147'",
+              family: "'__Fira_Sans_d5c5f4', '__Fira_Sans_Fallback_d5c5f4'",
               size: 20
             },
             color: "#f1f5f9",
@@ -376,7 +377,7 @@ export const templates: Template[] = [
             labels: {
               color: "#f8fafc",
               font: {
-                family: "'__Fira_Sans_2c3147', '__Fira_Sans_Fallback_2c3147'",
+                family: "'__Fira_Sans_d5c5f4', '__Fira_Sans_Fallback_d5c5f4'",
                 size: 13
               },
               padding: 10
@@ -420,7 +421,7 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Fira_Sans_2c3147', '__Fira_Sans_Fallback_2c3147'"
+                family: "'__Fira_Sans_d5c5f4', '__Fira_Sans_Fallback_d5c5f4'"
               }
             },
             stacked: false
@@ -438,7 +439,7 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Fira_Sans_2c3147', '__Fira_Sans_Fallback_2c3147'"
+                family: "'__Fira_Sans_d5c5f4', '__Fira_Sans_Fallback_d5c5f4'"
               }
             },
             stacked: false
@@ -454,11 +455,21 @@ export const templates: Template[] = [
     config: {
       type: "pie",
       data: {
-        labels: ["Q1", "Q2", "Q3", "Q4"],
+        labels: [
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
         datasets: [
           {
             label: "Quaterly sales",
-            data: [17500, 18200, 14000, 21900],
+            data: [
+              17500,
+              18200,
+              14000,
+              21900
+            ],
             backgroundColor: [
               "#4f46e5",
               "#a78bfa",
@@ -474,7 +485,7 @@ export const templates: Template[] = [
             borderWidth: 6,
             fill: false
           }
-        ],
+        ]
       },
       options: {
         plugins: {
@@ -486,7 +497,7 @@ export const templates: Template[] = [
             backgroundColor: "#1e3a8a",
             borderRadius: 16,
             font: {
-              family: "'__Merriweather_331a76', '__Merriweather_Fallback_331a76'",
+              family: "'__Merriweather_0c8a90', '__Merriweather_Fallback_0c8a90'",
               size: 15
             }
           },
@@ -497,7 +508,7 @@ export const templates: Template[] = [
             display: true,
             text: "Quarterly sales",
             font: {
-              family: "'__Merriweather_331a76', '__Merriweather_Fallback_331a76'",
+              family: "'__Merriweather_0c8a90', '__Merriweather_Fallback_0c8a90'",
               size: 26
             },
             color: "#3730a3",
@@ -508,7 +519,7 @@ export const templates: Template[] = [
             labels: {
               color: "#3730a3",
               font: {
-                family: "'__Merriweather_331a76', '__Merriweather_Fallback_331a76'",
+                family: "'__Merriweather_0c8a90', '__Merriweather_Fallback_0c8a90'",
                 size: 17
               },
               padding: 14
@@ -547,7 +558,7 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Merriweather_331a76', '__Merriweather_Fallback_331a76'"
+                family: "'__Merriweather_0c8a90', '__Merriweather_Fallback_0c8a90'"
               }
             }
           },
@@ -564,11 +575,11 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Merriweather_331a76', '__Merriweather_Fallback_331a76'"
+                family: "'__Merriweather_0c8a90', '__Merriweather_Fallback_0c8a90'"
               }
             }
           }
-        },
+        }
       }
     }
   },
@@ -635,7 +646,7 @@ export const templates: Template[] = [
             backgroundColor: "#818cf8",
             borderRadius: 5,
             font: {
-              family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'",
+              family: "'__Cabin_648c40', '__Cabin_Fallback_648c40'",
               size: 12
             }
           },
@@ -646,7 +657,7 @@ export const templates: Template[] = [
             display: true,
             text: "Skills",
             font: {
-              family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'",
+              family: "'__Cabin_648c40', '__Cabin_Fallback_648c40'",
               size: 40
             },
             color: "#f1f5f9",
@@ -658,7 +669,7 @@ export const templates: Template[] = [
             labels: {
               color: "#f8fafc",
               font: {
-                family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'",
+                family: "'__Cabin_648c40', '__Cabin_Fallback_648c40'",
                 size: 15
               },
               padding: 0
@@ -702,7 +713,7 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'"
+                family: "'__Cabin_648c40', '__Cabin_Fallback_648c40'"
               }
             },
             stacked: false
@@ -720,11 +731,11 @@ export const templates: Template[] = [
               display: false,
               color: "#f8fafc",
               font: {
-                family: "'__Cabin_f6121f', '__Cabin_Fallback_f6121f'"
+                family: "'__Cabin_648c40', '__Cabin_Fallback_648c40'"
               }
             }
           }
-        },
+        }
       }
     }
   },
