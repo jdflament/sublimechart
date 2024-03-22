@@ -25,17 +25,18 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
+  metadataBase: new URL('https://sublimechart.com'),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "Radix UI",
+    "Chart",
+    "Editor",
+    "Export",
+    "Design",
+    "Charts",
   ],
   authors: [
     {
@@ -44,10 +45,6 @@ export const metadata = {
     },
   ],
   creator: "jdflament",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -70,6 +67,13 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
+}
+
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
