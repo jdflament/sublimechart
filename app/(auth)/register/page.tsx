@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { UserAuthForm } from "@/components/user-auth-form"
+import Image from "next/image";
+import * as React from "react";
 
 export const metadata = {
   title: "Create an account",
@@ -26,7 +28,8 @@ export default function RegisterPage() {
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">
-            <Icons.logo className="mx-auto h-6 w-6" />
+            <Image src="/logo.png" alt="Logo" className="mx-auto h-8 w-8" width={32} height={32} />
+
             <h1 className="font-heading text-2xl tracking-tight">
               Create an account
             </h1>

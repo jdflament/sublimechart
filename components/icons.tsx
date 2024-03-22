@@ -38,7 +38,6 @@ import { Logo } from "@/components/icons/Logo";
 export type Icon = LucideIcon
 
 export const Icons = {
-  logo: Logo,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,

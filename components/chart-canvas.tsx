@@ -22,18 +22,18 @@ export function ChartCanvas() {
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [chartContainerClass, setChartContainerClass] = useState<string>('w-[500px]');
+  const [chartContainerClass, setChartContainerClass] = useState<string>('max-w-[650px]');
 
   useEffect(() => {
     switch (aspectRatio) {
       case "9/16":
       case "4/5":
       case "2/3":
-        setChartContainerClass('w-[350px]');
+        setChartContainerClass('max-w-[350px]');
         break;
       case "16/9":
       default:
-        setChartContainerClass('w-[650px]');
+        setChartContainerClass('max-w-[650px]');
     }
   }, [aspectRatio]);
 
