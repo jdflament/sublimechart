@@ -25,7 +25,7 @@ import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
-import {ChartExport} from "@/components/chart-export";
+import { ChartExport } from "@/components/chart-export";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">

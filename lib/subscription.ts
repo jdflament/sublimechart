@@ -12,10 +12,9 @@ export async function getUserSubscriptionPlan(
       id: userId,
     },
     select: {
-      stripeSubscriptionId: true,
-      stripeCurrentPeriodEnd: true,
-      stripeCustomerId: true,
-      stripePriceId: true,
+      lemonSqueezyOrderId: true,
+      lemonSqueezyCustomerId: true,
+      lemonSqueezyLicenseKey: true,
     },
   })
 
@@ -24,16 +23,13 @@ export async function getUserSubscriptionPlan(
   }
 
   // Check if user is on a pro plan.
-  const isPro =
-    user.stripePriceId &&
-    user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
+  const isPro = user.lemonSqueezyLicenseKey && user.lemonSqueezyOrderId
 
   const plan = isPro ? proPlan : freePlan
 
   return {
     ...plan,
     ...user,
-    stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd?.getTime(),
     isPro,
   }
 }

@@ -3,7 +3,7 @@
 import * as React from "react"
 
 import { UserSubscriptionPlan } from "types"
-import { cn, formatDate } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import {
   Card,
@@ -17,9 +17,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
 interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  subscriptionPlan: UserSubscriptionPlan & {
-    isCanceled: boolean
-  }
+  subscriptionPlan: UserSubscriptionPlan
 }
 
 export function BillingForm({
@@ -34,7 +32,7 @@ export function BillingForm({
     setIsLoading(!isLoading)
 
     // Get a Stripe session URL.
-    const response = await fetch("/api/users/stripe")
+    const response = await fetch("/api/users/lemon-squeezy")
 
     if (!response?.ok) {
       return toast({
@@ -44,10 +42,8 @@ export function BillingForm({
       })
     }
 
-    // Redirect to the Stripe session.
-    // This could be a checkout page for initial upgrade.
-    // Or portal to manage existing subscription.
     const session = await response.json()
+
     if (session) {
       window.location.href = session.url
     }
@@ -63,7 +59,23 @@ export function BillingForm({
             plan.
           </CardDescription>
         </CardHeader>
-        <CardContent>{subscriptionPlan.description}</CardContent>
+        <CardContent>
+          <p dangerouslySetInnerHTML={{ __html: subscriptionPlan.description }} />
+          <ul
+            role="list"
+            className={cn( 'mt-4 space-y-3 text-sm leading-6')}
+          >
+            {subscriptionPlan.features.map((feature) => (
+              <li key={feature} className="flex gap-x-3">
+                <Icons.check
+                  className="h-6 w-5 flex-none text-primary"
+                  aria-hidden="true"
+                />
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </CardContent>
         <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
           <button
             type="submit"
@@ -73,16 +85,8 @@ export function BillingForm({
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            {subscriptionPlan.isPro ? "Manage Subscription" : "Upgrade to PRO"}
+            {subscriptionPlan.isPro ? "View my order" : "Upgrade to PRO"}
           </button>
-          {subscriptionPlan.isPro ? (
-            <p className="rounded-full text-xs font-medium">
-              {subscriptionPlan.isCanceled
-                ? "Your plan will be canceled on "
-                : "Your plan renews on "}
-              {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}.
-            </p>
-          ) : null}
         </CardFooter>
       </Card>
     </form>

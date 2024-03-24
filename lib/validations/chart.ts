@@ -1,7 +1,7 @@
 import * as z from "zod"
 
 const aspectRatio = z.enum(['1/1', '2/3', '3/2', '4/3', '4/5', '16/9', '9/16'], {
-  'required_error': 'Please select an aspect ratio.',
+  required_error: 'Please select an aspect ratio.',
 });
 
 const type = z.enum(['bar', 'line', 'pie', 'radar', 'doughnut'], {
