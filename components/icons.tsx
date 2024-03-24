@@ -33,7 +33,6 @@ import { DoughnutChart } from "@/components/icons/DoughnutChart";
 import { LineChart } from "@/components/icons/LineChart";
 import { PieChart } from "@/components/icons/PieChart";
 import { RadarChart } from "@/components/icons/RadarChart";
-import { Logo } from "@/components/icons/Logo";
 
 export type Icon = LucideIcon
 

@@ -54,7 +54,7 @@ export function ChartExport() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Export</Button>
+        <Button type="button">Export</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">

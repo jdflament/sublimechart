@@ -56,12 +56,13 @@ export type DashboardConfig = {
 export type SubscriptionPlan = {
   name: string
   description: string
-  stripePriceId: string
+  features: string[]
+  lemonSqueezyStoreId: string
+  lemonSqueezyVariantId: string
 }
 
 export type UserSubscriptionPlan = SubscriptionPlan &
-  Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
-    stripeCurrentPeriodEnd: number
+  Pick<User, "lemonSqueezyCustomerId" | "lemonSqueezyLicenseKey" | "lemonSqueezyOrderId"> & {
     isPro: boolean
   }
 
