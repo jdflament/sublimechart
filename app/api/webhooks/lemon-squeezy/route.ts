@@ -1,70 +1,64 @@
-import { headers } from "next/headers"
-import { getWebhook } from "@lemonsqueezy/lemonsqueezy.js"
-
-import { env } from "@/env.mjs"
-import { db } from "@/lib/db"
+import crypto from "crypto";
+import { env } from "@/env.mjs";
+import { db } from "@/lib/db";
+import { slackMessage } from "@/lib/slack";
 
 export async function POST(req: Request) {
-  const body = await req.text()
-  const signature = headers().get("X-Signature") as string
-
-  let event;
-
   try {
-    event = getWebhook(
-      body,
-      signature,
-      env.LEMONSQUEEZY_WEBHOOK_SECRET
-    )
+    const text = await req.text();
+    const hmac = crypto.createHmac("sha256", env.LEMONSQUEEZY_WEBHOOK_SECRET);
+    const digest = Buffer.from(hmac.update(text).digest("hex"), "utf8");
+    const signature = Buffer.from(req.headers.get("x-signature") as string, "utf8");
+
+    if (!crypto.timingSafeEqual(digest, signature)) {
+      return new Response("Invalid signature.", {
+        status: 400,
+      });
+    }
+
+    const payload = JSON.parse(text);
+
+    const {
+      meta: { event_name: eventName },
+      data,
+    } = payload;
+
+    switch (eventName) {
+      case "order_created":
+        await slackMessage(`💰 LEMON SQUEEZY - New sale of SublimeChart ! 💰 ($${data.attributes.subtotal / 100})`);
+        break;
+      case "order_refunded":
+      case "license_key_updated":
+        const customerId = data?.attributes?.customer_id;
+        const isActiveLicenseKey = data?.attributes?.status === "active";
+
+        if (customerId && !isActiveLicenseKey) {
+          await db.user.update({
+            where: {
+              lemonSqueezyCustomerId: customerId.toString(),
+            },
+            data: {
+              lemonSqueezyCustomerId: null,
+              lemonSqueezyLicenseKey: null,
+              lemonSqueezyOrderId: null,
+            },
+          })
+        }
+        break;
+    }
   } catch (error) {
-    return new Response(`Webhook Error: ${error.message}`, { status: 400 })
+    if (error) {
+      return new Response(`Webhook error: ${error.message}`, {
+        status: 400,
+      });
+    }
+
+    return new Response("Webhook error", {
+      status: 400,
+    });
   }
 
-  const session = event.data.object
-
-  if (event.type === "checkout.session.completed") {
-    // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
-    )
-
-    // Update the user stripe into in our database.
-    // Since this is the initial subscription, we need to update
-    // the subscription id and customer id.
-    await db.user.update({
-      where: {
-        id: session?.metadata?.userId,
-      },
-      data: {
-        stripeSubscriptionId: subscription.id,
-        stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-      },
-    })
-  }
-
-  if (event.type === "invoice.payment_succeeded") {
-    // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
-    )
-
-    // Update the price id and set the new period end.
-    await db.user.update({
-      where: {
-        stripeSubscriptionId: subscription.id,
-      },
-      data: {
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-      },
-    })
-  }
-
-  return new Response(null, { status: 200 })
+  return new Response(null, {
+    status: 200,
+  });
 }

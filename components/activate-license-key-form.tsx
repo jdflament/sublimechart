@@ -68,7 +68,7 @@ export function ActivateLicenseKeyForm({ licenseKey }: ActivateLicenseKeyFormPro
     router.refresh();
 
     return toast({
-      description: "🎉Your license key has been activated! Enjoy the full potential of SublimeChart.",
+      description: "🎉 Your license key has been activated! Enjoy the full potential of SublimeChart.",
     });
   }
 
