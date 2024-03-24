@@ -1,4 +1,3 @@
-import { lemonSqueezySetup } from "@lemonsqueezy/lemonsqueezy.js";
 import { env } from "@/env.mjs"
 
 export async function slackMessage(text: string) {

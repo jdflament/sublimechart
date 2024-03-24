@@ -25,7 +25,13 @@ export async function POST(req: Request) {
 
     switch (eventName) {
       case "order_created":
-        await slackMessage(`💰 LEMON SQUEEZY - New sale of SublimeChart ! 💰 ($${data.attributes.subtotal / 100})`);
+        let message = `💰 LEMON SQUEEZY - New sale of SublimeChart ! 💰  ${data.attributes.subtotal_formatted}`;
+
+        if (data?.attributes?.discount_total) {
+          message += ` (- ${data.attributes.discount_total_formatted} discount)`;
+        }
+
+        await slackMessage(message);
         break;
       case "order_refunded":
       case "license_key_updated":
