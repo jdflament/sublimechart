@@ -38,7 +38,7 @@ export function ChartCanvas() {
   }, [aspectRatio]);
 
   // TODO: Uncomment to get the chart config
-  console.log(chartPatchSchema.parse(form.getValues()).config);
+  //console.log(chartPatchSchema.parse(form.getValues()).config);
 
   const initializeChart = useCallback(async () => {
     const ChartJS = (await import("chart.js/auto")).default
@@ -46,7 +46,6 @@ export function ChartCanvas() {
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
 
     if (watermark && options) {
-      // TODO: Adjust watermark options with correct logo
       options.watermark = {
         image: '/watermark.png',
         x: 0,
