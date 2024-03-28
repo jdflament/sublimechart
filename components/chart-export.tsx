@@ -24,15 +24,15 @@ import {
 import { Icons } from "@/components/icons";
 import { useFormContext } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { chartPatchSchema } from "@/lib/validations/chart";
 import { Separator } from "@/components/ui/separator";
-import { FFmpeg } from '@ffmpeg/ffmpeg';
-import { toBlobURL, fetchFile } from '@ffmpeg/util';
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { transcode } from "@/lib/transcoder";
+import { record } from "@/lib/recorder";
+import { downloadUrl } from "@/lib/downloader";
 
 export function ChartExport() {
   const [open, setOpen] = useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
@@ -80,137 +80,53 @@ export function ChartExport() {
 
 function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
-  const ffmpegRef = useRef(new FFmpeg());
   const title = form.watch("config.options.plugins.title.text");
-
-  function handleExportConfig() {
-    const config = chartPatchSchema.parse(form.getValues()).config;
-
-    if (config.options?.watermark) {
-      delete config.options?.watermark;
-    }
-
-    navigator.clipboard
-      .writeText(JSON.stringify(config, null, 2))
-      .then(() => {
-        return toast({
-          description: "🎉 Your chart config has been copied to clipboard!",
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-
-        return toast({
-          title: "Something went wrong.",
-          description: "An error occurred while copying your chart config. Please try again.",
-          variant: "destructive",
-        });
-      })
-      ;
-  }
+  const canvas = document.getElementById('chart') as HTMLCanvasElement;
 
   async function handleExportPNG() {
-    const ctx = document.getElementById('chart') as HTMLCanvasElement;
-
-    if (ctx) {
-      const url = ctx.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${title}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
+    if (!canvas) {
       return toast({
-        description: "🎉 Your chart has been successfully exported to PNG!",
-      });
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
     }
 
+    const url = canvas.toDataURL('image/png');
+    downloadUrl(url, `${title}.png`);
+
     return toast({
-      title: "Something went wrong.",
-      description: "Your chart was not exported. Please try again.",
-      variant: "destructive",
-    })
-  }
-
-  async function record(): Promise<Blob> {
-    const frames: Blob[] = [];
-    const timeLimit = 2000;
-
-    const time = 0;
-    const ctx = document.getElementById('chart') as HTMLCanvasElement;
-
-    return new Promise(function (resolve, reject) {
-      const stream = ctx.captureStream(60);
-
-      const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/webm;codecs=h264"
-      });
-
-      mediaRecorder.start(time);
-
-      mediaRecorder.ondataavailable = function (event) {
-        frames.push(event.data);
-
-        // Stop if nothing detected.
-        if (event.data.size === 0) {
-          mediaRecorder.stop();
-        }
-      }
-
-      mediaRecorder.onstop = function () {
-        const blob = new Blob(frames, { type: 'video/webm;codecs=h264' })
-        resolve(blob);
-      }
-
-      // Stop recording after 5 seconds max
-      setTimeout(() => {
-        if (mediaRecorder.state === 'recording') {
-          mediaRecorder.stop();
-        }
-      }, timeLimit);
+      description: "🎉 Your chart has been successfully exported to PNG!",
     });
   }
 
-  const load = async () => {
-    const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd'
-    const ffmpeg = ffmpegRef.current;
-    await ffmpeg.load({
-      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+  async function handleExportJPEG() {
+    if (!canvas) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
+
+    const url = canvas.toDataURL('image/jpeg');
+    downloadUrl(url, `${title}.jpeg`);
+
+    return toast({
+      description: "🎉 Your chart has been successfully exported to JPEG!",
     });
-  }
-
-  const transcode = async (blob) => {
-    const webmUrl = URL.createObjectURL(blob);
-    const ffmpeg = ffmpegRef.current;
-    await load();
-    await ffmpeg.writeFile('input.webm', await fetchFile(webmUrl));
-    await ffmpeg.exec(['-i', 'input.webm', '-vcodec', 'copy', '-qscale', '0', `${title}.mp4`], 1000);
-    const data = (await ffmpeg.readFile(`${title}.mp4`)) as any;
-
-    return URL.createObjectURL(new Blob([data], {type: 'video/mp4'}));
   }
 
   async function handleExportMP4() {
-    // Trigger chart animation
     const watermark = form.getValues().watermark;
     form.setValue('watermark', !watermark);
+    const filename = `${title}.mp4`;
 
     try {
-      // @ts-ignore
-      const blob = await record();
+      const blob = await record(canvas);
+      const url = await transcode(blob, 'video/mp4', filename);
 
-      // Transcode to MP4 and create object URL
-      const url = await transcode(blob);
-
-      // Create a link element to allow downloading the MP4 file
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${title}.mp4`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      downloadUrl(url, filename);
 
       return toast({
         description: "🎉 Your chart has been successfully exported to MP4!",
@@ -226,8 +142,34 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
     }
   }
 
+  async function handleExportGIF() {
+    const watermark = form.getValues().watermark;
+    form.setValue('watermark', !watermark);
+    const filename = `${title}.gif`;
+
+    try {
+      const blob = await record(canvas);
+      const url = await transcode(blob, 'image/gif', filename);
+
+      downloadUrl(url, filename);
+
+      return toast({
+        description: "🎉 Your chart has been successfully exported to GIF!",
+      });
+    } catch (error) {
+      console.error(error);
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
   return (
     <div className="mt-6 flex flex-col gap-2">
+      <p className="text-lg font-bold">Static</p>
       <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
         <Button
           type="button"
@@ -241,16 +183,17 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         <Button
           type="button"
           variant="outline"
-          onClick={handleExportConfig}
+          onClick={handleExportJPEG}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
-          <Icons.code className="mb-3 h-6 w-6" />
-          Chart.JS Config
+          <Icons.media className="mb-3 h-6 w-6" />
+          JPEG
         </Button>
       </div>
 
-    <Separator className="my-6" />
+      <Separator className="my-6" />
 
+      <p className="text-lg font-bold">Animated</p>
       <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
         <Button
           type="button"
@@ -264,7 +207,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         <Button
           type="button"
           variant="outline"
-          disabled
+          onClick={handleExportGIF}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
           <Icons.media className="mb-3 h-6 w-6" />

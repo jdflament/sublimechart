@@ -26,6 +26,7 @@ import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
 import { ChartExport } from "@/components/chart-export";
+import { ChartCode } from "@/components/chart-code";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -139,6 +140,8 @@ export function Playground({ chart }: PlaygroundProps) {
                 )}
                 <span>Save</span>
               </Button>
+
+              <ChartCode />
 
               <ChartExport />
             </div>
