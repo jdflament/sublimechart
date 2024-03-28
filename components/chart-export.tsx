@@ -38,7 +38,7 @@ export function ChartExport() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button type="button">Export</Button>
+          <Button type="button" size="lg">Export</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[550px]">
           <DialogHeader>
@@ -57,7 +57,7 @@ export function ChartExport() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button type="button">Export</Button>
+        <Button type="button" size="lg">Export</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
@@ -81,7 +81,7 @@ export function ChartExport() {
 function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
   const ffmpegRef = useRef(new FFmpeg());
-  const [videoUrl, setVideoUrl] = useState<string>("");
+  const title = form.watch("config.options.plugins.title.text");
 
   function handleExportConfig() {
     const config = chartPatchSchema.parse(form.getValues()).config;
@@ -111,7 +111,6 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
 
   async function handleExportPNG() {
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
-    const title = form.watch("config.options.plugins.title.text");
 
     if (ctx) {
       const url = ctx.toDataURL("image/png");
@@ -121,7 +120,10 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      return;
+
+      return toast({
+        description: "🎉 Your chart has been successfully exported to PNG!",
+      });
     }
 
     return toast({
@@ -132,7 +134,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function record(): Promise<Blob> {
-    const recordedChunks: Blob[] = [];
+    const frames: Blob[] = [];
     const timeLimit = 2000;
 
     const time = 0;
@@ -141,16 +143,14 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
     return new Promise(function (resolve, reject) {
       const stream = ctx.captureStream(60);
 
-      console.log(stream);
-
       const mediaRecorder = new MediaRecorder(stream, {
-        mimeType: "video/webm; codecs=vp9"
+        mimeType: "video/webm;codecs=h264"
       });
 
       mediaRecorder.start(time);
 
       mediaRecorder.ondataavailable = function (event) {
-        recordedChunks.push(event.data);
+        frames.push(event.data);
 
         // Stop if nothing detected.
         if (event.data.size === 0) {
@@ -159,10 +159,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
       }
 
       mediaRecorder.onstop = function () {
-        const blob = new Blob(recordedChunks, {
-          "type": "video/webm"
-        });
-
+        const blob = new Blob(frames, { type: 'video/webm;codecs=h264' })
         resolve(blob);
       }
 
@@ -189,10 +186,10 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
     const ffmpeg = ffmpegRef.current;
     await load();
     await ffmpeg.writeFile('input.webm', await fetchFile(webmUrl));
-    await ffmpeg.exec(['-i', 'input.webm', 'output.mp4'], 1000);
-    const data = (await ffmpeg.readFile('output.mp4')) as any
+    await ffmpeg.exec(['-i', 'input.webm', '-vcodec', 'copy', '-qscale', '0', `${title}.mp4`], 1000);
+    const data = (await ffmpeg.readFile(`${title}.mp4`)) as any;
 
-    return URL.createObjectURL(new Blob([data.buffer], {type: 'video/mp4'}));
+    return URL.createObjectURL(new Blob([data], {type: 'video/mp4'}));
   }
 
   async function handleExportMP4() {
@@ -200,18 +197,33 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
     const watermark = form.getValues().watermark;
     form.setValue('watermark', !watermark);
 
-    // @ts-ignore
-    const blob = await record();
+    try {
+      // @ts-ignore
+      const blob = await record();
 
-    // Transcode to MP4 and create object URL
-    const url = await transcode(blob);
+      // Transcode to MP4 and create object URL
+      const url = await transcode(blob);
 
-    // Create a link element to allow downloading the MP4 file
-    console.log(url);
+      // Create a link element to allow downloading the MP4 file
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${title}.mp4`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    setVideoUrl(url);
-    // Simulate click on the link to start downloading
-    //link.click();
+      return toast({
+        description: "🎉 Your chart has been successfully exported to MP4!",
+      });
+    } catch (error) {
+      console.error(error);
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
   }
 
   return (
@@ -259,10 +271,6 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
           GIF
         </Button>
       </div>
-
-      { videoUrl && (
-        <video controls className="mt-4 rounded-md" src={videoUrl} autoPlay loop />
-      )}
     </div>
   )
 }
