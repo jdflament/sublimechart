@@ -27,6 +27,7 @@ import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
 import { ChartExport } from "@/components/chart-export";
 import { ChartCode } from "@/components/chart-code";
+import { ChartProvider } from "@/components/chart-context";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -112,117 +113,119 @@ export function Playground({ chart }: PlaygroundProps) {
   }
 
   return (
-    <FormProvider {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid w-full gap-4">
-          <div className="flex w-full flex-col justify-between md:flex-row">
-            <div className="flex space-x-10">
-              <Link
-                href="/dashboard"
-                className={cn(buttonVariants({ variant: "ghost" }))}
-              >
-                <>
-                  <Icons.chevronLeft className="mr-2 h-4 w-4" />
-                  Back
-                </>
-              </Link>
-            </div>
-            <div className="flex w-full flex-col gap-4 md:w-auto md:flex-row">
-              <div className="flex justify-between gap-4 md:justify-normal">
-                <ChartWatermark />
-                <ChartAspectRatio />
+    <ChartProvider>
+      <FormProvider {...form}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid w-full gap-4">
+            <div className="flex w-full flex-col justify-between md:flex-row">
+              <div className="flex space-x-10">
+                <Link
+                  href="/dashboard"
+                  className={cn(buttonVariants({ variant: "ghost" }))}
+                >
+                  <>
+                    <Icons.chevronLeft className="mr-2 h-4 w-4" />
+                    Back
+                  </>
+                </Link>
               </div>
-              <ChartTitle />
+              <div className="flex w-full flex-col gap-4 md:w-auto md:flex-row">
+                <div className="flex justify-between gap-4 md:justify-normal">
+                  <ChartWatermark />
+                  <ChartAspectRatio />
+                </div>
+                <ChartTitle />
 
-              <Button type="submit" variant="outline">
-                {isSaving && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                <span>Save</span>
-              </Button>
+                <Button type="submit" variant="outline">
+                  {isSaving && (
+                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  <span>Save</span>
+                </Button>
 
-              <ChartCode />
+                <ChartCode />
 
-              <ChartExport />
+                <ChartExport />
+              </div>
+            </div>
+            <div className="grow lg:flex xl:px-2">
+              <div className="flex-1">
+                <div className="mx-auto mb-4 text-center sm:px-6 lg:pl-8 xl:shrink-0">
+                  <ChartSelector />
+                </div>
+
+                <div className="px-4 py-6 sm:px-6 md:sticky md:top-16 lg:flex-1 lg:pl-8 xl:pl-6">
+                  <ChartCanvas />
+                </div>
+              </div>
+
+              <div className="mb-4 w-full shrink-0 lg:ml-14 lg:w-[500px]">
+                <Tabs defaultValue="templates">
+                  <TabsList className="grid w-full grid-cols-4">
+                    <TabsTrigger value="templates">Templates</TabsTrigger>
+                    <TabsTrigger value="data">Data</TabsTrigger>
+                    <TabsTrigger value="options">Options</TabsTrigger>
+                    <TabsTrigger value="background">Background</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="templates">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Templates</CardTitle>
+                        <CardDescription>
+                          Select a predefined template.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <ChartTemplates />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="data">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Data</CardTitle>
+                        <CardDescription>
+                          Update the data of the chart.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <ChartLabels />
+                        <ChartDataSets />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="options">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Options</CardTitle>
+                        <CardDescription>
+                          Customize the chart render through options.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <ChartOptions />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                  <TabsContent value="background">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Background</CardTitle>
+                        <CardDescription>
+                          Select your favorite background.
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <ChartBackground />
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+              </div>
             </div>
           </div>
-          <div className="grow lg:flex xl:px-2">
-            <div className="flex-1">
-              <div className="mx-auto mb-4 text-center sm:px-6 lg:pl-8 xl:shrink-0">
-                <ChartSelector />
-              </div>
-
-              <div className="px-4 py-6 sm:px-6 md:sticky md:top-16 lg:flex-1 lg:pl-8 xl:pl-6">
-                <ChartCanvas />
-              </div>
-            </div>
-
-            <div className="mb-4 w-full shrink-0 lg:ml-14 lg:w-[500px]">
-              <Tabs defaultValue="templates">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="templates">Templates</TabsTrigger>
-                  <TabsTrigger value="data">Data</TabsTrigger>
-                  <TabsTrigger value="options">Options</TabsTrigger>
-                  <TabsTrigger value="background">Background</TabsTrigger>
-                </TabsList>
-                <TabsContent value="templates">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Templates</CardTitle>
-                      <CardDescription>
-                        Select a predefined template.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <ChartTemplates />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="data">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Data</CardTitle>
-                      <CardDescription>
-                        Update the data of the chart.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <ChartLabels />
-                      <ChartDataSets />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="options">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Options</CardTitle>
-                      <CardDescription>
-                        Customize the chart render through options.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <ChartOptions />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-                <TabsContent value="background">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Background</CardTitle>
-                      <CardDescription>
-                        Select your favorite background.
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <ChartBackground />
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-        </div>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </ChartProvider>
   )
 }

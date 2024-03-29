@@ -29,9 +29,10 @@ import { useState } from "react";
 import { transcode } from "@/lib/transcoder";
 import { record } from "@/lib/recorder";
 import { downloadUrl } from "@/lib/downloader";
+import { useChart } from "@/components/chart-context";
 
 export function ChartExport() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
@@ -82,6 +83,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
   const title = form.watch("config.options.plugins.title.text");
   const canvas = document.getElementById('chart') as HTMLCanvasElement;
+  const { toggleRerenderChart } = useChart();
 
   async function handleExportPNG() {
     if (!canvas) {
@@ -118,8 +120,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportMP4() {
-    const watermark = form.getValues().watermark;
-    form.setValue('watermark', !watermark);
+    toggleRerenderChart();
     const filename = `${title}.mp4`;
 
     try {
@@ -143,8 +144,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportGIF() {
-    const watermark = form.getValues().watermark;
-    form.setValue('watermark', !watermark);
+    toggleRerenderChart();
     const filename = `${title}.gif`;
 
     try {
@@ -169,7 +169,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <div className="mt-6 flex flex-col gap-2">
-      <p className="text-lg font-bold">Static</p>
+      <p className="text-lg font-bold">Image</p>
       <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
         <Button
           type="button"
