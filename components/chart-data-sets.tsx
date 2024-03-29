@@ -17,11 +17,11 @@ import {
   SheetTrigger
 } from "@/components/ui/sheet";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {Switch} from "@/components/ui/switch";
-import {ChartDataSetsColors} from "@/components/chart-data-sets-colors";
-import {Slider} from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { ChartDataSetsColors } from "@/components/chart-data-sets-colors";
+import { Slider } from "@/components/ui/slider";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel,
   AlertDialogContent, AlertDialogDescription, AlertDialogFooter,

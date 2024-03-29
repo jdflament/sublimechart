@@ -8,8 +8,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import {cn} from "@/lib/utils";
-import {chartPatchSchema} from "@/lib/validations/chart";
+import { cn } from "@/lib/utils";
+import { useChart } from "@/components/chart-context";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -22,6 +22,7 @@ export function ChartCanvas() {
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { rerenderChart } = useChart();
   const [chartContainerClass, setChartContainerClass] = useState<string>('max-w-[650px]');
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export function ChartCanvas() {
   }, [aspectRatio]);
 
   // TODO: Uncomment to get the chart config
-  console.log(chartPatchSchema.parse(form.getValues()).config);
+  //console.log(chartPatchSchema.parse(form.getValues()).config);
 
   const initializeChart = useCallback(async () => {
     const ChartJS = (await import("chart.js/auto")).default
@@ -46,7 +47,6 @@ export function ChartCanvas() {
     const ctx = document.getElementById('chart') as HTMLCanvasElement;
 
     if (watermark && options) {
-      // TODO: Adjust watermark options with correct logo
       options.watermark = {
         image: '/watermark.png',
         x: 0,
@@ -95,7 +95,8 @@ export function ChartCanvas() {
         options,
       });
     }
-  }, [type, data, options, watermark]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, data, options, watermark, rerenderChart]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

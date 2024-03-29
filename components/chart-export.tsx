@@ -24,18 +24,22 @@ import {
 import { Icons } from "@/components/icons";
 import { useFormContext } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { chartPatchSchema } from "@/lib/validations/chart";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { transcode } from "@/lib/transcoder";
+import { record } from "@/lib/recorder";
+import { downloadUrl } from "@/lib/downloader";
+import { useChart } from "@/components/chart-context";
 
 export function ChartExport() {
-  const [open, setOpen] = React.useState(false)
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const [open, setOpen] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button type="button">Export</Button>
+          <Button type="button" size="lg">Export</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[550px]">
           <DialogHeader>
@@ -54,7 +58,7 @@ export function ChartExport() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button type="button">Export</Button>
+        <Button type="button" size="lg">Export</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
@@ -77,57 +81,95 @@ export function ChartExport() {
 
 function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
-
-  function handleExportConfig() {
-    const config = chartPatchSchema.parse(form.getValues()).config;
-
-    if (config.options?.watermark) {
-      delete config.options?.watermark;
-    }
-
-    navigator.clipboard
-      .writeText(JSON.stringify(config, null, 2))
-      .then(() => {
-        return toast({
-          description: "🎉 Your chart config has been copied to clipboard!",
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-
-        return toast({
-          title: "Something went wrong.",
-          description: "An error occurred while copying your chart config. Please try again.",
-          variant: "destructive",
-        });
-      })
-      ;
-  }
+  const title = form.watch("config.options.plugins.title.text");
+  const canvas = document.getElementById('chart') as HTMLCanvasElement;
+  const { toggleRerenderChart } = useChart();
 
   async function handleExportPNG() {
-    const ctx = document.getElementById('chart') as HTMLCanvasElement;
-    const title = form.watch("config.options.plugins.title.text");
-
-    if (ctx) {
-      const url = ctx.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${title}.png`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      return;
+    if (!canvas) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
     }
 
+    const url = canvas.toDataURL('image/png');
+    downloadUrl(url, `${title}.png`);
+
     return toast({
-      title: "Something went wrong.",
-      description: "Your chart was not exported. Please try again.",
-      variant: "destructive",
-    })
+      description: "🎉 Your chart has been successfully exported to PNG!",
+    });
+  }
+
+  async function handleExportJPEG() {
+    if (!canvas) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
+
+    const url = canvas.toDataURL('image/jpeg');
+    downloadUrl(url, `${title}.jpeg`);
+
+    return toast({
+      description: "🎉 Your chart has been successfully exported to JPEG!",
+    });
+  }
+
+  async function handleExportMP4() {
+    toggleRerenderChart();
+    const filename = `${title}.mp4`;
+
+    try {
+      const blob = await record(canvas);
+      const url = await transcode(blob, 'video/mp4', filename);
+
+      downloadUrl(url, filename);
+
+      return toast({
+        description: "🎉 Your chart has been successfully exported to MP4!",
+      });
+    } catch (error) {
+      console.error(error);
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  async function handleExportGIF() {
+    toggleRerenderChart();
+    const filename = `${title}.gif`;
+
+    try {
+      const blob = await record(canvas);
+      const url = await transcode(blob, 'image/gif', filename);
+
+      downloadUrl(url, filename);
+
+      return toast({
+        description: "🎉 Your chart has been successfully exported to GIF!",
+      });
+    } catch (error) {
+      console.error(error);
+
+      return toast({
+        title: "Something went wrong.",
+        description: "Your chart was not exported. Please try again.",
+        variant: "destructive",
+      })
+    }
   }
 
   return (
     <div className="mt-6 flex flex-col gap-2">
+      <p className="text-lg font-bold">Image</p>
       <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
         <Button
           type="button"
@@ -141,46 +183,36 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         <Button
           type="button"
           variant="outline"
-          disabled
+          onClick={handleExportJPEG}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
-          <Icons.clapperboard className="mb-3 h-6 w-6" />
-          Video/GIF
+          <Icons.media className="mb-3 h-6 w-6" />
+          JPEG
         </Button>
       </div>
 
-    <Separator className="my-6" />
+      <Separator className="my-6" />
 
+      <p className="text-lg font-bold">Animated</p>
       <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
         <Button
           type="button"
           variant="outline"
-          onClick={handleExportConfig}
+          onClick={handleExportMP4}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
-          <Icons.code className="mb-3 h-6 w-6" />
-          Chart.JS Config
+          <Icons.clapperboard className="mb-3 h-6 w-6" />
+          Video (MP4)
         </Button>
-        <div className="flex h-auto flex-col p-0">
-          <p className="text-sm text-muted-foreground">
-            <Icons.help className="mr-1 inline h-4 w-4" />
-            <span>
-              Plugins used:
-            </span>
-          </p>
-          <ul className="ml-4 mt-2 list-disc text-sm text-muted-foreground">
-            <li>
-              <a
-                href="https://github.com/chartjs/chartjs-plugin-datalabels"
-                target="_blank"
-                rel="nofollow noreferrer"
-                className="font-medium text-primary underline underline-offset-4"
-              >
-                chartjs-plugin-datalabels
-              </a>
-            </li>
-          </ul>
-        </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleExportGIF}
+          className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+        >
+          <Icons.media className="mb-3 h-6 w-6" />
+          GIF
+        </Button>
       </div>
     </div>
   )
