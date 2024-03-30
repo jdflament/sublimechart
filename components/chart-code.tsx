@@ -12,21 +12,35 @@ import {
 import { Icons } from "@/components/icons";
 import { useFormContext } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { chartPatchSchema } from "@/lib/validations/chart";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {DialogClose} from "@radix-ui/react-dialog";
 import Link from "next/link";
+import {useEffect, useState} from "react";
+import { Plugin } from "@/types";
 
 export function ChartCode() {
   const form = useFormContext();
+  const config = form.watch('config');
+  const [plugins, setPlugins] = useState<Plugin[]>([]);
 
-  function handleCopyConfig() {
-    const config = chartPatchSchema.parse(form.getValues()).config;
-
+  useEffect(() => {
     if (config.options?.watermark) {
       delete config.options?.watermark;
     }
 
+    const pluginsUsed: Plugin[] = [];
+
+    if (config.options?.plugins?.datalabels?.display) {
+      pluginsUsed.push({
+        name: "Datalabels",
+        link: "https://github.com/chartjs/chartjs-plugin-datalabels",
+      });
+    }
+
+    setPlugins(pluginsUsed);
+  }, [config]);
+
+  function handleCopyConfig() {
     navigator.clipboard
       .writeText(JSON.stringify(config, null, 2))
       .then(() => {
@@ -63,21 +77,32 @@ export function ChartCode() {
         </DialogHeader>
         <ScrollArea className="max-h-[400px]">
           <pre className="rounded-md border border-muted bg-background p-4 text-sm text-muted-foreground">
-            {JSON.stringify(form.getValues().config, null, 2)}
+            {JSON.stringify(config, null, 2)}
           </pre>
         </ScrollArea>
         <div>
           <p className="text-sm italic text-muted-foreground">
-            *We are using the following plugins in this chart:
-            <ul>
+            ⚠️ We are using the following plugins in this chart:
+            <ul className="list-disc pl-4">
+              { plugins && plugins.map((plugin) => (
+                <li key={plugin.name}>
+                  <Link
+                    href={plugin.link}
+                    target="_blank"
+                    rel="nofollow"
+                    className="font-semibold hover:underline">
+                    {plugin.name}
+                  </Link>
+                </li>
+              ))}
               <li>
                 <Link
-                  href="https://github.com/chartjs/chartjs-plugin-datalabels"
+                  href="https://www.chartjs.org/docs/latest/configuration/canvas-background.html"
                   target="_blank"
                   rel="nofollow"
-                  className="font-semibold hover:underline">
-                  chartjs-plugin-datalabels
+                  className="font-semibold hover:underline">Canvas background
                 </Link>
+                <p className="text-xs italic text-muted-foreground">Follow the documentation to handle canvas backgrounds. Our own plugin for hexadecimal colors or linear gradients can be found <Link className="font-semibold hover:underline" href="/plugins/background.js">here</Link>.</p>
               </li>
             </ul>
           </p>

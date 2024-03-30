@@ -39,10 +39,23 @@ const axis = z.object({
   stacked: z.boolean().optional(),
 }).optional();
 
+const animation = z.record(
+  z.string().optional(),
+  z.object({
+    duration: z.number().optional(),
+    easing: z.string().optional(),
+    from: z.number().optional(),
+    to: z.number().optional(),
+    loop: z.boolean().optional(),
+    delay: z.number().optional(),
+    render: z.function().optional()
+  }).optional()
+).optional();
+
 const options = z.object({
   plugins: z.object({
     datalabels: z.object({
-      display: z.boolean().default(false).optional(),
+      display: z.boolean().optional(),
       anchor: z.enum(['start', 'center', 'end']).default('end').optional(),
       align: z.enum(['start', 'center', 'end', 'top', 'left', 'right', 'bottom']).default('top').optional(),
       color: z.string().default('#000000').optional(),
@@ -82,6 +95,9 @@ const options = z.object({
       align: z.enum(['start', 'center', 'end']).optional(),
     }).optional(),
   }).optional(),
+  animations: z.object({
+    animation,
+  }).or(z.boolean()).optional(),
   layout: z.object({
     padding: z.number().optional(),
   }).optional(),

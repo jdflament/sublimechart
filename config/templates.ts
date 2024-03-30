@@ -162,7 +162,7 @@ export const templates: Template[] = [
               "#fcd34d"
             ],
             borderColor: [
-              "#f8fafc"
+              "#1e1b4b"
             ],
             borderWidth: 0,
             fill: false
@@ -179,7 +179,7 @@ export const templates: Template[] = [
               "#f43f5e"
             ],
             borderColor: [
-              "#FFFFFF"
+              "#1e1b4b"
             ],
             borderWidth: 0,
             fill: false
@@ -196,7 +196,7 @@ export const templates: Template[] = [
               "#6d28d9"
             ],
             borderColor: [
-              "#FFFFFF"
+              "#1e1b4b"
             ],
             borderWidth: 0,
             fill: false
@@ -611,7 +611,7 @@ export const templates: Template[] = [
               "#a7f3d0"
             ],
             borderColor: [
-              "#f8fafc"
+              "#a7f3d0"
             ],
             borderWidth: 0,
             fill: true
@@ -629,7 +629,7 @@ export const templates: Template[] = [
               "#0d9488"
             ],
             borderColor: [
-              "#FFFFFF"
+              "#0d9488"
             ],
             borderWidth: 0,
             fill: true

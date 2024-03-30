@@ -1,6 +1,6 @@
 export async function record(canvas: HTMLCanvasElement): Promise<Blob> {
   const frames: Blob[] = [];
-  const timeLimit = 2000;
+  const timeLimit = 4000;
 
   const time = 0;
 
@@ -27,7 +27,7 @@ export async function record(canvas: HTMLCanvasElement): Promise<Blob> {
       resolve(blob);
     }
 
-    // Stop recording after 5 seconds max
+    // Stop recording after 4 seconds max
     setTimeout(() => {
       if (mediaRecorder.state === 'recording') {
         mediaRecorder.stop();
