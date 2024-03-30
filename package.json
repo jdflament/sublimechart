@@ -14,7 +14,7 @@
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
-    "postinstall": "prisma generate && prisma db push --accept-data-loss"
+    "postinstall": "prisma generate && prisma db push"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.10",
