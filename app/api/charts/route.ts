@@ -64,13 +64,6 @@ export async function POST(req: Request) {
     const json = await req.json()
     const body = chartCreateSchema.parse(json)
 
-    console.log({
-      aspectRatio: body.aspectRatio,
-      config: body.config,
-      authorId: session.user.id,
-      watermark: body.watermark,
-    });
-
     const chart = await db.chart.create({
       data: {
         aspectRatio: body.aspectRatio,

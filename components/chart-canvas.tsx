@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { useFormContext } from "react-hook-form";
-import { ChartPatchFormData } from "@/types/chart";
+import {ChartConfigType, ChartPatchFormData} from "@/types/chart";
 import ChartJS from "chart.js/auto";
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,11 +14,10 @@ import { useChart } from "@/components/chart-context";
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
   const aspectRatio = form.watch("aspectRatio");
-  const {
-    type,
-    data,
-    options
-  } = form.watch("config");
+  const config = form.watch("config");
+  const { type, data, options} = config;
+  // @ts-ignore
+  const { animations } = options;
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -96,7 +95,7 @@ export function ChartCanvas() {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, data, options, watermark, rerenderChart]);
+  }, [type, watermark, rerenderChart, JSON.stringify(animations)]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

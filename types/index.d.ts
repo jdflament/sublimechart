@@ -97,3 +97,15 @@ export type Tier = {
   features: string[]
   featured: boolean
 }
+
+export type Animation = {
+  label: string
+  value: string
+  key: string
+  animation: any
+}
+
+export type Plugin = {
+  name: string
+  link: string
+}

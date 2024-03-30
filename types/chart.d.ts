@@ -13,6 +13,16 @@ export type ChartDataType = {
   }[];
 }
 
+type Animation = Partial<Record<string, unknown>> & {
+  duration?: number | undefined;
+  easing?: string | undefined;
+  from?: number | undefined;
+  to?: number | undefined;
+  loop?: boolean | undefined;
+  delay?: number | undefined;
+  render?: () => void | undefined;
+};
+
 export type ChartOptionsType = {
   plugins?: {
     datalabels?: {
@@ -55,6 +65,9 @@ export type ChartOptionsType = {
     background?: {
       color?: string | undefined;
     },
+  },
+  animations?: {
+    animation?: Animation;
   },
   layout?: {
     padding?: number | undefined;

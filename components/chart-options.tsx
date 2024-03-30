@@ -10,11 +10,11 @@ import { ChartAnimations } from "@/components/chart-animations";
 export function ChartOptions() {
   return (
     <div className="flex flex-col gap-4">
-      <ChartFont />
       <ChartPadding />
+      <ChartFont />
+      <ChartAnimations />
       <ChartLegend />
       <ChartDataLabels />
-      <ChartAnimations />
       <ChartAxis />
     </div>
   );
