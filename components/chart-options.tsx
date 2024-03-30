@@ -5,6 +5,7 @@ import { ChartAxis } from "@/components/chart-axis";
 import { ChartLegend } from "@/components/chart-legend";
 import { ChartDataLabels } from "@/components/chart-data-labels";
 import { ChartFont } from "@/components/chart-font";
+import { ChartAnimations } from "@/components/chart-animations";
 
 export function ChartOptions() {
   return (
@@ -13,6 +14,7 @@ export function ChartOptions() {
       <ChartPadding />
       <ChartLegend />
       <ChartDataLabels />
+      <ChartAnimations />
       <ChartAxis />
     </div>
   );
