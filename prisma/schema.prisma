@@ -7,8 +7,8 @@ generator json {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
   relationMode = "prisma"
 }
 
@@ -27,7 +27,7 @@ model Account {
   session_state     String?
   createdAt         DateTime @default(now()) @map("created_at")
   updatedAt         DateTime @default(now()) @map("updated_at")
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "like_user_fk")
 
   @@unique([provider, providerAccountId])
   @@index([userId], map: "accounts_userId_fkey")
@@ -39,7 +39,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, map: "like_user_fk")
 
   @@index([userId], map: "sessions_userId_fkey")
   @@map("sessions")
@@ -80,7 +80,7 @@ model Chart {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
   authorId  String
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], map: "like_author_fk")
   watermark Boolean @default(true)
 
   @@index([authorId], map: "charts_authorId_fkey")
