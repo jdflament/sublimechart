@@ -9,7 +9,7 @@ import Background from '@/lib/chart/plugins/background';
 import ChartjsPluginWatermark from 'chartjs-plugin-watermark'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { cn } from "@/lib/utils";
-import { useChart } from "@/components/chart-context";
+import { usePlayground } from "@/components/playground-context";
 
 export function ChartCanvas() {
   const form = useFormContext<ChartPatchFormData>();
@@ -21,7 +21,7 @@ export function ChartCanvas() {
   const watermark = form.watch('watermark');
   const ref = useRef<ChartJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const { rerenderChart } = useChart();
+  const { rerenderChart } = usePlayground();
   const [chartContainerClass, setChartContainerClass] = useState<string>('max-w-[650px]');
 
   useEffect(() => {

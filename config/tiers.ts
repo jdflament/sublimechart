@@ -3,7 +3,7 @@ import { Tier } from "@/types";
 export const freeTier: Tier = {
   name: 'Free',
   id: 'tier-free',
-  priceMonthly: '$0',
+  price: '$0',
   description: "Give a try to SublimeChart with our free tier.",
   features: ['Line, Bar and Doughnut charts', 'Up to 3 charts saved', 'Basic editor options', 'PNG and Chart.js config export'],
   featured: false,
@@ -12,7 +12,7 @@ export const freeTier: Tier = {
 export const proTier: Tier = {
   name: 'Pro',
   id: 'tier-pro',
-  priceMonthly: '$69',
+  price: '$69',
   priceHelpText: '(one-time payment)',
   description: 'Get the pro version for unlimited charts, export and more. Lifetime access.',
   features: [

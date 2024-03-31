@@ -52,7 +52,7 @@ export default function PricingPage() {
                       'font-heading text-5xl tracking-tight'
                     )}
                   >
-                    {tier.priceMonthly}
+                    {tier.price}
                   </span>
                 { tier.priceHelpText && (
                   <span className={cn(

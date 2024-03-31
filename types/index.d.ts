@@ -91,7 +91,7 @@ export type Template = {
 export type Tier = {
   name: string
   id: string
-  priceMonthly: string
+  price: string
   priceHelpText?: string
   description: string
   features: string[]

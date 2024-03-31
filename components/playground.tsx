@@ -27,13 +27,15 @@ import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
 import { ChartExport } from "@/components/chart-export";
 import { ChartCode } from "@/components/chart-code";
-import { ChartProvider } from "@/components/chart-context";
+import { PlaygroundProvider } from "@/components/playground-context";
+import { UserSubscriptionPlan } from "@/types";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
+  subscriptionPlan: UserSubscriptionPlan
 }
 
-export function Playground({ chart }: PlaygroundProps) {
+export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
   const defaultValues = chartPatchSchema.parse(chart);
 
   const form = useForm<ChartPatchFormData>({
@@ -113,7 +115,7 @@ export function Playground({ chart }: PlaygroundProps) {
   }
 
   return (
-    <ChartProvider>
+    <PlaygroundProvider subscriptionPlan={subscriptionPlan}>
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full gap-4">
@@ -226,6 +228,6 @@ export function Playground({ chart }: PlaygroundProps) {
           </div>
         </form>
       </FormProvider>
-    </ChartProvider>
+    </PlaygroundProvider>
   )
 }

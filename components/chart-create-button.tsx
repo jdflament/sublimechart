@@ -16,7 +16,7 @@ export function ChartCreateButton({
    ...props
  }: ChartCreateButtonProps) {
   const router = useRouter()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onClick() {
     setIsLoading(true)

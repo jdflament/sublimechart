@@ -148,7 +148,7 @@ export default async function IndexPage() {
                       'font-heading text-5xl tracking-tight'
                     )}
                   >
-                    {tier.priceMonthly}
+                    {tier.price}
                   </span>
                   { tier.priceHelpText && (
                     <span className={cn(

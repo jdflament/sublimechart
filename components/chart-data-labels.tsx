@@ -6,13 +6,17 @@ import { Switch } from "@/components/ui/switch";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { usePlayground } from "@/components/playground-context";
+import { ProOverlay } from "@/components/pro-overlay";
+import * as React from "react";
 
 export function ChartDataLabels() {
   const form = useFormContext();
   const display = !!form.watch('config.options.plugins.datalabels.display');
+  const { isPro, toggleProPlanModal } = usePlayground();
 
   return (
-    <div className="rounded-lg border p-4">
+    <div className="group relative rounded-lg border p-4">
       <div className="flex flex-row items-center justify-between">
         <div className="space-y-0.5">
           <FormLabel className="text-sm font-semibold">
@@ -30,14 +34,14 @@ export function ChartDataLabels() {
               <FormControl>
                 <Switch
                   checked={field.value}
-                  onCheckedChange={field.onChange}
+                  onCheckedChange={isPro ? field.onChange : toggleProPlanModal}
                 />
               </FormControl>
             </FormItem>
           )}
         />
       </div>
-      { display && (
+      { isPro && display && (
         <div className="mt-2 flex flex-col space-y-2">
           <FormField
             control={form.control}
@@ -173,6 +177,9 @@ export function ChartDataLabels() {
             )}
           />
         </div>
+      )}
+      { !isPro && (
+        <ProOverlay />
       )}
     </div>
   );

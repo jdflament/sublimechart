@@ -1,16 +1,19 @@
 "use client"
 
 import { useFormContext } from "react-hook-form";
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Switch } from "@/components/ui/switch";
 import * as React from "react";
 import { animations } from "@/config/animations";
 import { Combobox } from "@/components/ui/combobox";
+import { usePlayground } from "@/components/playground-context";
+import { ProOverlay } from "@/components/pro-overlay";
 
 export function ChartAnimations() {
   const form = useFormContext();
   const hasAnimation = !!form.watch('config.options.animations');
   const [selectedAnimations, setSelectedAnimations] = React.useState<string[]>([]);
+  const { isPro, toggleProPlanModal } = usePlayground();
 
   function handleSelectAnimation(values) {
     setSelectedAnimations(values);
@@ -18,7 +21,7 @@ export function ChartAnimations() {
     // convert values to animations
     const selected = animations.filter((animation) => values.includes(animation.value));
 
-    form.setValue(`config.options.animations`, true);
+    form.setValue('config.options.animations', true);
 
     selected.forEach((animation) => {
       form.setValue(`config.options.${animation.key}`, animation.animation);
@@ -26,7 +29,7 @@ export function ChartAnimations() {
   }
 
   return (
-    <div className="rounded-lg border p-4">
+    <div className="group relative rounded-lg border p-4">
       <div className="flex flex-row items-center justify-between">
         <div className="space-y-0.5">
           <FormLabel className="text-sm font-semibold">
@@ -44,14 +47,14 @@ export function ChartAnimations() {
               <FormControl>
                 <Switch
                   checked={field.value}
-                  onCheckedChange={field.onChange}
+                  onCheckedChange={isPro ? field.onChange : toggleProPlanModal}
                 />
               </FormControl>
             </FormItem>
           )}
         />
       </div>
-      { hasAnimation && (
+      { isPro && hasAnimation && (
         <div className="mt-2 flex gap-4">
           <Combobox
             selectPlaceholder={"Select one or more animations"}
@@ -63,6 +66,9 @@ export function ChartAnimations() {
             clearable={true}
           />
         </div>
+      )}
+      { !isPro && (
+        <ProOverlay />
       )}
     </div>
   )

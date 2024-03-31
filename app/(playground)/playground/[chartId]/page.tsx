@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { Chart, User } from "@prisma/client";
 import { db } from "@/lib/db";
 import { Playground } from "@/components/playground";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
 
 export const metadata = {
   title: "Playground",
@@ -35,9 +36,11 @@ export default async function PlaygroundPage({ params }: PlaygroundPageProps) {
     notFound()
   }
 
+  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
   return (
     <main className="mx-auto w-full max-w-7xl">
-      <Playground chart={chart} />
+      <Playground chart={chart} subscriptionPlan={subscriptionPlan} />
     </main>
   )
 }

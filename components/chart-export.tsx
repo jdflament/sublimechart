@@ -29,7 +29,8 @@ import { useEffect, useState } from "react";
 import { transcode } from "@/lib/transcoder";
 import { record } from "@/lib/recorder";
 import { downloadUrl } from "@/lib/downloader";
-import { useChart } from "@/components/chart-context";
+import { usePlayground } from "@/components/playground-context";
+import {ProOverlay} from "@/components/pro-overlay";
 
 export function ChartExport() {
   const [open, setOpen] = useState(false);
@@ -86,7 +87,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const [isExporting, setIsExporting] = useState(false);
   const [isExportingMP4, setIsExportingMP4] = useState(false);
   const [isExportingGIF, setIsExportingGIF] = useState(false);
-  const { toggleRerenderChart } = useChart();
+  const { isPro, toggleProPlanModal, toggleRerenderChart } = usePlayground();
 
   useEffect(() => {
     if (isExportingMP4 || isExportingGIF) {
@@ -140,7 +141,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportMP4() {
-    if (isExporting) {
+    if (isExporting || !isPro) {
       return;
     }
 
@@ -172,7 +173,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportGIF() {
-    if (isExporting) {
+    if (isExporting || !isPro) {
       return;
     }
 
@@ -237,30 +238,42 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         <Button
           type="button"
           variant="outline"
-          onClick={handleExportMP4}
+          onClick={isPro ? handleExportMP4 : toggleProPlanModal}
           disabled={isExporting}
-          className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+          className={cn(
+            "group relative flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary",
+            !isPro && "border-muted/50 bg-popover/50"
+          )}
         >
           { isExportingMP4 ? (
-            <Icons.spinner className="mb-3 h-6 w-6 animate-spin" />
+            <Icons.spinner className={cn("mb-3 h-6 w-6 animate-spin", !isPro && "opacity-50")} />
           ) : (
-            <Icons.clapperboard className="mb-3 h-6 w-6" />
+            <Icons.clapperboard className={cn("mb-3 h-6 w-6", !isPro && "opacity-50")} />
           )}
-          Video (MP4)
+          <span className={!isPro ? "opacity-50" : ""}>Video (MP4)</span>
+          { !isPro && (
+            <ProOverlay />
+          )}
         </Button>
         <Button
           type="button"
           variant="outline"
-          onClick={handleExportGIF}
+          onClick={isPro ? handleExportGIF : toggleProPlanModal}
           disabled={isExporting}
-          className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+          className={cn(
+            "group relative flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary",
+            !isPro && "border-muted/50 bg-popover/50"
+          )}
         >
           { isExportingGIF ? (
-            <Icons.spinner className="mb-3 h-6 w-6 animate-spin" />
+            <Icons.spinner className={cn("mb-3 h-6 w-6 animate-spin", !isPro && "opacity-50")} />
           ) : (
-            <Icons.media className="mb-3 h-6 w-6" />
+            <Icons.media className={cn("mb-3 h-6 w-6", !isPro && "opacity-50")} />
           )}
-          GIF
+          <span className={!isPro ? "opacity-50" : ""}>GIF</span>
+          { !isPro && (
+            <ProOverlay />
+          )}
         </Button>
       </div>
     </div>

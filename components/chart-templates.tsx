@@ -4,10 +4,13 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { templates } from '@/config/templates';
 import * as React from "react";
 import { ChartPatchFormData } from "@/types/chart";
+import {usePlayground} from "@/components/playground-context";
+import {ProOverlay} from "@/components/pro-overlay";
 
 export function ChartTemplates() {
   const form = useFormContext<ChartPatchFormData>();
   const [selectedTheme, setSelectedTheme] = React.useState<string>()
+  const { isPro, toggleProPlanModal } = usePlayground();
 
   function onChangeTheme(templateSlug) {
     if (!templateSlug) {
@@ -25,15 +28,16 @@ export function ChartTemplates() {
   }
 
   return (
-    <RadioGroup onValueChange={onChangeTheme}>
+    <RadioGroup>
       <div className="grid max-w-md grid-cols-1 gap-2 pt-2">
         {templates.map((template) => (
-          <FormLabel htmlFor={template.slug} key={template.slug} className="[&:has([data-state=checked])>div]:border-primary">
+          <FormLabel htmlFor={template.slug} key={template.slug} className="group relative [&:has([data-state=checked])>div]:border-primary">
             <FormControl>
               <RadioGroupItem
                 id={template.slug}
                 value={template.slug}
                 checked={selectedTheme === template.slug}
+                onClick={() => !isPro ? toggleProPlanModal() : onChangeTheme(template.slug)}
                 className="sr-only"
               />
             </FormControl>
@@ -48,6 +52,9 @@ export function ChartTemplates() {
             <span className="block w-full p-2 text-center font-heading font-semibold">
               {template.name}
             </span>
+            {!isPro && (
+              <ProOverlay />
+            )}
           </FormLabel>
         ))}
       </div>
