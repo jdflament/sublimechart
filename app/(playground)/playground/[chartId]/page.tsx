@@ -5,6 +5,10 @@ import { Chart, User } from "@prisma/client";
 import { db } from "@/lib/db";
 import { Playground } from "@/components/playground";
 
+export const metadata = {
+  title: "Playground",
+}
+
 async function getChartForUser(chartId: Chart["id"], userId: User["id"]) {
   return await db.chart.findFirst({
     where: {

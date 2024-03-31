@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState } from 'react';
 import { useFormContext } from "react-hook-form";
-import {ChartConfigType, ChartPatchFormData} from "@/types/chart";
+import { ChartPatchFormData } from "@/types/chart";
 import ChartJS from "chart.js/auto";
 import * as React from "react";
 import { Card, CardContent } from "@/components/ui/card";

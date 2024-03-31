@@ -25,7 +25,7 @@ import { Icons } from "@/components/icons";
 import { useFormContext } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { transcode } from "@/lib/transcoder";
 import { record } from "@/lib/recorder";
 import { downloadUrl } from "@/lib/downloader";
@@ -83,9 +83,25 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   const form = useFormContext();
   const title = form.watch("config.options.plugins.title.text");
   const canvas = document.getElementById('chart') as HTMLCanvasElement;
+  const [isExporting, setIsExporting] = useState(false);
+  const [isExportingMP4, setIsExportingMP4] = useState(false);
+  const [isExportingGIF, setIsExportingGIF] = useState(false);
   const { toggleRerenderChart } = useChart();
 
+  useEffect(() => {
+    if (isExportingMP4 || isExportingGIF) {
+      setIsExporting(true);
+      return;
+    }
+
+    setIsExporting(false);
+  }, [isExportingMP4, isExportingGIF]);
+
   async function handleExportPNG() {
+    if (isExporting) {
+      return;
+    }
+
     if (!canvas) {
       return toast({
         title: "Something went wrong.",
@@ -103,6 +119,10 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportJPEG() {
+    if (isExporting) {
+      return;
+    }
+
     if (!canvas) {
       return toast({
         title: "Something went wrong.",
@@ -120,7 +140,13 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   async function handleExportMP4() {
+    if (isExporting) {
+      return;
+    }
+
+    setIsExportingMP4(true);
     toggleRerenderChart();
+
     const filename = `${title}.mp4`;
 
     try {
@@ -140,11 +166,19 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         description: "Your chart was not exported. Please try again.",
         variant: "destructive",
       })
+    } finally {
+      setIsExportingMP4(false);
     }
   }
 
   async function handleExportGIF() {
+    if (isExporting) {
+      return;
+    }
+
+    setIsExportingGIF(true);
     toggleRerenderChart();
+
     const filename = `${title}.gif`;
 
     try {
@@ -165,6 +199,9 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
         variant: "destructive",
       })
     }
+    finally {
+      setIsExportingGIF(false);
+    }
   }
 
   return (
@@ -175,6 +212,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
           type="button"
           variant="outline"
           onClick={handleExportPNG}
+          disabled={isExporting}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
           <Icons.media className="mb-3 h-6 w-6" />
@@ -184,6 +222,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
           type="button"
           variant="outline"
           onClick={handleExportJPEG}
+          disabled={isExporting}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
           <Icons.media className="mb-3 h-6 w-6" />
@@ -199,18 +238,28 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
           type="button"
           variant="outline"
           onClick={handleExportMP4}
+          disabled={isExporting}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
-          <Icons.clapperboard className="mb-3 h-6 w-6" />
+          { isExportingMP4 ? (
+            <Icons.spinner className="mb-3 h-6 w-6 animate-spin" />
+          ) : (
+            <Icons.clapperboard className="mb-3 h-6 w-6" />
+          )}
           Video (MP4)
         </Button>
         <Button
           type="button"
           variant="outline"
           onClick={handleExportGIF}
+          disabled={isExporting}
           className="flex h-auto flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
         >
-          <Icons.media className="mb-3 h-6 w-6" />
+          { isExportingGIF ? (
+            <Icons.spinner className="mb-3 h-6 w-6 animate-spin" />
+          ) : (
+            <Icons.media className="mb-3 h-6 w-6" />
+          )}
           GIF
         </Button>
       </div>
