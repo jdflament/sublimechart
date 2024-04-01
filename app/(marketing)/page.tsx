@@ -47,7 +47,7 @@ export default async function IndexPage() {
             Create, design and export awesome charts.
           </h1>
           <p className="max-w-[50rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            SublimeChart is the all in one editor to create charts with ease. <br />
+            SublimeChart is the all-in-one editor to create awesome charts easily. <br />
             Customize and export them to your website or social media in seconds.
           </p>
           <div className="space-x-4">
@@ -56,7 +56,7 @@ export default async function IndexPage() {
             </Link>
           </div>
           <p className="leading-normal text-muted-foreground sm:text-xs">
-            Powered by Chart.js
+            Powered by <Link href="https://www.chartjs.org" className="font-semibold hover:underline" target="_blank" rel="nofollow">Chart.js</Link>
           </p>
         </div>
       </section>
