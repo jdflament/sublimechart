@@ -53,13 +53,13 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
-    images: '/opengraph-image.jpg',
+    images: siteConfig.ogImage,
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
+    images: siteConfig.ogImage,
     creator: "@jdflament",
   },
   icons: {
