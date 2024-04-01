@@ -2,6 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 import Image from "next/image";
+import Link from "next/link";
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
@@ -13,6 +14,10 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             © Copyright 2024. All rights reserved.
           </p>
         </div>
+        <nav className="flex gap-4">
+          <Link href="/terms" className="text-sm hover:underline">Terms</Link>
+          <Link href="/privacy" className="text-sm hover:underline">Privacy</Link>
+        </nav>
       </div>
     </footer>
   )

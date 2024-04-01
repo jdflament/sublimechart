@@ -83,6 +83,13 @@ export default function PricingPage() {
               <Link href="/register" aria-describedby={tier.id} className={cn(buttonVariants({ size: "lg", variant: tier.featured ? 'default' : 'outline' }), 'mt-4 w-full')}>
                 Sign up for free
               </Link>
+              { tier.featured && (
+                <p className="mt-4 text-xs italic text-muted">
+                  *We are using <Link href="https://www.lemonsqueezy.com" className="font-semibold hover:underline" target="_blank" rel="nofollow">Lemon Squeezy</Link> for payments. <br />
+                  Taxes will be automatically calculated depending on your country. <br />
+                  Invoices will be available directly on their platform.
+                </p>
+              )}
             </div>
           ))}
         </div>

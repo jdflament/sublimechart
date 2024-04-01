@@ -10,7 +10,7 @@ import { ActivateLicenseKeyForm } from "@/components/activate-license-key-form";
 
 export const metadata = {
   title: "Billing",
-  description: "Manage billing and your subscription plan.",
+  description: "Manage billing and your plan.",
 }
 
 export default async function BillingPage() {

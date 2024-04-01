@@ -46,15 +46,18 @@ export default async function IndexPage() {
           <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
             Create, design and export awesome charts.
           </h1>
-          <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            Start building beautiful charts with ease. <br />
-            Customize and export them to your website, social media and more.
+          <p className="max-w-[50rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+            SublimeChart is the all in one editor to create charts with ease. <br />
+            Customize and export them to your website or social media in seconds.
           </p>
           <div className="space-x-4">
             <Link href="/dashboard" className={cn(buttonVariants({ size: "lg" }))}>
               Get Started - for free!
             </Link>
           </div>
+          <p className="leading-normal text-muted-foreground sm:text-xs">
+            Powered by Chart.js
+          </p>
         </div>
       </section>
       <section className="relative overflow-hidden pt-32">
@@ -91,8 +94,7 @@ export default async function IndexPage() {
           <h2 className="font-heading leading-7 text-foreground">We thought for you.</h2>
           <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">All you need for your <span className="text-primary">charts</span> are here.</p>
           <p className="mx-auto mt-6 leading-normal text-muted-foreground">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste
-            dolor cupiditate blanditiis.
+            SublimeChart offers a wide range of features to help you create the perfect chart. Stop wasting time to configure your chart, create it and use it.
           </p>
           <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-muted-foreground sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
             {features.map((feature) => (
@@ -179,6 +181,13 @@ export default async function IndexPage() {
                 <Link href="/register" aria-describedby={tier.id} className={cn(buttonVariants({ size: "lg", variant: tier.featured ? 'default' : 'outline' }), 'mt-4 w-full')}>
                   Sign up for free
                 </Link>
+                { tier.featured && (
+                  <p className="mt-4 text-xs italic text-muted">
+                    *We are using <Link href="https://www.lemonsqueezy.com" className="font-semibold hover:underline" target="_blank" rel="nofollow">Lemon Squeezy</Link> for payments. <br />
+                    Taxes will be automatically calculated depending on your country. <br />
+                    Invoices will be available directly on their platform.
+                  </p>
+                )}
               </div>
             ))}
           </div>

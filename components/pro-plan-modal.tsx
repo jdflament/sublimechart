@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import {proTier} from "@/config/tiers";
 import {DialogClose} from "@radix-ui/react-dialog";
+import Link from "next/link";
 
 interface ProPlanModalProps extends React.HTMLAttributes<HTMLFormElement> {
   open: boolean
@@ -83,22 +84,27 @@ export function ProPlanModal({
                 </li>
               ))}
             </ul>
+            <p className="mt-4 text-xs italic text-muted-foreground">
+              *We are using <Link href="https://www.lemonsqueezy.com" className="font-semibold hover:underline" target="_blank" rel="nofollow">Lemon Squeezy</Link> for payments. <br />
+              Taxes will be automatically calculated depending on your country. <br />
+              Invoices will be available directly on their platform.
+            </p>
           </div>
           <DialogFooter className="mx-auto flex flex-col items-center gap-2">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-              <button
-                type="button"
-                className={cn(buttonVariants())}
-                disabled={isLoading}
-                onClick={handleClickUpgrade}
-              >
-                {isLoading && (
-                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                )}
-                Upgrade to PRO
-              </button>
+            <button
+              type="button"
+              className={cn(buttonVariants())}
+              disabled={isLoading}
+              onClick={handleClickUpgrade}
+            >
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Upgrade to PRO
+            </button>
           </DialogFooter>
       </DialogContent>
     </Dialog>

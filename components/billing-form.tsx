@@ -53,7 +53,7 @@ export function BillingForm({
     <form className={cn(className)} onSubmit={onSubmit} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Subscription Plan</CardTitle>
+          <CardTitle>Plan</CardTitle>
           <CardDescription>
             You are currently on the <strong>{subscriptionPlan.name}</strong>{" "}
             plan.

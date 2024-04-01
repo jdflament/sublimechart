@@ -7,7 +7,8 @@ import { buttonVariants } from "@/components/ui/button"
 import { MainNav } from "@/components/main-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { getCurrentUser } from "@/lib/session"
-import {ModeToggle} from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/mode-toggle";
+
 
 interface MarketingLayoutProps {
   children: React.ReactNode
