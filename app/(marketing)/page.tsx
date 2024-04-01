@@ -8,7 +8,7 @@ import Image from "next/image";
 import LightPreview from '@/public/preview/light.png';
 import DarkPreview from '@/public/preview/dark.png';
 import { tiers } from "@/config/tiers";
-import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const features = [
   {
@@ -21,7 +21,7 @@ const features = [
     name: 'Start from a template',
     description:
       'Customize your charts with a comprehensive and easy to use editor. Add your data, change colors, labels, shapes and more.',
-    icon: Icons.settings,
+    icon: Icons.template,
   },
   {
     name: 'Advanced editor',
@@ -32,7 +32,7 @@ const features = [
   {
     name: 'Multiple export options',
     description:
-      'Export your chart to PNG, GIF, MP4 or even Chart.js configuration. Create a unique chart to share with your audience or on your website.',
+      'Export your chart to PNG, JPEG, GIF, MP4 or even Chart.js configuration. Create a unique chart to share with your audience or on your website.',
     icon: Icons.media,
   },
 ];
@@ -150,7 +150,12 @@ export default async function IndexPage() {
                       'font-heading text-5xl tracking-tight'
                     )}
                   >
-                    {tier.price}
+                    { tier.discount?.price && (
+                      <>
+                        <span className="mr-1 text-3xl line-through">{tier.price}</span>
+                        {tier.discount?.price}
+                      </>
+                    ) || tier.price }
                   </span>
                   { tier.priceHelpText && (
                     <span className={cn(
@@ -161,6 +166,22 @@ export default async function IndexPage() {
                   </span>
                   )}
                 </p>
+                { tier.discount?.code && (
+                  <p className={cn(
+                    tier.featured ? 'text-accent' : 'text-secondary-foreground',
+                    'mt-1 tracking-tight'
+                  )}>
+                    with code <strong>{tier.discount?.code}</strong>
+                    { tier.discount?.limit && (
+                      <span className={cn(
+                        tier.featured ? 'text-accent' : 'text-secondary-foreground',
+                        'ml-1 mt-1 text-xs tracking-tight'
+                      )}>
+                        (Limited to <strong>{tier.discount?.limit}</strong> uses)
+                      </span>
+                    )}
+                  </p>
+                )}
                 <p className={cn(tier.featured ? 'text-accent' : 'text-secondary-foreground', 'mt-6 text-base leading-7')}>
                   {tier.description}
                 </p>

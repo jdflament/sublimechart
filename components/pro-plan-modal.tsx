@@ -62,7 +62,12 @@ export function ProPlanModal({
             </h3>
             <p className="mt-4 flex items-baseline gap-x-2">
               <span className="font-heading text-5xl tracking-tight text-secondary-foreground">
-                {proTier.price}
+                { proTier.discount?.price && (
+                  <>
+                    <span className="mr-1 text-3xl line-through">{proTier.price}</span>
+                    {proTier.discount?.price}
+                  </>
+                ) || proTier.price }
               </span>
               { proTier.priceHelpText && (
                 <span className="font-heading text-sm tracking-tight text-secondary-foreground">
@@ -70,6 +75,16 @@ export function ProPlanModal({
                 </span>
               )}
             </p>
+            { proTier.discount?.code && (
+              <p className="mt-1 tracking-tight text-secondary-foreground">
+                with code <strong>{proTier.discount?.code}</strong>
+                { proTier.discount?.limit && (
+                  <span className="ml-1 mt-1 text-xs tracking-tight text-secondary-foreground">
+                    (Limited to <strong>{proTier.discount?.limit}</strong> uses)
+                  </span>
+                )}
+              </p>
+            )}
             <p className="mt-6 text-base leading-7 text-secondary-foreground">
               {proTier.description}
             </p>

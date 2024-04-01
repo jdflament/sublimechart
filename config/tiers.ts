@@ -13,6 +13,11 @@ export const proTier: Tier = {
   name: 'Pro',
   id: 'tier-pro',
   price: '$69',
+  discount: {
+    price: '$49',
+    code: 'SUBLIMELAUNCH24',
+    limit: 50,
+  },
   priceHelpText: '(one-time payment)',
   description: 'Get the pro version for unlimited charts, export and more. Lifetime access.',
   features: [

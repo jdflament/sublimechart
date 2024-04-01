@@ -92,6 +92,11 @@ export type Tier = {
   name: string
   id: string
   price: string
+  discount?: {
+    price: string
+    code: string
+    limit: number
+  }
   priceHelpText?: string
   description: string
   features: string[]
