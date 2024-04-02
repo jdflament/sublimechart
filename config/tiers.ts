@@ -18,7 +18,7 @@ export const proTier: Tier = {
     code: 'SUBLIMELAUNCH24',
     limit: 50,
   },
-  priceHelpText: '(one-time payment)',
+  priceHelpText: 'one time',
   description: 'Get the pro version for unlimited charts, export and more. Lifetime access.',
   features: [
     'All chart types',
