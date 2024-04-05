@@ -52,7 +52,7 @@ export function ChartActions({ chart }: ChartActionsProps) {
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
   return (
-    <>
+    <div onClick={(event) => event.stopPropagation()}>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
           <Icons.ellipsis className="h-4 w-4" />
@@ -112,6 +112,6 @@ export function ChartActions({ chart }: ChartActionsProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   )
 }
