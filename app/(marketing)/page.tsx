@@ -91,10 +91,10 @@ export default async function IndexPage() {
       </section>
       <section id="features" className="container mx-auto mt-14 flex max-w-[64rem] sm:mt-16 lg:mt-24">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <h2 className="font-heading leading-7 text-foreground">We thought for you.</h2>
-          <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">All you need for your <span className="text-primary">charts</span> are here.</p>
+          <h2 className="font-heading leading-7 text-foreground">We&apos;ve done all the work for you.</h2>
+          <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">All you need for your <span className="text-primary">charts</span> is here.</p>
           <p className="mx-auto mt-6 leading-normal text-muted-foreground">
-            SublimeChart offers a wide range of features to help you create the perfect chart. Stop wasting time to configure your chart, create it and use it.
+            SublimeChart offers many features to help you create the perfect chart. Stop wasting time configuring your chart; make it and use it.
           </p>
           <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-muted-foreground sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16">
             {features.map((feature) => (

@@ -29,14 +29,14 @@ export function ChartCreateButton({
       body: JSON.stringify({
         aspectRatio: '16/9',
         config: {
-          type: "line",
+          type: "bar",
           data: {
-            labels: ['Label'],
+            labels: ['2022', '2023', '2024'],
             datasets: [
               {
-                label: 'My First Dataset',
-                data: [0],
-                backgroundColor: [],
+                label: 'Revenue ($)',
+                data: [1850, 2100, 3200],
+                backgroundColor: ['#F7CE12', '#FCF1CD', '#0D0A09'],
                 borderColor: [],
               }
             ]

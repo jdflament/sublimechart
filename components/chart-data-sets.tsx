@@ -86,7 +86,7 @@ export function ChartDataSets() {
                       <Sheet>
                         <SheetTrigger asChild>
                           <Button type="button" variant="outline">
-                            <span className="sr-only">Configure</span>
+                            <span className="mr-1">Configure</span>
                             <Icons.settings className="h-4 w-4" />
                           </Button>
                         </SheetTrigger>

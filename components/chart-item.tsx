@@ -13,14 +13,11 @@ export function ChartItem({ chart }: ChartItemProps) {
   const title = chart.config?.options?.plugins?.title?.text;
 
   return (
-    <div className="flex items-center justify-between p-4">
+    <Link href={`/playground/${chart.id}`} className="flex items-center justify-between p-4 hover:bg-secondary">
       <div className="grid gap-1">
-        <Link
-          href={`/playground/${chart.id}`}
-          className="font-semibold hover:underline"
-        >
+        <p className="font-semibold">
           {title}
-        </Link>
+        </p>
         <div>
           <p className="text-sm text-muted-foreground">
             {formatDate(chart.createdAt?.toDateString())}
@@ -28,7 +25,7 @@ export function ChartItem({ chart }: ChartItemProps) {
         </div>
       </div>
       <ChartActions chart={{ id: chart.id }} />
-    </div>
+    </Link>
   )
 }
 
