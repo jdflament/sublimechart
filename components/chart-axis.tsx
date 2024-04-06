@@ -9,6 +9,10 @@ export function ChartAxis() {
 
   const XYOptions = [
     {
+      name: "ticks.unit.display",
+      label: "Unit",
+    },
+    {
       name: "grid.display",
       label: "Grid",
     },
@@ -27,6 +31,10 @@ export function ChartAxis() {
   ];
 
   const ROptions = [
+    {
+      name: "ticks.unit.display",
+      label: "Unit",
+    },
     {
       name: "grid.display",
       label: "Grid",

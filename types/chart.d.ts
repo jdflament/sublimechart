@@ -87,6 +87,12 @@ export type ChartOptionsType = {
         color?: string | undefined;
       },
       ticks?: {
+        unit?: {
+          display?: boolean | undefined;
+          value?: string | undefined;
+          position?: string | undefined;
+        };
+        callback?: () => string;
         display?: boolean | undefined;
         color?: string | undefined;
         font?: {
@@ -111,6 +117,12 @@ export type ChartOptionsType = {
         color?: string | undefined;
       },
       ticks?: {
+        unit?: {
+          display?: boolean | undefined;
+          value?: string | undefined;
+          position?: string | undefined;
+        };
+        callback?: () => string;
         display?: boolean | undefined;
         color?: string | undefined;
         font?: {
@@ -129,6 +141,12 @@ export type ChartOptionsType = {
         color?: string | undefined;
       },
       ticks?: {
+        unit?: {
+          display?: boolean | undefined;
+          value?: string | undefined;
+          position?: string | undefined;
+        };
+        callback?: () => string;
         display?: boolean | undefined;
         color?: string | undefined;
         font?: {

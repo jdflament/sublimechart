@@ -13,8 +13,8 @@ const data = z.object({
   datasets: z.array(z.object({
     label: z.string().optional(),
     data: z.array(z.number().nullish()).optional(),
-    backgroundColor: z.string().array().optional(),
-    borderColor: z.string().array().optional(),
+    backgroundColor: z.array(z.string().nullish()).optional(),
+    borderColor: z.array(z.string().nullish()).optional(),
     borderWidth: z.number().optional(),
     fill: z.boolean().optional().default(false),
   })).optional(),
@@ -30,6 +30,12 @@ const axis = z.object({
     color: z.string().optional(),
   }).optional(),
   ticks: z.object({
+    unit: z.object({
+      display: z.boolean().optional(),
+      value: z.string().optional(),
+      position: z.enum(['before', 'after']).optional(),
+    }).optional(),
+    callback: z.function().optional(),
     display: z.boolean().optional(),
     color: z.string().optional(),
     font: z.object({
@@ -108,6 +114,12 @@ const options = z.object({
         color: z.string().optional(),
       }).optional(),
       ticks: z.object({
+        unit: z.object({
+          display: z.boolean().optional(),
+          value: z.string().optional(),
+          position: z.enum(['before', 'after']).optional(),
+        }).optional(),
+        callback: z.function().optional(),
         display: z.boolean().optional(),
         color: z.string().optional(),
         font: z.object({
