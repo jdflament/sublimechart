@@ -6,7 +6,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
 
 interface ChartAxisItem {
   axis: string;
@@ -15,36 +14,12 @@ interface ChartAxisItem {
 
 export function ChartAxisItem({ axis, options }: ChartAxisItem) {
   const form = useFormContext();
-  const { setValue } = form;
 
   const hasGrid  = form.watch(`config.options.scales.${axis}.grid.display`);
   const hasLabels  = form.watch(`config.options.scales.${axis}.ticks.display`);
   const hasBorder  = form.watch(`config.options.scales.${axis}.border.display`);
   const hasPointLabels  = form.watch(`config.options.scales.${axis}.pointLabels.display`);
   const hasUnit  = form.watch(`config.options.scales.${axis}.ticks.unit.display`);
-  const unit = form.watch(`config.options.scales.${axis}.ticks.unit.value`);
-  const position = form.watch(`config.options.scales.${axis}.ticks.unit.position`);
-
-  function generateTickCallback(display: boolean, unit: string, position: string) {
-    return function (value: number, index: number, ticks: number[]) {
-      const label = this.getLabelForValue(value);
-
-      if (!display) return label;
-
-      switch (position) {
-        case 'before':
-          return `${unit}${label}`;
-        case 'after':
-          return `${label}${unit}`;
-      }
-    };
-  }
-
-  useEffect(() => {
-    if (unit && position) {
-      setValue(`config.options.scales.${axis}.ticks.callback`, generateTickCallback(hasUnit, unit, position));
-    }
-  }, [axis, hasUnit, unit, position, setValue]);
 
   return (
     <div className="rounded-lg border p-4">

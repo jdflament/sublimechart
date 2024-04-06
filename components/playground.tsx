@@ -13,7 +13,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ChartLabels } from "@/components/chart-labels";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -46,8 +46,6 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
 
   const { watch, unregister } = form;
   const type = watch("config.type");
-  const labels = watch('config.data.labels');
-  const datasets = watch('config.data.datasets');
 
   const {
     handleSubmit,
@@ -65,6 +63,9 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
 
   // Clear excess data if labels are removed
   useEffect(() => {
+    const labels = form.watch('config.data.labels');
+    const datasets = form.watch('config.data.datasets');
+
     if (labels?.length && datasets?.length) {
       datasets.forEach((dataset, datasetIndex) => {
         if (!dataset.data) {
@@ -80,7 +81,56 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
         }
       });
     }
-  }, [labels, datasets, form]);
+  }, [JSON.stringify(form)]);
+
+  // Define callback for scales
+  useMemo(() => {
+    const scales = form.watch('config.options.scales');
+    
+    if (!scales) return;
+
+    const axes = ['x', 'y', 'r'];
+    const callbacks = {};
+
+    axes.forEach(axis => {
+      const displayUnit = scales?.[axis]?.ticks?.unit?.display;
+      const unitValue = scales?.[axis]?.ticks?.unit?.value;
+      const unitPosition = scales?.[axis]?.ticks?.unit?.position;
+
+      callbacks[axis] = generateTickCallback(displayUnit, unitValue, unitPosition);
+    });
+
+    const callbackScales = {};
+
+    axes.forEach(axis => {
+      callbackScales[axis] = {
+        ...scales?.[axis],
+        ticks: {
+          ...scales?.[axis]?.ticks,
+          callback: callbacks[axis],
+        },
+      };
+    });
+
+    form.setValue('config.options.scales', callbackScales);
+  }, [JSON.stringify(form)]);
+
+  function generateTickCallback(display: boolean, unit?: string | undefined, position?: string | undefined) {
+    return function(value: number, index: number, ticks: number[]) {
+      const label = this.getLabelForValue(value);
+
+      if (!display || !unit || !position) return label;
+
+      switch (position) {
+        case 'before':
+          return `${unit}${label}`;
+        case 'after':
+          return `${label}${unit}`;
+        default:
+          return label;
+      }
+    };
+  }
 
   async function onSubmit(data: ChartPatchFormData) {
     setIsSaving(true)

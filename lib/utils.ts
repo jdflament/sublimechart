@@ -2,7 +2,6 @@ import { ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 import { env } from "@/env.mjs"
-import {AnyObject} from "chart.js/dist/types/basic";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -32,19 +31,4 @@ export function mergeObjects(obj1, obj2) {
     }
   }
   return obj1;
-}
-
-export function filterObjectByType<T extends AnyObject>(obj: T, allowedKeys: T): Partial<T> {
-  const result: Partial<T> = {};
-  for (const key in obj) {
-    if (key in allowedKeys) {
-      if (typeof obj[key] === 'object' && typeof allowedKeys[key] === 'object') {
-        // @ts-ignore
-        result[key] = filterObjectByType(obj[key], allowedKeys[key]);
-      } else {
-        result[key] = obj[key];
-      }
-    }
-  }
-  return result;
 }
