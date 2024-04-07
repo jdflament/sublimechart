@@ -237,57 +237,84 @@ export function ChartDataSets() {
                     )}
 
                     { ['line', 'radar'].includes(type) && (
-                      <FormField
-                        control={form.control}
-                        name={`config.data.datasets.${datasetIndex}.tension`}
-                        render={({ field: { value, onChange } }) => (
-                          <FormItem className="py-2">
-                            <FormControl>
-                              <div className="grid gap-4">
-                                <div className="flex items-center justify-between">
-                                  <FormLabel htmlFor={`tension-${datasetIndex}`}>Tension</FormLabel>
-                                  <span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
-                                  {value ?? '-'}
-                                </span>
+                      <>
+                        <FormField
+                          control={form.control}
+                          name={`config.data.datasets.${datasetIndex}.tension`}
+                          render={({ field: { value, onChange } }) => (
+                            <FormItem className="py-2">
+                              <FormControl>
+                                <div className="grid gap-4">
+                                  <div className="flex items-center justify-between">
+                                    <FormLabel htmlFor={`tension-${datasetIndex}`}>Tension</FormLabel>
+                                    <span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
+                                    {value ?? '-'}
+                                  </span>
+                                  </div>
+                                  <Slider
+                                    id={`tension-${datasetIndex}`}
+                                    max={2}
+                                    defaultValue={[value]}
+                                    step={0.1}
+                                    className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                                    aria-label="Tension"
+                                    onValueChange={(values) => onChange(values[0])}
+                                  />
                                 </div>
-                                <Slider
-                                  id={`tension-${datasetIndex}`}
-                                  max={2}
-                                  defaultValue={[value]}
-                                  step={0.1}
-                                  className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-                                  aria-label="Tension"
-                                  onValueChange={(values) => onChange(values[0])}
-                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`config.data.datasets.${datasetIndex}.pointRadius`}
+                          render={({ field: { value, onChange } }) => (
+                            <FormItem className="py-2">
+                              <FormControl>
+                                <div className="grid gap-4">
+                                  <div className="flex items-center justify-between">
+                                    <FormLabel htmlFor={`pointRadius-${datasetIndex}`}>Point radius</FormLabel>
+                                    <span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
+                                    {value ?? '-'}
+                                  </span>
+                                  </div>
+                                  <Slider
+                                    id={`pointRadius-${datasetIndex}`}
+                                    max={30}
+                                    defaultValue={[value]}
+                                    step={1}
+                                    className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                                    aria-label="Point radius"
+                                    onValueChange={(values) => onChange(values[0])}
+                                  />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name={`config.data.datasets.${datasetIndex}.fill`}
+                          render={({ field }) => (
+                            <FormItem className="flex flex-row items-center justify-between py-2">
+                              <div className="space-y-0.5">
+                                <FormLabel className="text-sm">
+                                  Fill
+                                </FormLabel>
                               </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-
-                    { ['line', 'radar'].includes(type) && (
-                      <FormField
-                        control={form.control}
-                        name={`config.data.datasets.${datasetIndex}.fill`}
-                        render={({ field }) => (
-                          <FormItem className="flex flex-row items-center justify-between py-2">
-                            <div className="space-y-0.5">
-                              <FormLabel className="text-sm">
-                                Fill
-                              </FormLabel>
-                            </div>
-                            <FormControl>
-                              <Switch
-                                checked={field.value}
-                                defaultChecked={true}
-                                onCheckedChange={field.onChange}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
+                              <FormControl>
+                                <Switch
+                                  checked={field.value}
+                                  defaultChecked={true}
+                                  onCheckedChange={field.onChange}
+                                />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </>
                     )}
 
                     <ChartDataSetsColors datasetIndex={datasetIndex} />

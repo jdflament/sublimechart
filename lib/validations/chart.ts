@@ -18,6 +18,7 @@ const data = z.object({
     borderWidth: z.number().optional(),
     borderRadius: z.number().optional(),
     tension: z.number().optional(),
+    pointRadius: z.number().optional(),
     fill: z.boolean().optional().default(false),
   })).optional(),
 });

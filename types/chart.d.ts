@@ -11,6 +11,7 @@ export type ChartDataType = {
     borderWidth?: number;
     borderRadius?: number | undefined;
     tension?: number | undefined;
+    pointRadius?: number | undefined;
     fill?: boolean | undefined;
   }[];
 }
