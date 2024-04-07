@@ -9,6 +9,8 @@ export type ChartDataType = {
     borderColor?: string[];
     backgroundColor?: string[];
     borderWidth?: number;
+    borderRadius?: number | undefined;
+    tension?: number | undefined;
     fill?: boolean | undefined;
   }[];
 }
