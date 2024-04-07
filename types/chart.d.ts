@@ -1,5 +1,6 @@
 import * as z from "zod";
 import { chartPatchSchema } from "@/lib/validations/chart";
+import { ComponentType } from "react";
 
 export type ChartDataType = {
   labels: string[];
@@ -176,6 +177,13 @@ declare global {
       options: ChartOptionsType,
     }
   }
+}
+
+export type Chart = {
+  name: string
+  type: string,
+  icon: ComponentType<{ className?: string }>
+  pro: boolean
 }
 
 export type ChartPatchFormData = z.infer<typeof chartPatchSchema>

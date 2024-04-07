@@ -5,6 +5,9 @@ import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ChartActions } from "@/components/chart-actions"
 import { UserSubscriptionPlan } from "@/types";
+import { ChartIcon } from "@/components/chart-icon";
+import { charts } from "@/config/charts";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ChartItemProps {
   chart: Pick<Chart, "id" | "config" | "createdAt">
@@ -13,6 +16,15 @@ interface ChartItemProps {
 
 export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
   const title = chart.config?.options?.plugins?.title?.text;
+
+  const chartType = charts.find((c) => c.type === chart.config?.type);
+
+  if (!chartType) {
+    console.error('Invalid chart');
+
+    return;
+  }
+
   let subtitle;
 
   if (
@@ -29,9 +41,21 @@ export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
     <Link href={`/playground/${chart.id}`} className="flex items-center justify-between p-4 hover:bg-secondary">
       <div className="grid gap-1">
         <div className="mb-2">
-          <p className="mb-1 font-semibold">
-            {title}
-          </p>
+          <div className="flex justify-center gap-1">
+            <TooltipProvider delayDuration={100}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ChartIcon icon={chartType.icon} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{chartType.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <p className="mb-1 font-semibold">
+              {title}
+            </p>
+          </div>
           { labels && (
             <p className="text-xs font-semibold text-muted-foreground">{labels}</p>
           )}
