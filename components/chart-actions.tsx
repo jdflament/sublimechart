@@ -24,20 +24,46 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+
+async function copyChart(chartId: string) {
+  const response = await fetch(`/api/charts/${chartId}/copy`, {
+    method: "POST",
+  })
+
+  if (!response.ok) {
+    toast({
+      title: "Something went wrong.",
+      description: "Failed to copy the chart. Please try again.",
+      variant: "destructive",
+    });
+
+    return false
+  }
+
+  toast({
+    description: "Your chart has been successfully copied!",
+  });
+
+  return true
+}
 
 async function deleteChart(chartId: string) {
   const response = await fetch(`/api/charts/${chartId}`, {
     method: "DELETE",
-  })
+  });
 
   if (!response?.ok) {
     toast({
       title: "Something went wrong.",
       description: "Your chart was not deleted. Please try again.",
       variant: "destructive",
-    })
+    });
   }
+
+  toast({
+    description: "Your chart has been successfully deleted.",
+  });
 
   return true
 }
@@ -51,6 +77,27 @@ export function ChartActions({ chart }: ChartActionsProps) {
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
+  const handleCopy = async () => {
+    const copied = await copyChart(chart.id)
+
+    if (copied) {
+      router.refresh()
+    }
+  }
+
+  const handleDelete = async (event) => {
+    event.preventDefault()
+    setIsDeleteLoading(true)
+
+    const deleted = await deleteChart(chart.id)
+
+    if (deleted) {
+      setIsDeleteLoading(false)
+      setShowDeleteAlert(false)
+      router.refresh()
+    }
+  }
+
   return (
     <div onClick={(event) => event.stopPropagation()}>
       <DropdownMenu>
@@ -63,6 +110,12 @@ export function ChartActions({ chart }: ChartActionsProps) {
             <Link href={`/playground/${chart.id}`} className="flex w-full">
               Edit
             </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="flex cursor-pointer items-center"
+            onSelect={handleCopy}
+          >
+            Copy
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -85,21 +138,7 @@ export function ChartActions({ chart }: ChartActionsProps) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={async (event) => {
-                event.preventDefault()
-                setIsDeleteLoading(true)
-
-                const deleted = await deleteChart(chart.id)
-
-                if (deleted) {
-                  setIsDeleteLoading(false)
-                  setShowDeleteAlert(false)
-                  router.refresh()
-                }
-              }}
-              asChild
-            >
+            <AlertDialogAction onClick={handleDelete} asChild>
               <Button type="button" variant="destructive" disabled={isDeleteLoading}>
                 {isDeleteLoading ? (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
