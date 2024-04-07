@@ -16,6 +16,7 @@ const data = z.object({
     backgroundColor: z.string().array().optional(),
     borderColor: z.string().array().optional(),
     borderWidth: z.number().optional(),
+    borderRadius: z.number().optional(),
     fill: z.boolean().optional().default(false),
   })).optional(),
 });

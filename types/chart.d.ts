@@ -77,6 +77,7 @@ export type ChartOptionsType = {
       backgroundColor?: string | undefined;
       borderColor?: string | undefined;
       borderWidth?: number | undefined;
+      borderRadius?: number | undefined;
       fill?: boolean | undefined;
     },
   },
