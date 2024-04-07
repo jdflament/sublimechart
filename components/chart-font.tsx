@@ -4,9 +4,11 @@ import { FormLabel } from "@/components/ui/form"
 
 import { useFormContext } from "react-hook-form";
 import { FontPicker } from "@/components/ui/font-picker";
+import { usePlayground } from "@/components/playground-context";
 
 export function ChartFont() {
   const form = useFormContext();
+  const { isPro } = usePlayground();
 
   function handleChangeFont(font) {
     form.setValue("config.options.plugins.title.font.family", font);
@@ -17,6 +19,10 @@ export function ChartFont() {
 
     if (form.getValues("config.options.scales.r.ticks.display")) {
       form.setValue("config.options.scales.r.ticks.font.family", font);
+    }
+
+    if (isPro && form.getValues("config.options.plugins.subtitle.display")) {
+      form.setValue("config.options.plugins.subtitle.font.family", font);
     }
   }
 

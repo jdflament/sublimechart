@@ -21,7 +21,6 @@ import { ChartPatchFormData } from "@/types/chart";
 import { ChartDataSets } from "@/components/chart-data-sets";
 import { ChartOptions } from "@/components/chart-options";
 import { ChartBackground } from "@/components/chart-background";
-import { ChartTitle } from "@/components/chart-title";
 import { ChartAspectRatio } from "@/components/chart-aspect-ratio";
 import { ChartWatermark } from "@/components/chart-watermark";
 import { ChartTemplates } from "@/components/chart-templates";
@@ -29,6 +28,7 @@ import { ChartExport } from "@/components/chart-export";
 import { ChartCode } from "@/components/chart-code";
 import { PlaygroundProvider } from "@/components/playground-context";
 import { UserSubscriptionPlan } from "@/types";
+import { ChartTitles } from "@/components/chart-titles";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -136,7 +136,7 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
                   <ChartWatermark />
                   <ChartAspectRatio />
                 </div>
-                <ChartTitle />
+                <ChartTitles />
 
                 <Button type="submit" variant="outline">
                   {isSaving && (

@@ -65,6 +65,18 @@ export type ChartOptionsType = {
       position?: string | undefined;
       padding?: number | undefined;
     }
+    subtitle?: {
+      display?: boolean | undefined;
+      text?: string | undefined;
+      font?: {
+        family?: string | undefined;
+        size?: number | undefined;
+      },
+      align?: string | undefined;
+      color?: string | undefined;
+      position?: string | undefined;
+      padding?: number | undefined;
+    }
     background?: {
       color?: string | undefined;
     },

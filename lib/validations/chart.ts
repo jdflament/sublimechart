@@ -14,7 +14,7 @@ const data = z.object({
     label: z.string().optional(),
     data: z.array(z.number().nullish()).optional(),
     backgroundColor: z.string().array().optional(),
-    borderColor: z.string().array().optional(),
+    borderColor: z.array(z.string().nullish()).optional(),
     borderWidth: z.number().optional(),
     borderRadius: z.number().optional(),
     tension: z.number().optional(),
@@ -75,6 +75,18 @@ const options = z.object({
     title: z.object({
       display: z.boolean(),
       text: z.string(),
+      font: z.object({
+        family: z.string().optional(),
+        size: z.number().optional(),
+      }).optional(),
+      color: z.string().optional(),
+      align: z.enum(['start', 'center', 'end']).optional(),
+      position: z.enum(['top', 'left', 'right', 'bottom']).optional(),
+      padding: z.number().optional(),
+    }).optional(),
+    subtitle: z.object({
+      display: z.boolean().optional(),
+      text: z.string().optional(),
       font: z.object({
         family: z.string().optional(),
         size: z.number().optional(),
