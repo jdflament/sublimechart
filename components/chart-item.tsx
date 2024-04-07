@@ -35,7 +35,7 @@ export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
     <Link href={`/playground/${chart.id}`} className="flex items-center justify-between p-4 hover:bg-secondary">
       <div className="grid gap-1">
         <div className="mb-2">
-          <div className="flex justify-center gap-1">
+          <div className="flex gap-1">
             { chartType && (
               <TooltipProvider delayDuration={100}>
                 <Tooltip>
