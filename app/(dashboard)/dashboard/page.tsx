@@ -8,6 +8,7 @@ import { DashboardHeader } from "@/components/header"
 import { ChartCreateButton } from "@/components/chart-create-button"
 import { DashboardShell } from "@/components/shell"
 import { ChartItem } from "@/components/chart-item";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
 
 export const metadata = {
   title: "Dashboard",
@@ -19,6 +20,8 @@ export default async function DashboardPage() {
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
   const charts = await db.chart.findMany({
     where: {
@@ -43,7 +46,7 @@ export default async function DashboardPage() {
         {charts?.length ? (
           <div className="divide-y divide-border rounded-md border">
             {charts.map((chart) => (
-              <ChartItem key={chart.id} chart={chart} />
+              <ChartItem key={chart.id} chart={chart} subscriptionPlan={subscriptionPlan} />
             ))}
           </div>
         ) : (
