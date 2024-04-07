@@ -19,12 +19,6 @@ export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
 
   const chartType = charts.find((c) => c.type === chart.config?.type);
 
-  if (!chartType) {
-    console.error('Invalid chart');
-
-    return;
-  }
-
   let subtitle;
 
   if (
@@ -42,16 +36,18 @@ export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
       <div className="grid gap-1">
         <div className="mb-2">
           <div className="flex justify-center gap-1">
-            <TooltipProvider delayDuration={100}>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <ChartIcon icon={chartType.icon} />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{chartType.name}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            { chartType && (
+              <TooltipProvider delayDuration={100}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <ChartIcon icon={chartType.icon} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{chartType.name}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
             <p className="mb-1 font-semibold">
               {title}
             </p>
