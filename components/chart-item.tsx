@@ -23,13 +23,18 @@ export function ChartItem({ chart, subscriptionPlan }: ChartItemProps) {
     subtitle = chart.config?.options?.plugins?.subtitle?.text;
   }
 
+  const labels = chart.config?.data?.datasets?.map((dataset) => dataset.label).join(' ,');
+
   return (
     <Link href={`/playground/${chart.id}`} className="flex items-center justify-between p-4 hover:bg-secondary">
       <div className="grid gap-1">
-        <div className="gap-0">
-          <p className="font-semibold">
+        <div className="mb-2">
+          <p className="mb-1 font-semibold">
             {title}
           </p>
+          { labels && (
+            <p className="text-xs font-semibold text-muted-foreground">{labels}</p>
+          )}
           { subtitle && (
             <p className="text-sm text-muted-foreground">{subtitle}</p>
           )}
