@@ -2,6 +2,8 @@ import * as z from "zod";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { RequiresProPlanError } from "@/lib/exceptions";
+import { getUserSubscriptionPlan } from "@/lib/subscription";
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -14,6 +16,29 @@ export async function POST(
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const { user } = session
+    const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+    // If user is on a free plan.
+    // Check if user has reached limit of 3 charts.
+    if (!subscriptionPlan?.isPro) {
+      const count = await db.chart.count({
+        where: {
+          authorId: user.id,
+        },
+      })
+
+      if (count >= 3) {
+        throw new RequiresProPlanError()
+      }
+    }
+
     // Validate route params.
     const { params } = routeContextSchema.parse(context)
 
@@ -59,10 +84,12 @@ export async function POST(
 
     return new Response(JSON.stringify(newChart))
   } catch (error) {
-    console.log(error);
-
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
+
+    if (error instanceof RequiresProPlanError) {
+      return new Response("Requires Pro Plan", { status: 402 })
     }
 
     return new Response(null, { status: 500 })

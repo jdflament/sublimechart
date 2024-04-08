@@ -32,6 +32,16 @@ async function copyChart(chartId: string) {
   })
 
   if (!response.ok) {
+    if (response.status === 402) {
+      toast({
+        title: "Limit of 3 charts reached.",
+        description: "Please upgrade to the PRO plan.",
+        variant: "destructive",
+      })
+
+      return false;
+    }
+
     toast({
       title: "Something went wrong.",
       description: "Failed to copy the chart. Please try again.",
@@ -54,7 +64,7 @@ async function deleteChart(chartId: string) {
   });
 
   if (!response?.ok) {
-    toast({
+    return toast({
       title: "Something went wrong.",
       description: "Your chart was not deleted. Please try again.",
       variant: "destructive",
