@@ -1,4 +1,5 @@
 import { Open_Sans, Roboto, Lato, Montserrat, Oswald, Ubuntu, Raleway, Source_Sans_3, Merriweather, Nunito, Playfair_Display, PT_Sans, Inter, Quicksand, Noto_Sans, Josefin_Sans, Pacifico, Comfortaa, Fira_Sans, Exo, Roboto_Condensed, Cabin, Mulish, Arimo, Titillium_Web, Vollkorn, Dancing_Script, Poppins, Baloo_2, Yantramanav, Barlow, Work_Sans, Roboto_Slab, Cinzel, Bitter, Amatic_SC, Karla, Notable, PT_Serif, Noto_Serif, Rubik, Roboto_Mono, Indie_Flower, Cormorant } from "next/font/google";
+import localFont from "next/font/local";
 
 const openSans = Open_Sans({ weight: "400", subsets: ["latin"], variable: "--font-open-sans" });
 const roboto = Roboto({ weight: "400", subsets: ["latin"], variable: "--font-roboto" });
@@ -44,6 +45,7 @@ const rubik = Rubik({ weight: "400", subsets: ["latin"], variable: "--font-rubik
 const robotoMono = Roboto_Mono({ weight: "400", subsets: ["latin"], variable: "--font-roboto-mono" });
 const indieFlower = Indie_Flower({ weight: "400", subsets: ["latin"], variable: "--font-indie-flower" });
 const cormorant = Cormorant({ weight: "400", subsets: ["latin"], variable: "--font-cormorant" });
+const bricolageGrotesque = localFont({ weight: "400", src: "../assets/fonts/BricolageGrotesque-ExtraBold.ttf", variable: "--font-bricolage-grotesque" })
 
 // Create an array containing all font objects with name and loader properties
 export const Fonts = [
@@ -90,6 +92,7 @@ export const Fonts = [
   { name: 'Rubik', loader: rubik },
   { name: 'Roboto Mono', loader: robotoMono },
   { name: 'Indie Flower', loader: indieFlower },
-  { name: 'Cormorant', loader: cormorant }
+  { name: 'Cormorant', loader: cormorant },
+  { name: 'Bricolage Grotesque', loader: bricolageGrotesque },
 ];
 
