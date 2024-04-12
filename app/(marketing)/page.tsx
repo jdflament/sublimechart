@@ -9,7 +9,11 @@ import LightPreview from '@/public/preview/light.png';
 import DarkPreview from '@/public/preview/dark.png';
 import { tiers } from "@/config/tiers";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import {siteConfig} from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { templates } from "@/config/templates";
+import { Badge } from "@/components/ui/badge";
 
 const features = [
   {
@@ -73,7 +77,7 @@ export default async function IndexPage() {
       </section>
       <section className="relative overflow-hidden pt-32">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <h2 className="font-heading leading-7 text-foreground">You are <span className="text-primary">unique</span>. You&apos;re chart too.</h2>
+          <h2 className="font-heading leading-7 text-foreground">You are <span className="text-primary">unique</span>. Your charts are, too.</h2>
           <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">Make it your <span className="text-primary">own</span>.</p>
           <p className="mx-auto mt-6 max-w-2xl leading-normal text-muted-foreground">
             Craft captivating charts effortlessly with our intuitive editor. Customize colors, labels, shapes and more to tell your data&apos;s story beautifully.
@@ -102,7 +106,6 @@ export default async function IndexPage() {
       </section>
       <section id="features" className="container mx-auto mt-14 flex max-w-[64rem] sm:mt-16 lg:mt-24">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
-          <h2 className="font-heading leading-7 text-foreground">We&apos;ve done all the work for you.</h2>
           <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">All you need for your <span className="text-primary">charts</span> is here.</p>
           <p className="mx-auto mt-6 leading-normal text-muted-foreground">
             SublimeChart offers many features to help you create the perfect chart. Stop wasting time configuring your chart; make it and use it.
@@ -120,6 +123,42 @@ export default async function IndexPage() {
           </dl>
         </div>
       </section>
+      <section id="templates" className="mx-auto mt-14 flex w-full sm:mt-16 lg:mt-24">
+        <div className="mx-auto w-full px-16 text-center">
+          <div className="mx-auto max-w-[64rem]">
+            <h2 className="font-heading leading-7 text-foreground">We&apos;ve done all the work for you.</h2>
+            <p className="mt-2 font-heading text-3xl tracking-tight sm:text-4xl">Create a chart in a <span className="text-primary">click</span>.</p>
+            <p className="mx-auto mt-6 max-w-7xl leading-normal text-muted-foreground">
+              We&apos;ve created for you built-in templates, ready to use in just a click. Change the colors or the values in a second.
+            </p>
+          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="mx-auto mt-16 w-full"
+          >
+            <CarouselContent>
+              { templates && templates.map((template) => (
+                <CarouselItem key={template.slug} className="md:basis-1/2 lg:basis-1/3">
+                  <Card>
+                    <CardContent className="flex items-center justify-center rounded-md p-0">
+                      <Image src={template.image} alt={`Chart template - ${template.name} (${template.config.type})`} className="w-full select-none rounded-t-md text-3xl font-semibold" width={1600} height={900} />
+                    </CardContent>
+                    <CardFooter className="flex justify-between p-3">
+                      <span className="font-heading font-bold">{ template.name }</span>
+                      <Badge className="capitalize">{ template.config.type }</Badge>
+                    </CardFooter>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+      </section>
       <section id="pricing" className="container mt-14 flex flex-col gap-6 md:mt-16 md:max-w-[64rem] lg:mt-24">
         <div className="mx-auto flex w-full flex-col gap-4 md:max-w-[58rem]">
           <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
@@ -128,7 +167,7 @@ export default async function IndexPage() {
               Build <span className="text-primary">awesome</span> charts today.
             </p>
           </div>
-          <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-2xl text-center text-lg leading-8 text-muted-foreground">
             SublimeChart offers a straightforward pricing model. No hidden fees, no surprises.
           </p>
           <div className="mx-auto mt-4 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-16 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
@@ -261,7 +300,7 @@ export default async function IndexPage() {
             <AccordionItem value="item-5">
               <AccordionTrigger>Can I use my chart inside my application?</AccordionTrigger>
               <AccordionContent>
-                Of course! You can export the Chart.JS configuration by clicking on the export button.
+                Of course! You can export the Chart.js configuration by clicking on the export button.
               </AccordionContent>
             </AccordionItem>
           </Accordion>

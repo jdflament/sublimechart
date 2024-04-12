@@ -84,8 +84,8 @@ export type Preset = {
 
 export type Template = {
   slug: string
-  name: string|undefined
-  image: string|undefined
+  name: string
+  image: string
   config: ChartConfigType
 }
 
