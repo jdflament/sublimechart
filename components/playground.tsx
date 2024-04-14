@@ -29,6 +29,7 @@ import { ChartCode } from "@/components/chart-code";
 import { PlaygroundProvider } from "@/components/playground-context";
 import { UserSubscriptionPlan } from "@/types";
 import { ChartTitles } from "@/components/chart-titles";
+import {ChartImport} from "@/components/chart-import";
 
 interface PlaygroundProps {
   chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
@@ -184,11 +185,14 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
                   </TabsContent>
                   <TabsContent value="data">
                     <Card>
-                      <CardHeader>
-                        <CardTitle>Data</CardTitle>
-                        <CardDescription>
-                          Update the data of the chart.
-                        </CardDescription>
+                      <CardHeader className="flex flex-row items-center justify-between">
+                        <div>
+                          <CardTitle>Data</CardTitle>
+                          <CardDescription>
+                            Update the data of the chart.
+                          </CardDescription>
+                        </div>
+                        <ChartImport />
                       </CardHeader>
                       <CardContent className="space-y-2">
                         <ChartLabels />

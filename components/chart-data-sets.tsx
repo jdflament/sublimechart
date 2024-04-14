@@ -85,8 +85,8 @@ export function ChartDataSets() {
                     <div className="flex gap-2">
                       <Sheet>
                         <SheetTrigger asChild>
-                          <Button type="button" variant="outline">
-                            <span className="mr-1">Configure</span>
+                          <Button type="button" variant="secondary">
+                            <span className="mr-1">Edit data</span>
                             <Icons.settings className="h-4 w-4" />
                           </Button>
                         </SheetTrigger>

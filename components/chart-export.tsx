@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  DialogDescription, DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -31,6 +31,7 @@ import { record } from "@/lib/recorder";
 import { downloadUrl } from "@/lib/downloader";
 import { usePlayground } from "@/components/playground-context";
 import {ProOverlay} from "@/components/pro-overlay";
+import {DialogClose} from "@radix-ui/react-dialog";
 
 export function ChartExport() {
   const [open, setOpen] = useState(false);
@@ -51,6 +52,11 @@ export function ChartExport() {
             </DialogDescription>
           </DialogHeader>
           <ExportButtons />
+          <DialogFooter className="pt-2">
+            <DialogClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DialogClose>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     )
@@ -206,9 +212,9 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
   }
 
   return (
-    <div className="mt-6 flex flex-col gap-2">
+    <div className={cn("mt-6 flex flex-col gap-2", className)}  {...props}>
       <p className="text-lg font-bold">Image</p>
-      <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
+      <div className="grid grid-cols-2 gap-4">
         <Button
           type="button"
           variant="outline"
@@ -234,7 +240,7 @@ function ExportButtons({ className, ...props }: React.ComponentProps<"div">) {
       <Separator className="my-6" />
 
       <p className="text-lg font-bold">Animated</p>
-      <div className={cn("grid grid-cols-2 gap-4", className)} {...props}>
+      <div className="grid grid-cols-2 gap-4">
         <Button
           type="button"
           variant="outline"
