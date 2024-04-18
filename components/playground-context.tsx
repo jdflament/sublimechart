@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useState } from 'react';
 import { UserSubscriptionPlan } from "@/types";
-import {ProPlanModal} from "@/components/pro-plan-modal";
+import { ProPlanModal } from "@/components/pro-plan-modal";
+import { Chart } from "@prisma/client";
 
 const PlaygroundContext = createContext<{
+  chart?: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
   rerenderChart: boolean;
   isPro: boolean;
   toggleRerenderChart: () => void;
   toggleProPlanModal: () => void;
 }>({
+  chart: undefined,
   rerenderChart: false,
   isPro: false,
   toggleRerenderChart: () => {},
@@ -15,11 +18,12 @@ const PlaygroundContext = createContext<{
 });
 
 type PlaygroundProviderProps = {
+  chart: Pick<Chart, "id" | "aspectRatio" | "config" | "watermark" | "createdAt">
   children?: React.ReactNode
   subscriptionPlan: UserSubscriptionPlan;
 };
 
-export const PlaygroundProvider = ({ children, subscriptionPlan }: PlaygroundProviderProps) => {
+export const PlaygroundProvider = ({ chart, children, subscriptionPlan }: PlaygroundProviderProps) => {
   const [rerenderChart, setRerenderChart] = useState(false);
   const [showProPlanModal, setShowProPlanModal] = useState(false);
   const isPro = subscriptionPlan?.isPro;
@@ -33,7 +37,7 @@ export const PlaygroundProvider = ({ children, subscriptionPlan }: PlaygroundPro
   };
 
   return (
-    <PlaygroundContext.Provider value={{ rerenderChart, isPro, toggleRerenderChart, toggleProPlanModal }}>
+    <PlaygroundContext.Provider value={{ chart, rerenderChart, isPro, toggleRerenderChart, toggleProPlanModal }}>
       {children}
       <ProPlanModal open={showProPlanModal} onOpenChange={setShowProPlanModal} />
     </PlaygroundContext.Provider>

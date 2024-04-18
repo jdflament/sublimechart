@@ -116,7 +116,7 @@ export function Playground({ chart, subscriptionPlan }: PlaygroundProps) {
   }
 
   return (
-    <PlaygroundProvider subscriptionPlan={subscriptionPlan}>
+    <PlaygroundProvider chart={chart} subscriptionPlan={subscriptionPlan}>
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid w-full gap-4">

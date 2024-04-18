@@ -20,14 +20,17 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import {FormProvider, useForm, useFormContext} from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "@/components/ui/use-toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Icons } from "@/components/icons";
-import {FormControl, FormField, FormItem, FormMessage} from "@/components/ui/form";
-import {Dropzone} from "@/components/ui/dropzone";
-import {cn} from "@/lib/utils";
-import {DialogClose} from "@radix-ui/react-dialog";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Dropzone } from "@/components/ui/dropzone";
+import { cn } from "@/lib/utils";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { usePapaParse } from 'react-papaparse';
+import {usePlayground} from "@/components/playground-context";
+import {useRouter} from "next/navigation";
 
 export function ChartImport() {
   const [open, setOpen] = useState(false);
@@ -89,19 +92,10 @@ export function ChartImport() {
 }
 
 function Import({ className, ...props }: React.ComponentProps<"div">) {
+  const { chart } = usePlayground();
+  const router = useRouter();
   const [isImporting, setIsImporting] = useState(false);
-
-  async function handleImport() {
-    if (isImporting) {
-      return;
-    }
-
-    setIsImporting(true);
-
-    return toast({
-      description: "🎉 Your data has been successfully imported!",
-    });
-  }
+  const { readString } = usePapaParse();
 
   const defaultValues: { file: null | File } = {
     file: null,
@@ -113,6 +107,60 @@ function Import({ className, ...props }: React.ComponentProps<"div">) {
     shouldUnregister: false,
     shouldUseNativeValidation: false,
   });
+
+  async function handleImport() {
+    const file = methods.getValues('file');
+
+    if (isImporting || !file) {
+      return;
+    }
+
+    setIsImporting(true);
+
+    const reader = new FileReader();
+
+    reader.onload = async function(event) {
+      const csv = event.target?.result;
+
+      if (typeof csv !== 'string') {
+        setIsImporting(false);
+        return;
+      }
+
+      const parseResponse = readString(csv, {
+        complete: () => {}
+      });
+
+      try {
+        const response = await fetch(`/api/charts/${chart?.id}/csv`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // @ts-ignore
+          body: parseResponse.data,
+        });
+
+        if (response.ok) {
+          toast({
+            description: "🎉 Your data has been successfully imported!",
+          });
+
+          router.refresh();
+        } else {
+          throw new Error('Failed to import data. Please try again.');
+        }
+      } catch (error) {
+        toast({
+          description: `❌ Error: ${error.message}`,
+        });
+      } finally {
+        setIsImporting(false);
+      }
+    };
+
+    reader.readAsText(file);
+  }
 
   function handleOnDrop(acceptedFiles: FileList | null) {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -181,6 +229,12 @@ function Import({ className, ...props }: React.ComponentProps<"div">) {
             <p className="text-sm font-medium">{methods.watch("file")?.name}</p>
           </div>
         )}
+        <Button type="submit" disabled={isImporting}>
+          {isImporting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          <span>Import</span>
+        </Button>
       </form>
     </FormProvider>
   )
